@@ -7,13 +7,13 @@ namespace NEFAB.Domains
     public class Container
     {
        
-            public string ContainerNumber { get; set; }
+            public string ContainerNo { get; set; }
             public int Week { get; set; }
             public int Year { get; set; }
 
-            public Container(string containerNumber)
+            public Container(string containerNo)
             {
-                ContainerNumber = containerNumber;
+                ContainerNo = containerNo;
             }
         
     }
