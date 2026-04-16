@@ -9,6 +9,8 @@
     <Grid>
         <Label Content="NEFAB HOME" HorizontalAlignment="Left" Margin="351,179,0,0" VerticalAlignment="Top" Height="36" Width="102"/>
         <Button Content="Container" Command="{Binding NavigateToContainerViewCommand}" HorizontalAlignment="Left" Margin="220,263,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <Button Content="Employee" Command="{Binding NavigateToEmployeeViewCommand}" HorizontalAlignment="Left" Margin="453,287,0,0" VerticalAlignment="Top"/>
+        <Button Content="Supplier" Command="{Binding NavigateToSupplierViewCommand}" HorizontalAlignment="Left" Margin="351,325,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>

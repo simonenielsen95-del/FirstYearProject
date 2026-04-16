@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Label Content="Employee" HorizontalAlignment="Center" Margin="0,166,0,0" VerticalAlignment="Top" Width="90"/>
+        <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="246,179,0,0" VerticalAlignment="Top"/>
+
     </Grid>
 </UserControl>
