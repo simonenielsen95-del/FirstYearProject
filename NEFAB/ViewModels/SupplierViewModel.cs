@@ -4,7 +4,9 @@ using System.Text;
 
 namespace NEFAB.ViewModels
 {
-    public class SupplierViewModel
+    public class SupplierViewModel : BaseViewModel
     {
+        
+
     }
 }

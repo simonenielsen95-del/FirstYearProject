@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NEFAB.ViewModels
 {
-    public class ContainerViewModel : BaseViewModel
+    public class HomeViewModel : BaseViewModel
     {
     }
 }
