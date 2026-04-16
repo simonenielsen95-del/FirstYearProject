@@ -7,6 +7,7 @@ namespace NEFAB.Stores
 {
     public class NavigationStore
     {
+        public event Action CurrentViewModelChanged;
         private BaseViewModel _currentViewModel;
         public BaseViewModel CurrentViewModel
         {
@@ -16,8 +17,13 @@ namespace NEFAB.Stores
             }
             set
             {
-                _currentViewModel = value;
+                _currentViewModel = value; OnCurrentViewModelChanged();
             }
+        }
+
+            public void OnCurrentViewModelChanged()
+            {
+                CurrentViewModelChanged?.Invoke();
         }
 
     }

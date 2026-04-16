@@ -9,6 +9,7 @@
         xmlns:viewmodels="clr-namespace:NEFAB.ViewModels"
         xmlns:views="clr-namespace:NEFAB.Views">
     <Grid>
+
         <ContentControl Content="{Binding CurrentViewModel}">
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
@@ -25,6 +26,5 @@
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
-
     </Grid>
 </Window>

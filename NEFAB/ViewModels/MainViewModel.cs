@@ -20,7 +20,12 @@ namespace NEFAB.ViewModels
         public MainViewModel(NavigationStore navigationStore)
         {
             NavigationStore = navigationStore;
+            NavigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
 
+        public void OnCurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentViewModel));
+        }
     }
 }

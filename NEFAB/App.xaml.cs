@@ -16,7 +16,7 @@ namespace NEFAB
         protected override void OnStartup(StartupEventArgs e)
         {
             _navigationStore = new NavigationStore();
-            _navigationStore.CurrentViewModel = new HomeViewModel();
+            _navigationStore.CurrentViewModel = new HomeViewModel(_navigationStore);
             MainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_navigationStore)
