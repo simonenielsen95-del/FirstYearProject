@@ -8,7 +8,7 @@ using NEFAB.Domains;
 
 namespace NEFAB.Repositories
 {
-    public class ContainerRepository : IContainerRepository
+    public class ContainerRepository
     {
         private readonly string ConnectionString;
         private List<Container> containers;
