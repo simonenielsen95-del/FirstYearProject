@@ -5,8 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NEFAB"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        xmlns:viewmodels="clr-namespace:NEFAB.ViewModels"
+        xmlns:views="clr-namespace:NEFAB.Views">
     <Grid>
 
+        <ContentControl Content="{Binding CurrentViewModel}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
+                    <views:HomeView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:ContainerViewModel}">
+                    <views:ContainerView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:EmployeeViewModel}">
+                    <views:EmployeeView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:SupplierViewModel}">
+                    <views:SupplierView/>
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
     </Grid>
 </Window>
