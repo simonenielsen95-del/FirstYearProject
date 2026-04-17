@@ -8,4 +8,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="images\nefab logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\nefab logo.png" />
+  </ItemGroup>
+
 </Project>
