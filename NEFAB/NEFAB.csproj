@@ -9,11 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="images\nefab logo.png" />
+    <Folder Include="Commands\" />
+    <Folder Include="Stores\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="images\nefab logo.png" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.6" />
   </ItemGroup>
 
 </Project>
