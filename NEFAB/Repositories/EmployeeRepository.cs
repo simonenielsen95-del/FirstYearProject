@@ -15,9 +15,9 @@ namespace NEFAB.Repositories
 
         public EmployeeRepository()
         {
-           IConfigurationRoot config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
+            IConfigurationRoot config = new ConfigurationBuilder()
+                 .AddJsonFile("appsettings.json")
+                 .Build();
 
             Employees = new List<Employee>();
             ConnectionString = config.GetConnectionString("MyDBConnection");
@@ -51,7 +51,7 @@ namespace NEFAB.Repositories
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Employees (EmployeeID, EmployeeName) VALUES (@EmployeeID, @EmployeeName);", con))
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO EMPLOYEES (EmployeeID, EmployeeName) VALUES (@EmployeeID, @EmployeeName);", con))
                 {
                     cmd.Parameters.AddWithValue("@EmployeeID", employee.EmployeeID);
                     cmd.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName);
@@ -73,9 +73,33 @@ namespace NEFAB.Repositories
                 }
             }
             //Fjern employee fra den lokale liste, så den ikke længere vises i UI'et
-            Employees.RemoveAll(e=> e.EmployeeID == employee.EmployeeID);
+            Employees.RemoveAll(e => e.EmployeeID == employee.EmployeeID);
         }
 
-        
+        public Employee GetByEmployeeID(string EmployeeID)
+        {
+            Employee employee = null;
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                string query = "SELECT EmployeeID, EmployeeName FROM Employees WHERE EmployeeID = @EmployeeID";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    string employeeName = reader.GetString(1);
+                    employee = new Employee(EmployeeID)
+                    {
+                        EmployeeName = employeeName
+                    };
+                }
+            }
+            return employee;
         }
+    }
+
 }
+
+
+
