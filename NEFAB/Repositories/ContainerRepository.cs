@@ -32,7 +32,7 @@ namespace NEFAB.Repositories
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                string query = "SELECT ContainerNo, Week, Year FROM Containers";
+                string query = "SELECT ContainerNo, Week, Year FROM Container";
                 SqlCommand command = new SqlCommand(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
@@ -57,7 +57,7 @@ namespace NEFAB.Repositories
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Containers (ContainerNo, Week, Year) VALUES (@ContainerNo, @Week, @Year);",
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Container (ContainerNo, Week, Year) VALUES (@ContainerNo, @Week, @Year);",
                     con))
                 {
                     cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = container.ContainerNo;
@@ -76,7 +76,7 @@ namespace NEFAB.Repositories
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("DELETE FROM Containers WHERE ContainerNo = @ContainerNo", con))
+                using (SqlCommand cmd = new SqlCommand("DELETE FROM Container WHERE ContainerNo = @ContainerNo", con))
                 {
                     cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = container.ContainerNo;
                     cmd.ExecuteNonQuery();
@@ -97,7 +97,7 @@ namespace NEFAB.Repositories
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                string query = "SELECT ContainerNo, Week, Year FROM Containers WHERE ContainerNo = @ContainerNo";
+                string query = "SELECT ContainerNo, Week, Year FROM Container WHERE ContainerNo = @ContainerNo";
                 using var command = new SqlCommand(query, connection);
                 command.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = containerNo;
                 using var reader = command.ExecuteReader();
@@ -122,7 +122,7 @@ namespace NEFAB.Repositories
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                string query = "SELECT ContainerNo, Week, Year FROM Containers WHERE Week = @Week AND Year = @Year";
+                string query = "SELECT ContainerNo, Week, Year FROM Container WHERE Week = @Week AND Year = @Year";
                 using var command = new SqlCommand(query, connection);
                 command.Parameters.Add("@Week", SqlDbType.Int).Value = week;
                 command.Parameters.Add("@Year", SqlDbType.Int).Value = year;
@@ -150,7 +150,7 @@ namespace NEFAB.Repositories
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("UPDATE Containers SET Week = @Week, Year = @Year WHERE ContainerNo = @ContainerNo",
+                using (SqlCommand cmd = new SqlCommand("UPDATE Container SET Week = @Week, Year = @Year WHERE ContainerNo = @ContainerNo",
                     con))
                 {
                     cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = container.ContainerNo;
