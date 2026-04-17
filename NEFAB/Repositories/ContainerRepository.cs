@@ -23,12 +23,12 @@ namespace NEFAB.Repositories
 
             ConnectionString = config.GetConnectionString("MyDBConnection");
         }
-
+         
 
         public List<Container> GetAll()
         {
 
-            //returner nu også containere der allerede lå i databasen
+            //returner containere der allerede ligger i databasen
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -37,10 +37,10 @@ namespace NEFAB.Repositories
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    string containerNumber = reader.GetString(0);
+                    string containerNo = reader.GetString(0);
                     int week = reader.GetInt32(1);
                     int year = reader.GetInt32(2);
-                    Container container = new Container(containerNumber)
+                    Container container = new Container(containerNo)
                     {
                         Week = week,
                         Year = year
@@ -70,7 +70,7 @@ namespace NEFAB.Repositories
             containers.Add(container);
         }
 
-        public void Remove(Container container)
+        public void Remove(Container container) 
 
         {
             using (SqlConnection con = new SqlConnection(ConnectionString))
@@ -85,12 +85,13 @@ namespace NEFAB.Repositories
 
             //Fjern også fra local liste
             containers.RemoveAll(c => c.ContainerNo == container.ContainerNo);
+        
         }
         
-        public Container GetByContainerNumber(string containerNumber)
+        public Container GetByContainerNumber(string containerNo)
         {
             // check in-memory cache first
-            var found = containers.FirstOrDefault(c => c.ContainerNo == containerNumber);
+            var found = containers.FirstOrDefault(c => c.ContainerNo == containerNo);
             if (found != null) return found;
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -98,14 +99,14 @@ namespace NEFAB.Repositories
                 connection.Open();
                 string query = "SELECT ContainerNo, Week, Year FROM Containers WHERE ContainerNo = @ContainerNo";
                 using var command = new SqlCommand(query, connection);
-                command.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = containerNumber;
+                command.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = containerNo;
                 using var reader = command.ExecuteReader();
                 if (reader.Read())
                 {
-                    string containerNo = reader.GetString(0);
+                    string dbContainerNo = reader.GetString(0);
                     int week = reader.GetInt32(1);
                     int year = reader.GetInt32(2);
-                    var container = new Container(containerNo) { Week = week, Year = year };
+                    var container = new Container(dbContainerNo) { Week = week, Year = year };
                     containers.Add(container);
                     return container;
                 }
@@ -128,12 +129,12 @@ namespace NEFAB.Repositories
                 using var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    string containerNumber = reader.GetString(0);
+                    string containerNo = reader.GetString(0);
                     int w = reader.GetInt32(1);
                     int y = reader.GetInt32(2);
-                    if (!results.Any(c => c.ContainerNo == containerNumber))
+                    if (!results.Any(c => c.ContainerNo == containerNo))
                     {
-                        var container = new Container(containerNumber) { Week = w, Year = y };
+                        var container = new Container(containerNo) { Week = w, Year = y };
                         results.Add(container);
                         containers.Add(container);
                     }
@@ -142,6 +143,7 @@ namespace NEFAB.Repositories
 
             return results;
         }
+
         
         public void Update(Container container)
         {
@@ -157,7 +159,9 @@ namespace NEFAB.Repositories
 
                     cmd.ExecuteNonQuery();
                 }
+
             }
+
 
             //Opdaterer listen lokalt 
             Container containerToUpdate = containers.FirstOrDefault(c => c.ContainerNo == container.ContainerNo);
