@@ -7,11 +7,29 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label Content="                                                               Container" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontSize="20" Background="#144e8c" Width="780" Height="66" FontWeight="Bold"/>
+        <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="800"/>
+
+        <Label Content="Container" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" Width="176" FontSize="36" FontWeight="Bold" Foreground="White"/>
         <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="34,378,0,0" VerticalAlignment="Top" Height="35" Width="88"/>
-        <Label Content="Tast nyt ContainerID" HorizontalAlignment="Left" Margin="78,108,0,0" VerticalAlignment="Top"/>
-        <Label Content="Dato: uge - år" HorizontalAlignment="Left" Margin="78,139,0,0" VerticalAlignment="Top"/>
-        <Label Content="Label" HorizontalAlignment="Center" Margin="0,203,0,0" VerticalAlignment="Top"/>
+        <Label Content="Tast nyt ContainerID" HorizontalAlignment="Left" Margin="60,143,0,0" VerticalAlignment="Top"/>
+        <Label Content="Dato: uge - år" HorizontalAlignment="Left" Margin="60,182,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.126,0.636"/>
+        <Label Content="Opret:" HorizontalAlignment="Left" Margin="34,110,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" RenderTransformOrigin="-0.107,1.765"/>
+        <TextBox HorizontalAlignment="Left" Margin="222,152,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="222,189,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="844,152,0,0" VerticalAlignment="Top" Width="0"/>
+        <Button Content="OPRET" HorizontalAlignment="Left" Margin="362,198,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.08,0.927"/>
+        <Label Content="Rediger:" HorizontalAlignment="Left" Margin="438,114,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+        <Label Content="Tast ContainerID" HorizontalAlignment="Left" Margin="451,147,0,0" VerticalAlignment="Top"/>
+        <Label Content="Tast nyt ContainerID" HorizontalAlignment="Left" Margin="451,185,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="598,151,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="598,193,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="598,229,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Data: uge - år" HorizontalAlignment="Left" Margin="451,225,0,0" VerticalAlignment="Top"/>
+        <Label Content="Slet:" HorizontalAlignment="Left" Margin="60,247,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+        <Label Content="Tast ContainerID" HorizontalAlignment="Left" Margin="70,280,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="222,284,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Button Content="GEM" HorizontalAlignment="Left" Margin="744,247,0,0" VerticalAlignment="Top"/>
+        <Button Content="SLET" HorizontalAlignment="Left" Margin="364,306,0,0" VerticalAlignment="Top" Width="37"/>
 
     </Grid>
 </UserControl>
