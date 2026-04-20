@@ -39,12 +39,18 @@ namespace NEFAB.Repositories
                 con.Open();
 
                 SqlCommand cmd = new SqlCommand("SELECT ContainerNo, Week, Year FROM Container", con);
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
                 {
-                    string containerNo = reader.GetString(0);
-                    int week = reader.GetInt32(1);
-                    int year = reader.GetInt32(2);
+                    Container container = new Container(dr.GetString(0))
+                    {
+                        Week = dr.GetInt32(1),
+                        Year = dr.GetInt32(2)
+                    };
+
+                    string containerNo = dr.GetString(0);
+                    int week = dr.GetInt32(1);
+                    int year = dr.GetInt32(2);
                     Container container = new Container(containerNo)
                     {
                         Week = week,
@@ -106,20 +112,22 @@ namespace NEFAB.Repositories
              
                 using var cmd = new SqlCommand("SELECT ContainerNo, Week, Year FROM CONTAINER WHERE ContainerNo = @ContainerNo", con);
                 cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = containerNo;
-                using var reader = cmd.ExecuteReader();
-                if (reader.Read())
+                using var dr = cmd.ExecuteReader();
+                if (dr.Read())
                 {
-                    container = new Container
-                    string dbContainerNo = reader.GetString(0);
-                    int week = reader.GetInt32(1);
-                    int year = reader.GetInt32(2);
+                  //  container = new Container(dr.GetString(0))
+                    
+                    string dbContainerNo = dr.GetString(0);
+                    int week = dr.GetInt32(1);
+                    int year = dr.GetInt32(2);
                     var container = new Container(dbContainerNo) { Week = week, Year = year };
                    // containers.Add(container);
                     return container;
+                
                 }
             }
 
-            return null;
+          //  return container;
         }
 
         public List<Container> GetByWeek(int week, int year)
@@ -171,7 +179,7 @@ namespace NEFAB.Repositories
                     cmd.Parameters.Add("@Week", SqlDbType.Int).Value = container.Week;
                     cmd.Parameters.Add("@Year", SqlDbType.Int).Value = container.Year;
 
-                    cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery(); 
                 }
 
             }

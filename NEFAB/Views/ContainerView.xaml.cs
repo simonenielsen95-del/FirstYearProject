@@ -30,7 +30,7 @@ namespace NEFAB.Views
 
         private void btnCreateNewContainer_Click(object sender, RoutedEventArgs e)
         {
-            try
+            try 
             {
                 string containerNo = txtCreateContainerNo.Text.Trim();
                 string weekYear = txtCreateWeekAndYear.Text.Trim();
