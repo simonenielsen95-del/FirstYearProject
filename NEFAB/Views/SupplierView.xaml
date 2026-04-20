@@ -7,8 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label Content="Supplier" HorizontalAlignment="Left" Margin="277,169,0,0" VerticalAlignment="Top" Height="56" Width="86"/>
-        <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="554,225,0,0" VerticalAlignment="Top"/>
+        <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="800"/>
+
+        <Label Content="Supplier" HorizontalAlignment="Center" Margin="0,22,0,0" VerticalAlignment="Top" Height="56" Width="152" FontSize="36" FontWeight="Bold" Foreground="White"/>
+        <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="10,420,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>
