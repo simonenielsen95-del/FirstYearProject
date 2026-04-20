@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using NEFAB.Domains;
 using System;
@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Reflection.PortableExecutable;
 using System.Text;
+using System.Windows.Navigation;
 
 namespace NEFAB.Repositories
 {
@@ -39,7 +40,7 @@ namespace NEFAB.Repositories
                         {
                             EmployeeName = dr.GetString(1)
                         };
-                        
+
                         employees.Add(employee);
                     }
             }
@@ -78,31 +79,28 @@ namespace NEFAB.Repositories
 
 
 
-        public Employee GetByEmployeeID(string EmployeeID)
+        public Employee GetByID(string EmployeeID)
 
         {
             Employee employee = null;
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                connection.Open();
-                string query = "SELECT EmployeeID, EmployeeName FROM Employees WHERE EmployeeID = @EmployeeID";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SELECT EmployeeID, EmployeeName FROM Employees WHERE EmployeeID = @EmployeeID", con);
+                cmd.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
                 {
-                    string employeeName = reader.GetString(1);
-                    employee = new Employee(EmployeeID)
+                    if (dr.Read())
                     {
-                        EmployeeName = employeeName
-                    };
+                        employee = new Employee(dr.GetString(0))
+                        {
+                            EmployeeName = dr.GetString(1)
+                        };
+                    }
                 }
             }
             return employee;
         }
     }
-
 }
-
-
-
