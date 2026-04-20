@@ -7,8 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label Content="Employee" HorizontalAlignment="Center" Margin="0,166,0,0" VerticalAlignment="Top" Width="90"/>
-        <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="246,179,0,0" VerticalAlignment="Top"/>
+        <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="800"/>
+
+        <Label Content="Employee" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" Width="176" FontSize="36" FontWeight="Bold" Foreground="White"/>
+        <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="24,402,0,0" VerticalAlignment="Top" Width="80" Height="24" FontSize="15" Background="#FF8CB3DB"/>
+        <Image Margin="10,24,655,371" Source="/images/nefab white.png" Width="135" Height="55"/>
 
     </Grid>
 </UserControl>
