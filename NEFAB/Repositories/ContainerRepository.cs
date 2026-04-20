@@ -14,7 +14,7 @@ namespace NEFAB.Repositories
 
         //fjerner cachen helt for at sikre at vi altid henter data fra databasen,
         //og ikke risikerer at have forældet data i cachen
-        // private List<Container> containers;
+        //private List<Container> containers;
 
         public ContainerRepository()
         {
@@ -69,6 +69,7 @@ namespace NEFAB.Repositories
                     cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = container.ContainerNo;
                     cmd.Parameters.Add("@Week", SqlDbType.Int).Value = container.Week;
                     cmd.Parameters.Add("@Year", SqlDbType.Int).Value = container.Year;
+             
 
                     cmd.ExecuteNonQuery();
                 }
@@ -137,6 +138,7 @@ namespace NEFAB.Repositories
                 using var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
+                   
                     string containerNo = reader.GetString(0);
                     int w = reader.GetInt32(1);
                     int y = reader.GetInt32(2);
