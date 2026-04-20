@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Data;
-using Microsoft.Data.SqlClient;
-using NEFAB.Domains;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using NEFAB.Domains;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Reflection.PortableExecutable;
+using System.Text;
 
 namespace NEFAB.Repositories
 {
     public class EmployeeRepository
     {
-        private readonly string ConnectionString;
-        private List<Employee> Employees;
+        private readonly string connectionString;
+        private List<Employee> employees;
 
         public EmployeeRepository()
         {
@@ -19,36 +20,35 @@ namespace NEFAB.Repositories
                  .AddJsonFile("appsettings.json")
                  .Build();
 
-            Employees = new List<Employee>();
-            ConnectionString = config.GetConnectionString("MyDBConnection");
+            employees = new List<Employee>();
+            connectionString = config.GetConnectionString("MyDBConnection");
         }
 
         public List<Employee> GetAll()
         {
+            List<Employee> employees = new List<Employee>();
             //Her returner Employees der allerede ligger i databasen
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                connection.Open();
-                string query = "SELECT EmployeeID, EmployeeName FROM Employees";
-                SqlCommand command = new SqlCommand(query, connection);
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    string employeeID = reader.GetString(0);
-                    string employeeName = reader.GetString(1);
-                    Employee employee = new Employee(employeeID)
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SELECT EmployeeID, EmployeeName FROM Employees", con);
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                    while (dr.Read())
                     {
-                        EmployeeName = employeeName
-                    };
-                    Employees.Add(employee);
-                }
+                        Employee employee = new Employee(dr.GetString(0))
+                        {
+                            EmployeeName = dr.GetString(1)
+                        };
+                        
+                        employees.Add(employee);
+                    }
             }
-            return Employees;
+            return employees;
         }
 
         public void Add(Employee employee)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("INSERT INTO EMPLOYEES (EmployeeID, EmployeeName) VALUES (@EmployeeID, @EmployeeName);", con))
@@ -58,28 +58,31 @@ namespace NEFAB.Repositories
                     cmd.ExecuteNonQuery();
                 }
             }
-            Employees.Add(employee);
+            employees.Add(employee);
         }
 
-        public void RemoveAll(Employee employee)
+        public void Update(Employee employee)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("DELETE FROM Employees WHERE EmployeeID = @EmployeeID;", con))
+                using (SqlCommand cmd = new SqlCommand("UPDATE EMPLOYEES SET EmployeeName = @EmployeeName WHERE EmployeeID = @EmployeeID;", con))
                 {
                     cmd.Parameters.AddWithValue("@EmployeeID", employee.EmployeeID);
+                    cmd.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName);
                     cmd.ExecuteNonQuery();
                 }
             }
-            //Fjern employee fra den lokale liste, så den ikke længere vises i UI'et
-            Employees.RemoveAll(e => e.EmployeeID == employee.EmployeeID);
         }
 
+
+
+
         public Employee GetByEmployeeID(string EmployeeID)
+
         {
             Employee employee = null;
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 string query = "SELECT EmployeeID, EmployeeName FROM Employees WHERE EmployeeID = @EmployeeID";
