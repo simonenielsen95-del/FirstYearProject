@@ -12,9 +12,8 @@ namespace NEFAB.Repositories
     {
         private readonly string connectionString;
 
-        //fjerner cachen helt for at sikre at vi altid henter data fra databasen,
-        //og ikke risikerer at have forældet data i cachen
-        //private List<Container> containers;
+       
+        private List<Container> containers;
 
         public ContainerRepository()
         {
@@ -22,7 +21,7 @@ namespace NEFAB.Repositories
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-          //  containers = new List<Container>();
+          containers = new List<Container>();
 
             connectionString = config.GetConnectionString("MyDBConnection");
         }
@@ -110,6 +109,7 @@ namespace NEFAB.Repositories
                 using var reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
+                    container = new Container
                     string dbContainerNo = reader.GetString(0);
                     int week = reader.GetInt32(1);
                     int year = reader.GetInt32(2);
