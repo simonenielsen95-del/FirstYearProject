@@ -80,7 +80,7 @@ namespace NEFAB.Views
                     return;
                 }
 
-                Container? container = _repository.GetByContainerNumber(containerNo);
+                Container? container = _repository.GetByID(containerNo);
                 if (container == null)
                 {
                     MessageBox.Show($"Container {containerNo} blev ikke fundet.");
@@ -127,7 +127,7 @@ namespace NEFAB.Views
                 int year = int.Parse(parts[1]);
 
 
-                Container? container = _repository.GetByContainerNumber(containerNo);
+                Container? container = _repository.GetByID(containerNo);
                 if (container == null)
                 {
                     MessageBox.Show($"Container {containerNo} blev ikke fundet.");
