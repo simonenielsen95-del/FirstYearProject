@@ -22,7 +22,7 @@ namespace NEFAB.Repositories
                  .Build();
 
             employees = new List<Employee>();
-            connectionString = config.GetConnectionString("MyDBConnection") ??: ;
+            connectionString = config.GetConnectionString("MyDBConnection");
         }
 
         public List<Employee> GetAll()
@@ -32,7 +32,7 @@ namespace NEFAB.Repositories
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT EmployeeID, EmployeeName FROM Employees", con); // mangler korrekt navngivning af table.
+                SqlCommand cmd = new SqlCommand("SELECT EmployeeID, EmployeeName FROM EMPLOYEE", con);
                 using (SqlDataReader dr = cmd.ExecuteReader())
                     while (dr.Read())
                     {
@@ -52,10 +52,11 @@ namespace NEFAB.Repositories
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO EMPLOYEES (EmployeeID, EmployeeName) VALUES (@EmployeeID, @EmployeeName);", con)) // tættere på men stadig ikke korrekt navn på table :) + manglende string, kig i car create 
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO EMPLOYEE (EmployeeID, EmployeeName) VALUES (@EmployeeID, @EmployeeName);", con))
                 {
-                    cmd.Parameters.AddWithValue("@EmployeeID", employee.EmployeeID); // man bruger ikke AddWithValue her hvis man følger car. så bruges Add("@EmployeeName", SqlDbType.datatype).value = emplyee.Employeename
-                    cmd.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName); // skal ikke være her
+                    cmd.Parameters.Add("@EmployeeID", SqlDbType.NVarChar).Value = employee.EmployeeID;
+                    cmd.Parameters.Add("@EmployeeName", SqlDbType.NVarChar).Value = employee.EmployeeName; 
+                    
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -67,10 +68,10 @@ namespace NEFAB.Repositories
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("UPDATE EMPLOYEES SET EmployeeName = @EmployeeName WHERE EmployeeID = @EmployeeID;", con)) // tættere på men stadig ikke korrekt navn på table :) + manglende string, kig i car create 
+                using (SqlCommand cmd = new SqlCommand("UPDATE EMPLOYEE SET EmployeeName = @EmployeeName WHERE EmployeeID = @EmployeeID;", con))  
                 {
-                    cmd.Parameters.AddWithValue("@EmployeeID", employee.EmployeeID); // man bruger ikke AddWithValue her hvis man følger car. så bruges Add("@EmployeeName", SqlDbType.datatype).value = emplyee.Employeename
-                    cmd.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName); // skal ikke være her
+                    cmd.Parameters.Add("@EmployeeName", SqlDbType.NVarChar).Value = employee.EmployeeName; 
+                    cmd.Parameters.Add("@EmployeeID", SqlDbType.NVarChar).Value = employee.EmployeeID; 
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -79,15 +80,15 @@ namespace NEFAB.Repositories
 
 
 
-        public Employee GetByID(string EmployeeID) // mangler '?' lig mærke til forskellen inde i koden.
+        public Employee? GetByID(string employeeID) 
 
         {
-            Employee employee = null;
+            Employee? employee = null;
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT EmployeeID, EmployeeName FROM Employees WHERE EmployeeID = @EmployeeID", con); // forkert navngivning af tabel
-                cmd.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+                SqlCommand cmd = new SqlCommand("SELECT EmployeeID, EmployeeName FROM EMPLOYEE WHERE EmployeeID = @EmployeeID", con);
+                cmd.Parameters.Add("@EmployeeID", SqlDbType.NVarChar).Value = employeeID;
 
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
