@@ -10,7 +10,8 @@
         <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="800"/>
 
         <Label Content="Supplier" HorizontalAlignment="Center" Margin="0,22,0,0" VerticalAlignment="Top" Height="56" Width="152" FontSize="36" FontWeight="Bold" Foreground="White"/>
-        <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="10,420,0,0" VerticalAlignment="Top"/>
+        <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="10,416,0,0" VerticalAlignment="Top" Width="80" Height="24" FontSize="15" Background="#FF8CB3DB"/>
+        <Image Height="55" Width="135" Source="/images/nefab white.png" Margin="10,24,655,371"/>
 
     </Grid>
 </UserControl>
