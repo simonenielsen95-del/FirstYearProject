@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\nefab white.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Commands\" />
     <Folder Include="Stores\" />
   </ItemGroup>
