@@ -69,7 +69,7 @@ namespace NEFAB.Repositories
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand("SELECT SupplierName FROM SUPPLIER WHERE SupplierName = @SupplierName", con);
-                cmd.Parameters.AddWithValue("@SupplierName", Name);
+                cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar).Value = Name;
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
                     if (dr.Read())
