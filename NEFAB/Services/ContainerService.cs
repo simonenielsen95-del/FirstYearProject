@@ -8,14 +8,14 @@ namespace NEFAB.Services
 {
     public class ContainerService 
     {
-        private readonly List<ContainerRepository> _containerRepository;
+        private readonly ContainerRepository _containerRepository;
 
-        public ContainerService(List<Container> _containerRepository)
+        public ContainerService()
         {
-            _containerRepository = containerRepo; 
+            _containerRepository = new ContainerRepository(); 
         }
 
-        public CreateContainer()
+        public void Add(string ContainerNo )
 
 
     }
