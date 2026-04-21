@@ -38,7 +38,7 @@ namespace NEFAB.Repositories
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT ContainerNo, Week, Year FROM Container", con);
+                SqlCommand cmd = new SqlCommand("SELECT ContainerNo, Week, Year FROM CONTAINER", con);
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
@@ -46,15 +46,6 @@ namespace NEFAB.Repositories
                     {
                         Week = dr.GetInt32(1),
                         Year = dr.GetInt32(2)
-                    };
-
-                    string containerNo = dr.GetString(0);
-                    int week = dr.GetInt32(1);
-                    int year = dr.GetInt32(2);
-                    Container container = new Container(containerNo)
-                    {
-                        Week = week,
-                        Year = year
                     };
                    result.Add(container);
                 }
@@ -68,10 +59,10 @@ namespace NEFAB.Repositories
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Container (ContainerNo, Week, Year) VALUES (@ContainerNo, @Week, @Year);",
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO CONTAINER (ContainerNo, Week, Year) VALUES (@ContainerNo, @Week, @Year);",
                     con))
                 {
-                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = container.ContainerNo;
+                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar).Value = container.ContainerNo; 
                     cmd.Parameters.Add("@Week", SqlDbType.Int).Value = container.Week;
                     cmd.Parameters.Add("@Year", SqlDbType.Int).Value = container.Year;
              
@@ -79,7 +70,7 @@ namespace NEFAB.Repositories
                     cmd.ExecuteNonQuery();
                 }
             }
-           // containers.Add(container);
+           containers.Add(container);
         }
 
         public void Remove(Container container) 
@@ -90,80 +81,73 @@ namespace NEFAB.Repositories
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("DELETE FROM CONTAINER WHERE ContainerNo = @ContainerNo", con))
                 {
-                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = container.ContainerNo;
+                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar).Value = container.ContainerNo; 
                     cmd.ExecuteNonQuery();
                 }
             }
 
-            //Fjern også fra local liste
-         //   containers.RemoveAll(c => c.ContainerNo == container.ContainerNo);
-        
+            
         }
-        
-        public Container GetByContainerNumber(string containerNo)
-        {
-          
-          //  var found = containers.FirstOrDefault(c => c.ContainerNo == containerNo);
-         //   if (found != null) return found;
 
+        public Container? GetByContainerNumber(string containerNo)
+        {
+
+           
+            Container? container = null; 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-             
-                using var cmd = new SqlCommand("SELECT ContainerNo, Week, Year FROM CONTAINER WHERE ContainerNo = @ContainerNo", con);
-                cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = containerNo;
-                using var dr = cmd.ExecuteReader();
-                if (dr.Read())
-                {
-                  //  container = new Container(dr.GetString(0))
-                    
-                    string dbContainerNo = dr.GetString(0);
-                    int week = dr.GetInt32(1);
-                    int year = dr.GetInt32(2);
-                    var container = new Container(dbContainerNo) { Week = week, Year = year };
-                   // containers.Add(container);
-                    return container;
-                
-                }
-            }
 
-          //  return container;
+                using var cmd = new SqlCommand("SELECT ContainerNo, Week, Year FROM CONTAINER WHERE ContainerNo = @ContainerNo", con);
+                cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar).Value = containerNo;
+                using var dr = cmd.ExecuteReader();
+                {
+                    if (dr.Read())
+                    {
+                        container = new Container(dr.GetString(0)) // skal være her
+                        {
+                        
+                        Week = dr.GetInt32(1), 
+                        Year = dr.GetInt32(2) 
+                        };
+                        
+                       
+
+                    }
+                }
+
+               
+            }
+            return container;
         }
 
         public List<Container> GetByWeek(int week, int year)
         {
 
-            var results = new List<Container>();
+            List<Container> containers = new List<Container>();
 
-            //var results = containers.Where(c => c.Week == week && c.Year == year).ToList();
+           
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 using var cmd = new SqlCommand("SELECT ContainerNo, Week, Year FROM CONTAINER WHERE Week = @Week AND Year = @Year", con);
-                cmd.Parameters.Add("@Week", SqlDbType.Int).Value = week;
-                cmd.Parameters.Add("@Year", SqlDbType.Int).Value = year;
-                using var reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (SqlDataReader dr = cmd.ExecuteReader()) 
+                while (dr.Read())
                 {
-                   
-                    string containerNo = reader.GetString(0);
-                    int w = reader.GetInt32(1);
-                    int y = reader.GetInt32(2);
-
-                    //er den der allerede?
-                    if (!results.Any(c => c.ContainerNo == containerNo))
+                    Container container = new Container(dr.GetString(0)) // skal være her
                     {
-                        var container = new Container(containerNo) { Week = w, Year = y };
-                        results.Add(container);
-
-                       //til cachen
-                       //containers.Add(container);
-                    }
+                 
+                    Week = dr.GetInt32(1), // Week = dr.GetInt32(1),
+                    Year = dr.GetInt32(2) // Year =dr.GetInt32(2)
+                    };
+                    containers.Add(container);
+                    
+                    
                 }
             }
 
-            return results;
+            return containers;
         }
 
         
@@ -175,7 +159,7 @@ namespace NEFAB.Repositories
                 using (SqlCommand cmd = new SqlCommand("UPDATE CONTAINER SET Week = @Week, Year = @Year WHERE ContainerNo = @ContainerNo",
                     con))
                 {
-                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = container.ContainerNo;
+                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar).Value = container.ContainerNo; 
                     cmd.Parameters.Add("@Week", SqlDbType.Int).Value = container.Week;
                     cmd.Parameters.Add("@Year", SqlDbType.Int).Value = container.Year;
 
@@ -184,14 +168,6 @@ namespace NEFAB.Repositories
 
             }
 
-
-            //Opdaterer listen lokalt 
-            //Container containerToUpdate = containers.FirstOrDefault(c => c.ContainerNo == container.ContainerNo);
-            //if (containerToUpdate != null)
-            //{
-            //    containerToUpdate.Week = container.Week;
-            //    containerToUpdate.Year = container.Year;
-            //}
         }
     }
 }
