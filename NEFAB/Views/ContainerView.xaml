@@ -23,13 +23,13 @@
         <TextBox x:Name="txtUpdateContainerNo" HorizontalAlignment="Left" Margin="598,151,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtUpdateNewContainerNo" HorizontalAlignment="Left" Margin="598,193,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtUpdateWeekAndYear" HorizontalAlignment="Left" Margin="598,229,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Data: uge - år" HorizontalAlignment="Left" Margin="451,225,0,0" VerticalAlignment="Top"/>
+        <Label Content="Dato: uge - år" HorizontalAlignment="Left" Margin="451,225,0,0" VerticalAlignment="Top"/>
         <Label Content="Slet:" HorizontalAlignment="Left" Margin="60,247,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
         <Label Content="Tast ContainerID" HorizontalAlignment="Left" Margin="70,280,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtRemoveContainerNo" HorizontalAlignment="Left" Margin="222,284,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
         
-        <Button x:Name="btnUpdateContainer" Content="GEM" HorizontalAlignment="Left" Margin="744,247,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnRemoveContainer" Content="SLET" HorizontalAlignment="Left" Margin="364,306,0,0" VerticalAlignment="Top" Width="37"/>
+        <Button x:Name="btnUpdateContainer" Content="GEM" HorizontalAlignment="Left" Margin="744,247,0,0" VerticalAlignment="Top" Click="btnUpdateContainer_Click"/>
+        <Button x:Name="btnRemoveContainer" Content="SLET" HorizontalAlignment="Left" Margin="364,306,0,0" VerticalAlignment="Top" Width="37" Click="btnRemoveContainer_Click"/>
         <Button x:Name="btnCreateNewContainer" Content="OPRET" HorizontalAlignment="Left" Margin="362,198,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.08,0.927" Click="btnCreateNewContainer_Click"/>
 
     </Grid>

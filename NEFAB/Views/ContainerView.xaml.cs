@@ -30,7 +30,7 @@ namespace NEFAB.Views
 
         private void btnCreateNewContainer_Click(object sender, RoutedEventArgs e)
         {
-            try 
+            try
             {
                 string containerNo = txtCreateContainerNo.Text.Trim();
                 string weekYear = txtCreateWeekAndYear.Text.Trim();
@@ -61,6 +61,90 @@ namespace NEFAB.Views
                 MessageBox.Show($"Container {containerNo} for uge {week} i år {year} er oprettet.");
                 txtCreateContainerNo.Clear();
                 txtCreateWeekAndYear.Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Der opstod en fejl: {ex.Message}");
+            }
+        }
+
+
+        private void btnRemoveContainer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string containerNo = txtRemoveContainerNo.Text.Trim();
+                if (string.IsNullOrEmpty(containerNo))
+                {
+                    MessageBox.Show("Udfyld venligst ContainerNo.");
+                    return;
+                }
+
+                Container? container = _repository.GetByContainerNumber(containerNo);
+                if (container == null)
+                {
+                    MessageBox.Show($"Container {containerNo} blev ikke fundet.");
+                    return;
+                }
+
+                _repository.Remove(container);
+
+                MessageBox.Show($"Container {containerNo} er fjernet.");
+                txtRemoveContainerNo.Clear();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Der opstod en fejl: {ex.Message}");
+            }
+
+        }
+
+        private void btnUpdateContainer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string containerNo = txtUpdateContainerNo.Text.Trim();
+                string newContainerNo = txtUpdateNewContainerNo.Text.Trim();
+                string weekYear = txtUpdateWeekAndYear.Text.Trim();
+
+                if (string.IsNullOrEmpty(containerNo) || string.IsNullOrEmpty(weekYear) || string.IsNullOrEmpty(newContainerNo))
+                {
+                    MessageBox.Show("Udfyld venligst både ContainerNo, Nyt ContainerNo og Uge-År.");
+                    return;
+                }
+
+
+                //split weekYear
+                string[] parts = weekYear.Split(new char[] { '-', ' ', '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (parts.Length != 2)
+                {
+                    MessageBox.Show("Uge-År formatet er forkert. Brug formatet 'Uge-År' (f.eks. '12-2024').");
+                    return;
+                }
+                int week = int.Parse(parts[0]);
+                int year = int.Parse(parts[1]);
+
+
+                Container? container = _repository.GetByContainerNumber(containerNo);
+                if (container == null)
+                {
+                    MessageBox.Show($"Container {containerNo} blev ikke fundet.");
+                    return;
+                }
+
+                container.ContainerNo = newContainerNo;
+                container.Week = week;
+                container.Year = year;
+
+
+                _repository.Update(container);
+
+                MessageBox.Show($"Container {containerNo} er opdateret til {newContainerNo} for uge {week} i år {year}.");
+                txtUpdateContainerNo.Clear();
+                txtUpdateNewContainerNo.Clear();
+                txtUpdateWeekAndYear.Clear();
             }
             catch (Exception ex)
             {

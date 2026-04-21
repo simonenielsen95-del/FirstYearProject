@@ -27,12 +27,14 @@ namespace NEFAB.Repositories
         }
          
 
-        public List<Container> GetAll()//henter og gemmer dem i cachen
+        public List<Container> GetAll()
         {
             //kun inde i metoden. forsvinder når metoden er færdig, så vi ikke har forældet data i cachen
             //den gemmer ikke data til næste gang
             //men skal bruges fordi metoden skal returnere en list<container>
+
             List<Container> result = new List<Container>();
+
             //returner containere der allerede ligger i databasen
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -92,7 +94,6 @@ namespace NEFAB.Repositories
         public Container? GetByContainerNumber(string containerNo)
         {
 
-           
             Container? container = null; 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -104,7 +105,7 @@ namespace NEFAB.Repositories
                 {
                     if (dr.Read())
                     {
-                        container = new Container(dr.GetString(0)) // skal være her
+                        container = new Container(dr.GetString(0)) 
                         {
                         
                         Week = dr.GetInt32(1), 
@@ -135,11 +136,11 @@ namespace NEFAB.Repositories
                 using (SqlDataReader dr = cmd.ExecuteReader()) 
                 while (dr.Read())
                 {
-                    Container container = new Container(dr.GetString(0)) // skal være her
+                    Container container = new Container(dr.GetString(0))
                     {
                  
-                    Week = dr.GetInt32(1), // Week = dr.GetInt32(1),
-                    Year = dr.GetInt32(2) // Year =dr.GetInt32(2)
+                    Week = dr.GetInt32(1), 
+                    Year = dr.GetInt32(2)
                     };
                     containers.Add(container);
                     
