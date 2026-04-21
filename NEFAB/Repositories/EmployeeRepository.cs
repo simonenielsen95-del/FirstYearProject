@@ -1,6 +1,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using NEFAB.Domains;
+using NEFAB.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,7 +11,7 @@ using System.Windows.Navigation;
 
 namespace NEFAB.Repositories
 {
-    public class EmployeeRepository
+    public class EmployeeRepository : IRepoGetAddUpdate<Employee, string>
     {
         private readonly string connectionString;
         private List<Employee> employees;
