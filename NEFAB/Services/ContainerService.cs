@@ -33,13 +33,24 @@ namespace NEFAB.Services
             {
                 throw new ArgumentException("Udfyld venligst et korrekt container nr.");
             }
-            List<char> cha = new List<char>();
-            cha.Add('A', 'B');
-            for (int i = 0; i <= container.ContainerNo.Length; i++)
+            
+            
+            for (int i = 0; i < container.ContainerNo.Length; i++)
             {
-                if (i >= 0 && i <=3 )
+                if (i <= 3 )
                 {
-                    
+                    char c = container.ContainerNo[i];
+                    if(!(c>= 'A' && c <= 'Z'))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
+                if (i > 3) 
+                {
+                    if (!char.IsDigit(container.ContainerNo[i]))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
                 }
             }
 
@@ -63,50 +74,105 @@ namespace NEFAB.Services
             ContainerRepository.Add(container);
         }
 
-        public void Remove(string containerNo)
+        public void Remove(Container container)
         {
-            if (string.IsNullOrEmpty(containerNo))
+            if (string.IsNullOrEmpty(container.ContainerNo))
             {
                 throw new ArgumentException("Udfyld venligst ContainerNo.");
             }
 
-            Container? container = ContainerRepository.GetByID(containerNo);
+            Container? containerDB = ContainerRepository.GetByID(container.ContainerNo);
 
-            if (container == null)
+            if (containerDB == null)
             {
-                throw new Exception($"Container {containerNo} blev ikke fundet.");
+                throw new Exception($"Container {container.ContainerNo} blev ikke fundet.");
             }
-
-            ContainerRepository.Remove(container);
+            else
+            {
+                try
+                {
+                    ContainerRepository.Remove(container);
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Containeren kunne ikke slettes, hvis der er pakker i containeren kan den ikke slettes i systemet");
+                }
+            }
         }  
+        // NÅET HER TIL!!
 
-        public void Update(string containerNo, string newContainerNo, string weekYear)
+        public void Update(Container container)
         {
-            if (string.IsNullOrEmpty(containerNo) || string.IsNullOrEmpty(weekYear) || string.IsNullOrEmpty(newContainerNo))
+            if (string.IsNullOrEmpty(container.ContainerNo) || container.Week == null || container.Year == null)
             {
-                throw new ArgumentException("Udfyld venligst både ContainerNo, Nyt ContainerNo og Uge-År.");
+                throw new ArgumentException("Udfyld venligst både ContainerNo, uge og år.");
             }
 
-            string[] parts = weekYear.Split(new char[] { '-', ' ', '/' }, StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length != 2)
+            //string[] parts = weekYear.Split(new char[] { '-', ' ', '/' }, StringSplitOptions.RemoveEmptyEntries);
+            //if (parts.Length != 2)
+            //{
+            //    throw new ArgumentException("Uge-År formatet er forkert. Brug formatet 'Uge-År' (f.eks. '12-2024').");
+            //}
+
+            //int week = int.Parse(parts[0]);
+            //int year = int.Parse(parts[1]);
+
+            if (container.ContainerNo.Length != 11)
             {
-                throw new ArgumentException("Uge-År formatet er forkert. Brug formatet 'Uge-År' (f.eks. '12-2024').");
+                throw new ArgumentException("Udfyld venligst et korrekt container nr.");
             }
 
-            int week = int.Parse(parts[0]);
-            int year = int.Parse(parts[1]);
 
-            Container? container = ContainerRepository.GetByID(containerNo);
-            if (container == null)
+            for (int i = 0; i < container.ContainerNo.Length; i++)
             {
-                throw new Exception($"Container {containerNo} blev ikke fundet.");
+                if (i <= 3)
+                {
+                    char c = container.ContainerNo[i];
+                    if (!(c >= 'A' && c <= 'Z'))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
+                if (i > 3)
+                {
+                    if (!char.IsDigit(container.ContainerNo[i]))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
             }
 
-            container.ContainerNo = newContainerNo;
-            container.Week = week;
-            container.Year = year;
+            if (container.Year < 1949)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt År.");
+            }
 
-            ContainerRepository.Update(container);
+            if (container.Week <= 0 || container.Week >= 54)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt uge nr.");
+            }
+
+
+            Container? containerDB = ContainerRepository.GetByID(container.ContainerNo);
+            if (containerDB == null)
+            {
+                throw new Exception($"Container {container.ContainerNo} blev ikke fundet.");
+            }
+
+            //container.ContainerNo = newContainerNo;
+            //container.Week = week;
+            //container.Year = year;
+            else
+            {
+                try
+                {
+                    ContainerRepository.Update(container);
+                }
+                catch (Exception ex) 
+                {
+                    throw new Exception("Containeren kunne ikke opdateres");
+                }
+            }
         }
     }
 }

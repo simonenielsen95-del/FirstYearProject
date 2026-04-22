@@ -23,11 +23,23 @@ namespace NEFAB.ViewModels
 
         private readonly ContainerService _containerService;
 
-        private Container _selectedContainer;
-        public Container SelectedContainer
+        private Container _selectedNewContainer;
+        public Container SelectedNewContainer
         {
-            get { return _selectedContainer; }
-            set { _selectedContainer = value; OnPropertyChanged(); }
+            get { return _selectedNewContainer; }
+            set { _selectedNewContainer = value; OnPropertyChanged(); }
+        }
+        private Container _selectedRemoveContainer;
+        public Container SelectedRemoveContainer 
+        {
+            get { return _selectedRemoveContainer; }
+            set { _selectedRemoveContainer = value; OnPropertyChanged(); }
+        }
+        private Container _selectedUpdateContainer;
+        public Container SelectedUpdateContainer 
+        {
+            get { return _selectedUpdateContainer; }
+            set { _selectedUpdateContainer = value; OnPropertyChanged(); }
         }
 
         public ContainerViewModel(NavigationStore navigationStore)
@@ -44,7 +56,9 @@ namespace NEFAB.ViewModels
             //IRepoGetAddUpdateRemove<Container, string> repo = new ContainerRepository(); 
             _containerService = new ContainerService();
 
-            SelectedContainer = new Container();
+            SelectedNewContainer = new Container();
+            SelectedRemoveContainer = new Container();
+            SelectedUpdateContainer = new Container();
         }
 
       
@@ -59,7 +73,7 @@ namespace NEFAB.ViewModels
         {
             try
             {
-                _containerService.Add(SelectedContainer);
+                _containerService.Add(SelectedNewContainer);
                 MessageBox.Show("Ny Container er blevet oprettet!", "Succes", MessageBoxButton.OK);
             }
             catch (Exception ex)
@@ -69,8 +83,33 @@ namespace NEFAB.ViewModels
             }
         }
 
-        public void RemoveContainer() { }
-        public void UpdateContainer() { }
+        public void RemoveContainer() 
+        {
+            try
+            {
+                _containerService.Remove(SelectedRemoveContainer);
+                MessageBox.Show("Container er blevet slettet!", "Succes", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show($"Container kunne ikke slettes! {ex}", "Fejl", MessageBoxButton.OK);
+            }
+        }
+        public void UpdateContainer() 
+        {
+
+            try
+            {
+                _containerService.Update(SelectedUpdateContainer);
+                MessageBox.Show("Container er blevet opdateret!", "Succes", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show($"Container kunne ikke opdateres! {ex}", "Fejl", MessageBoxButton.OK);
+            }
+        }
 
 
 

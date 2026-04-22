@@ -23,9 +23,16 @@ namespace NEFAB.Services
             {
                 throw new Exception("indtast et navn på leverandør");
             }
-            else 
-            { 
-                SupplierRepository.Add(supplier);
+            else
+            {
+                try
+                {
+                    SupplierRepository.Add(supplier);
+                }
+                catch(Exception) 
+                {
+                    throw new Exception("Leverandøren kunne ikke oprettes, navnet findes allerede i systemet");
+                }
             }
         }
     }
