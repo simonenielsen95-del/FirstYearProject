@@ -35,7 +35,7 @@ namespace NEFAB.ViewModels
             SelectedSupplier = new Supplier();
             supplierService = new SupplierService();
         }
-         public void NewSupplier()
+        public void NewSupplier()
         {
             try
             {

@@ -19,7 +19,7 @@ namespace NEFAB.Services
 
         public void Add(Supplier supplier) 
         {
-            if (supplier == null)
+            if (supplier.SupplierName == null)
             {
                 throw new Exception("indtast et navn på leverandør");
             }
