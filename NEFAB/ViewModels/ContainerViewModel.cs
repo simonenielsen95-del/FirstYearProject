@@ -20,13 +20,15 @@ namespace NEFAB.ViewModels
         public ICommand RemoveContainerCommand { get; }
         public ICommand CreateNewContainerCommand { get; }
 
+        private readonly ContainerService _containerService;
 
-
-        public ContainerViewModel(NavigationStore navigationStore)
+              public ContainerViewModel(NavigationStore navigationStore)
         {
             NavigationService homeNavigationService = new NavigationService(navigationStore, () => new HomeViewModel(navigationStore));
 
             NavigateToHomeViewCommand = new NavigateCommand(homeNavigationService);
+
+            IRepoGetAddUpdateRemove<Container, string> repo = new ContainerRepository(); _containerService = new ContainerService(repo);
         }
 
       
@@ -36,10 +38,10 @@ namespace NEFAB.ViewModels
         public int Week { get; set; }
         public int Year { get; set; }
 
-        public void Add(Container container)
-        { 
-            _container
-        }
+
+
+       
+
     }
 }
 
