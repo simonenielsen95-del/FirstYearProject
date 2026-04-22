@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using NEFAB.Domains;
+using NEFAB.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +10,7 @@ using System.Linq;
 
 namespace NEFAB.Repositories
 {
-    public class SupplierRepository
+    public class SupplierRepository : IRepoGetAdd<Supplier, string>
     {
         private readonly string ConnectionString;
         private List<Supplier> suppliers;
@@ -62,7 +63,7 @@ namespace NEFAB.Repositories
             return suppliers;
         }
 
-        public Supplier? GetBySupplierName(string Name)
+        public Supplier? GetByID(string Name)
         {
             Supplier? supplier = null;
             using (SqlConnection con = new SqlConnection(ConnectionString))

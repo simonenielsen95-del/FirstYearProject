@@ -7,11 +7,27 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="154*"/>
+            <RowDefinition Height="71*"/>
+        </Grid.RowDefinitions>
         <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="800"/>
 
         <Label Content="Employee" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" Width="176" FontSize="36" FontWeight="Bold" Foreground="White"/>
-        <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="10,420,0,0" VerticalAlignment="Top" Width="80" Height="24" FontSize="15" Background="#FF8CB3DB"/>
-        <Image Margin="10,24,655,371" Source="/images/nefab white.png" Width="135" Height="55"/>
+        <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="35,0,0,0" VerticalAlignment="Center" Width="88" Height="34" FontSize="15" Background="#FF8CB3DB" Grid.Row="1"/>
+        <Image Margin="10,24,655,229" Source="/images/nefab white.png" Width="135" Height="55"/>
+        <TextBox HorizontalAlignment="Left" Margin="185,145,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="185,180,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Opret:" HorizontalAlignment="Left" Margin="35,110,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" RenderTransformOrigin="-0.107,1.765"/>
+        <Label Content="nyt medarbjder ID" HorizontalAlignment="Left" Margin="35,145,0,0" VerticalAlignment="Top"/>
+        <Label Content="mearbejder navn" HorizontalAlignment="Left" Margin="35,180,0,0" VerticalAlignment="Top"/>
+        <Label Content="Rediger:" HorizontalAlignment="Left" Margin="420,110,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+        <Label Content="medarbejder ID" HorizontalAlignment="Left" Margin="420,145,0,0" VerticalAlignment="Top"/>
+        <Label Content="nyt medarbejder navn" HorizontalAlignment="Left" Margin="420,180,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="593,149,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="593,180,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Gem" HorizontalAlignment="Left" Margin="310,195,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button Content="Gem" HorizontalAlignment="Left" Margin="718,195,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>

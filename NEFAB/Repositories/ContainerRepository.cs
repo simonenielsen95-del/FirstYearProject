@@ -4,11 +4,12 @@ using System.Data;
 using System.Linq;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using NEFAB.Domains; 
+using NEFAB.Domains;
+using NEFAB.Repositories.Interfaces;
 
 namespace NEFAB.Repositories
 {
-    public class ContainerRepository
+    public class ContainerRepository : IRepoGetAddUpdateRemove<Container, string>
     {
         private readonly string connectionString;
 
@@ -91,7 +92,7 @@ namespace NEFAB.Repositories
             
         }
 
-        public Container? GetByContainerNumber(string containerNo)
+        public Container? GetByID(string containerNo)
         {
 
             Container? container = null; 
