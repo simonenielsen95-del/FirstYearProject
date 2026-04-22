@@ -1,7 +1,8 @@
-﻿using System;
+﻿using NEFAB.Domains;
+using NEFAB.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using NEFAB.Repositories;
 
 namespace NEFAB.Services
 {
@@ -14,10 +15,29 @@ namespace NEFAB.Services
             _employeeRepository = employeeRepository;
         }
 
-        public void AddEmployee(string employeeName)
+        public void Add(Employee employee)
         {
-            _employeeRepository.Add(employeeName)
+            if (employee == null)
+            {
+                throw new ArgumentNullException(nameof(employee), "Du skal først vælge en medarbejder.");
+
+            }
+
+            if (string.IsNullOrWhiteSpace(employee.Name))
+            {
+
+                {
+                    throw new ArgumentException("Medarbejderens navn må ikke være tomt.", nameof(employee));
+                }
+
+                if (string.IsNullOrWhiteSpace(employee.EmployeeID))
+                {
+                    throw new ArgumentException("Medarbejderens ID må ikke være tomt.", nameof(employee));
+                }
+
+                _employeeRepository.Add(employee);
+            }
         }
     }
-
 }
+          
