@@ -1,11 +1,12 @@
 ﻿using NEFAB.Commands;
+using NEFAB.Domains;
+using NEFAB.Services;
 using NEFAB.Stores;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
-using NEFAB.Services;
-using NEFAB.Domains;
 
 namespace NEFAB.ViewModels
 {
@@ -14,12 +15,14 @@ namespace NEFAB.ViewModels
         public ICommand SaveSupplierCommand { get; }
         public ICommand NavigateToHomeViewCommand { get; }
 
-        private Employee _selectedEmployee;
-        public Employee SelectedEmployee
+        private Supplier _selectedSupplier;
+        public Supplier SelectedSupplier
         {
-            get { return _selectedEmployee; }
-            set { _selectedEmployee = value; OnPropertyChanged(); }
+            get { return _selectedSupplier; }
+            set { _selectedSupplier = value; OnPropertyChanged(); }
         }
+
+        private readonly SupplierService supplierService;
 
         public SupplierViewModel(NavigationStore navigationStore)
         {
@@ -27,7 +30,23 @@ namespace NEFAB.ViewModels
 
             NavigateToHomeViewCommand = new NavigateCommand(homeNavigationService);
 
-            SaveSupplierCommand = new CommandHandler()
+            SaveSupplierCommand = new CommandHandler(() => NewSupplier());
+
+            SelectedSupplier = new Supplier();
+            supplierService = new SupplierService();
+        }
+         public void NewSupplier()
+        {
+            try
+            {
+                supplierService.Add(SelectedSupplier);
+                MessageBox.Show("Ny leverandør er blevet oprettet!", "Succes", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show($"Leverandør kunne ikke oprettes! {ex}", "Fejl", MessageBoxButton.OK);
+            }
         }
 
     }

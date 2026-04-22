@@ -11,11 +11,7 @@ namespace NEFAB.Domains
 
         public string SupplierName { get; set; }
 
-        public Supplier(string supplierName)
-        {
-            SupplierName = supplierName;
-        }
-
+       
         
 
     }
