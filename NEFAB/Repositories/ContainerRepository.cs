@@ -45,8 +45,9 @@ namespace NEFAB.Repositories
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    Container container = new Container(dr.GetString(0))
+                    Container container = new Container()
                     {
+                        ContainerNo = dr.GetString(0),
                         Week = dr.GetInt32(1),
                         Year = dr.GetInt32(2)
                     };
@@ -106,11 +107,11 @@ namespace NEFAB.Repositories
                 {
                     if (dr.Read())
                     {
-                        container = new Container(dr.GetString(0)) 
+                        container = new Container() 
                         {
-                        
-                        Week = dr.GetInt32(1), 
-                        Year = dr.GetInt32(2) 
+                            ContainerNo = dr.GetString(0),
+                            Week = dr.GetInt32(1), 
+                            Year = dr.GetInt32(2) 
                         };
                         
                        
@@ -137,11 +138,11 @@ namespace NEFAB.Repositories
                 using (SqlDataReader dr = cmd.ExecuteReader()) 
                 while (dr.Read())
                 {
-                    Container container = new Container(dr.GetString(0))
+                    Container container = new Container()
                     {
-                 
-                    Week = dr.GetInt32(1), 
-                    Year = dr.GetInt32(2)
+                        ContainerNo = dr.GetString(0),
+                        Week = dr.GetInt32(1), 
+                        Year = dr.GetInt32(2)
                     };
                     containers.Add(container);
                     
