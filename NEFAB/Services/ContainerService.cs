@@ -17,19 +17,20 @@ namespace NEFAB.Services
         public void Add(string containerNo, string weekYear)
         {
             if (string.IsNullOrEmpty(containerNo) || string.IsNullOrEmpty(weekYear))
+            {
                 throw new ArgumentException("Udfyld venligst både ContainerNo og Uge-År.");
+            }
 
             string[] parts = weekYear.Split(new char[] { '-', ' ', '/' }, StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length != 2)
+            {
                 throw new ArgumentException("Uge-År formatet er forkert. Brug formatet 'Uge-År' (f.eks. '12-2024').");
-
-            int week = int.Parse(parts[0]);
-            int year = int.Parse(parts[1]);
+            }
 
             Container newContainer = new Container(containerNo)
             {
-                Week = week,
-                Year = year
+                Week = int.Parse(parts[0]),
+                Year = int.Parse(parts[1])
             };
 
             _containerRepository.Add(newContainer);
@@ -41,7 +42,9 @@ namespace NEFAB.Services
             {
                 throw new ArgumentException("Udfyld venligst ContainerNo.");
             }
+
             Container? container = _containerRepository.GetByID(containerNo);
+
             if (container == null)
             {
                 throw new Exception($"Container {containerNo} blev ikke fundet.");
