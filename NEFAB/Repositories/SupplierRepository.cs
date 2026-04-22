@@ -55,7 +55,10 @@ namespace NEFAB.Repositories
                 {
                     while (dr.Read())
                     {
-                        Supplier supplier = new Supplier(dr.GetString(0));
+                        Supplier supplier = new Supplier()
+                        {
+                            SupplierName = dr.GetString(0)
+                        };
                         suppliers.Add(supplier);
                     }                    
                 }
@@ -75,13 +78,14 @@ namespace NEFAB.Repositories
                 {
                     if (dr.Read())
                     {
-                        supplier = new Supplier(dr.GetString(0));
+                        supplier = new Supplier()
+                        {
+                            SupplierName = dr.GetString(0)
+                        };
                     }
                 }
             }
             return supplier;
         }
-
     }   
-
 }
