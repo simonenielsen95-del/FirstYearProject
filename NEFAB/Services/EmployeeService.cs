@@ -4,14 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using NEFAB.Repositories.Interfaces;
 
 namespace NEFAB.Services
 {
-    internal class EmployeeService
+    public class EmployeeService
     {
-        private readonly EmployeeRepository _employeeRepository;
+        private readonly IRepoGetAddUpdate<Employee, string> _employeeRepository;
 
-        public EmployeeService(EmployeeRepository employeeRepository)
+        public EmployeeService(IRepoGetAddUpdate<Employee, string> _employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }
