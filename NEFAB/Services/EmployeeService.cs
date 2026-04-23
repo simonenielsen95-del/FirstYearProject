@@ -40,27 +40,26 @@ namespace NEFAB.Services
                         throw new ArgumentException("De første 4 tegn i EmployeeID skal være store bogstaver (A-Z).");
                     }
                 }
-                if (i > 3)
+                else
                 {
                     if (!char.IsDigit(employee.EmployeeID[i]))
                         throw new ArgumentException("De sidste 4 tegn skal være tal (0-9).");
                 }
             }
 
-                
-                   
-                        try
-                        {
-                            EmployeeRepository.Add(employee);
+                try
+                {
+                    EmployeeRepository.Add(employee);
 
-                        }
-                        catch
-                        {
-                            throw new ArgumentException("Noget gik galt, prøv igen");
-                        }
+                }
+                catch
+                {
+                    throw new ArgumentException("Noget gik galt, prøv igen");
+                }
 
-                    }
-                
+            }
+        
+             
             
         
 
@@ -87,14 +86,15 @@ namespace NEFAB.Services
                     }
 
                 }
-            }
-
-                if (i > 3)
+                else
                 {
-                    if (char.IsDigit(employee.EmployeeID[i]))
+
+                    if (!char.IsDigit(employee.EmployeeID[i]))
                     {
                         throw new ArgumentException("EmployeeID er ikke af korrekt type: ABCD1234");
                     }
+                }
+
 
                     Employee? employeeDB = EmployeeRepository.GetByID(employee.EmployeeID);
                     if (employeeDB == null)
@@ -102,8 +102,6 @@ namespace NEFAB.Services
                         throw new Exception($"Employee {employee.EmployeeID} blev ikke fundet.");
                     }
 
-                    else
-                    {
                         try
                         {
                             EmployeeRepository.Update(employee);
@@ -117,5 +115,4 @@ namespace NEFAB.Services
 
             }
         }
-    }
-}
+    
