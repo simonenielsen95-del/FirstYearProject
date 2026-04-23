@@ -41,14 +41,12 @@ namespace NEFAB.Services
                 }
                 if (i > 3)
                 {
-
                     if (!char.IsDigit(employee.EmployeeID[i]))
-                    {
-                        throw new ArgumentException("De sidste 4 tegn i EmployeeID skal være tal (0-9).");
-                    }
+                        throw new ArgumentException("De sidste 4 tegn skal være tal (0-9).");
+                }
 
 
-                    else
+                else
                     {
                         try
                         {
@@ -113,6 +111,7 @@ namespace NEFAB.Services
                         }
                     }
                 }
+
             }
         }
     }
