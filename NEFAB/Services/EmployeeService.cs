@@ -8,7 +8,7 @@ namespace NEFAB.Services
 {
     public class EmployeeService
     {
-        private readonly IRepoGetAddUpdate<Employee, string> _employeeRepository;
+      //  private readonly IRepoGetAddUpdate<Employee, string> _employeeRepository;
 
         public EmployeeRepository EmployeeRepository { get; set; }
 
@@ -41,8 +41,8 @@ namespace NEFAB.Services
                 }
                 if (i > 3)
                 {
-                    char e = employee.EmployeeID[i];
-                    if (!(e >= '0' && e <= '9'))
+
+                    if (!char.IsDigit(employee.EmployeeID[i]))
                     {
                         throw new ArgumentException("De sidste 4 tegn i EmployeeID skal være tal (0-9).");
                     }
