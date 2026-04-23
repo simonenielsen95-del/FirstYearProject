@@ -24,11 +24,7 @@ namespace NEFAB.Services
                 throw new ArgumentException("Udfyld venligst både ContainerNo, Uge og År.");
             }
 
-            //string[] parts = weekYear.Split(new char[] { '-', ' ', '/' }, StringSplitOptions.RemoveEmptyEntries);
-            //if (parts.Length != 2)
-            //{
-            //    throw new ArgumentException("Uge-År formatet er forkert. Brug formatet 'Uge-År' (f.eks. '12-2024').");
-            //}
+            
             if (container.ContainerNo.Length != 11)
             {
                 throw new ArgumentException("Udfyld venligst et korrekt container nr.");
@@ -64,14 +60,19 @@ namespace NEFAB.Services
                 throw new ArgumentException("Udfyld venligst et korrekt uge nr.");
             }
 
-            //Container newContainer = new Container()
-            //{
-            //    ContainerNo = containerNo,
-            //    Week = int.Parse(parts[0]),
-            //    Year = int.Parse(parts[1])
-            //};
-
-            ContainerRepository.Add(container);
+           
+            else
+            {
+                try
+                {
+                    ContainerRepository.Add(container);
+                }
+                catch (Exception)
+                {
+                    throw new ArgumentException("noget gik galt! prøv igen");
+                }
+            }
+            
         }
 
         public void Remove(Container container)
@@ -99,7 +100,7 @@ namespace NEFAB.Services
                 }
             }
         }  
-        // NÅET HER TIL!!
+ 
 
         public void Update(Container container)
         {
@@ -108,14 +109,6 @@ namespace NEFAB.Services
                 throw new ArgumentException("Udfyld venligst både ContainerNo, uge og år.");
             }
 
-            //string[] parts = weekYear.Split(new char[] { '-', ' ', '/' }, StringSplitOptions.RemoveEmptyEntries);
-            //if (parts.Length != 2)
-            //{
-            //    throw new ArgumentException("Uge-År formatet er forkert. Brug formatet 'Uge-År' (f.eks. '12-2024').");
-            //}
-
-            //int week = int.Parse(parts[0]);
-            //int year = int.Parse(parts[1]);
 
             if (container.ContainerNo.Length != 11)
             {
@@ -159,9 +152,6 @@ namespace NEFAB.Services
                 throw new Exception($"Container {container.ContainerNo} blev ikke fundet.");
             }
 
-            //container.ContainerNo = newContainerNo;
-            //container.Week = week;
-            //container.Year = year;
             else
             {
                 try
