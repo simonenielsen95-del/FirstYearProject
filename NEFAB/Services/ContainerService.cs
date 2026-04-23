@@ -63,14 +63,17 @@ namespace NEFAB.Services
            
             else
             {
-                try
+                try 
                 {
                     ContainerRepository.Add(container);
                 }
-                catch (Exception)
-                {
-                    throw new ArgumentException("noget gik galt! prøv igen");
+                catch 
+                { 
+                    throw new ArgumentException("Noget gik galt, prøv igen");
                 }
+
+                    
+               
             }
             
         }
