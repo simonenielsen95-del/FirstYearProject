@@ -30,7 +30,7 @@
         <TextBox x:Name="txtUpdateEmployeeID" HorizontalAlignment="Left" Margin="593,149,0,0" TextWrapping="Wrap" Text="{Binding SelectedUpdateEmployee.EmployeeID, UpdateSourceTrigger=PropertyChanged, Mode= TwoWay}" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtUpdateEmployeeName" HorizontalAlignment="Left" Margin="593,180,0,0" TextWrapping="Wrap" Text="{Binding SelectedUpdateEmployee.EmployeeName, UpdateSourceTrigger=PropertyChanged, Mode= TwoWay}" VerticalAlignment="Top" Width="120"/>
 
-        <Button x:Name="btnCreateNewEmployee" Content="Opret" Command="{Binding CreateNewEmployeeCommand}" HorizontalAlignment="Left" Margin="310,195,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button x:Name="btnCreateNewEmployee" Content="Opret" Command="{Binding CreateEmployeeCommand}" HorizontalAlignment="Left" Margin="310,195,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btnUpdateEmployee" Content="Gem" Command="{Binding UpdateEmployeeCommand}" HorizontalAlignment="Left" Margin="718,195,0,0" VerticalAlignment="Top"/>
 
     </Grid>
