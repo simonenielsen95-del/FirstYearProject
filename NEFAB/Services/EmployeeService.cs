@@ -24,6 +24,7 @@ namespace NEFAB.Services
                 throw new ArgumentException("Udfyld venligst både EmployeeID og EmployeeName.");
             }
 
+
             if (employee.EmployeeID.Length != 8)
             {
                 throw new ArgumentException("EmployeeID skal være præcis 8 tegn langt.");
@@ -44,10 +45,10 @@ namespace NEFAB.Services
                     if (!char.IsDigit(employee.EmployeeID[i]))
                         throw new ArgumentException("De sidste 4 tegn skal være tal (0-9).");
                 }
+            }
 
-
-                else
-                    {
+                
+                   
                         try
                         {
                             EmployeeRepository.Add(employee);
@@ -59,9 +60,9 @@ namespace NEFAB.Services
                         }
 
                     }
-                }
-            }
-        }
+                
+            
+        
 
         public void Update(Employee employee)
         {
@@ -86,6 +87,8 @@ namespace NEFAB.Services
                     }
 
                 }
+            }
+
                 if (i > 3)
                 {
                     if (char.IsDigit(employee.EmployeeID[i]))

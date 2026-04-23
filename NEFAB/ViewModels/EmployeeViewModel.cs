@@ -22,11 +22,11 @@ namespace NEFAB.ViewModels
 
         private readonly EmployeeService _employeeService;
 
-        private Employee _selectedEmployee;
-        public Employee SelectedEmployee
+        private Employee _selectedCreateEmployee;
+        public Employee SelectedCreateEmployee
         {
-            get { return _selectedEmployee; }
-            set { _selectedEmployee = value; OnPropertyChanged(); }
+            get { return _selectedCreateEmployee; }
+            set { _selectedCreateEmployee = value; OnPropertyChanged(); }
         }
         private Employee _selectedUpdateEmployee;
         public Employee SelectedUpdateEmployee
@@ -46,7 +46,7 @@ namespace NEFAB.ViewModels
 
             _employeeService = new EmployeeService();
 
-            SelectedEmployee = new Employee();
+            SelectedCreateEmployee = new Employee();
             SelectedUpdateEmployee = new Employee();
 
         }
@@ -55,7 +55,7 @@ namespace NEFAB.ViewModels
         {
             try
             {
-                _employeeService.Add(SelectedEmployee);
+                _employeeService.Add(SelectedCreateEmployee);
                 MessageBox.Show("Ny Employee er blevet oprettet!", "Succes", MessageBoxButton.OK);
             }
             catch (Exception ex)
