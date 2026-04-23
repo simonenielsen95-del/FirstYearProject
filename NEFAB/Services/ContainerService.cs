@@ -7,79 +7,164 @@ namespace NEFAB.Services
 {
     public class ContainerService 
     {
-        private readonly IRepoGetAddUpdateRemove<Container, string> _containerRepository;
+        
 
-        public ContainerService(IRepoGetAddUpdateRemove<Container, string> containerRepository)
+        //public ContainerService(IRepoGetAddUpdateRemove<Container, string> containerRepository)
+        private readonly ContainerRepository _containerRepository;
+        public ContainerService()
         {
-            _containerRepository = containerRepository; 
+            _containerRepository = new ContainerRepository(); 
         }
 
-        public void Add(string containerNo, string weekYear)
+        public void Add(Container container)
         {
-            if (string.IsNullOrEmpty(containerNo) || string.IsNullOrEmpty(weekYear))
+            if (string.IsNullOrEmpty(container.ContainerNo) || (container.Year == null) || (container.Week== null))
             {
-                throw new ArgumentException("Udfyld venligst både ContainerNo og Uge-År.");
+                throw new ArgumentException("Udfyld venligst både ContainerNo, Uge og År.");
             }
 
-            string[] parts = weekYear.Split(new char[] { '-', ' ', '/' }, StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length != 2)
+            
+            if (container.ContainerNo.Length != 11)
             {
-                throw new ArgumentException("Uge-År formatet er forkert. Brug formatet 'Uge-År' (f.eks. '12-2024').");
+                throw new ArgumentException("Udfyld venligst et korrekt container nr.");
+            }
+           
+
+            for (int i = 0; i < container.ContainerNo.Length; i++)
+            {
+                if (i <= 3)
+                {
+                    char c = container.ContainerNo[i];
+                    if (!(c >= 'A' && c <= 'Z'))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
+                if (i > 3)
+                {
+                    if (!char.IsDigit(container.ContainerNo[i]))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
             }
 
-            Container newContainer = new Container(containerNo)
+            if (container.Year <1949) 
             {
-                Week = int.Parse(parts[0]),
-                Year = int.Parse(parts[1])
-            };
+                throw new ArgumentException("Udfyld venligst et korrekt År.");
+            }
+            
+            if (container.Week <=0 || container.Week >= 54)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt uge nr.");
+            }
 
-            _containerRepository.Add(newContainer);
+           
+            else
+            {
+                try 
+                {
+                    _containerRepository.Add(container);
+                }
+                catch 
+                { 
+                    throw new ArgumentException("Noget gik galt, prøv igen");
+                }
+
+                    
+               
+            }
+            
         }
 
-        public void Remove(string containerNo)
+        public void Remove(Container container)
         {
-            if (string.IsNullOrEmpty(containerNo))
+            if (string.IsNullOrEmpty(container.ContainerNo))
             {
                 throw new ArgumentException("Udfyld venligst ContainerNo.");
             }
 
-            Container? container = _containerRepository.GetByID(containerNo);
+            Container? containerDB = _containerRepository.GetByID(container.ContainerNo);
 
-            if (container == null)
+            if (containerDB == null)
             {
-                throw new Exception($"Container {containerNo} blev ikke fundet.");
+                throw new Exception($"Container {container.ContainerNo} blev ikke fundet.");
             }
-
-            _containerRepository.Remove(container);
+            else
+            {
+                try
+                {
+                    _containerRepository.Remove(container);
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Containeren kunne ikke slettes, hvis der er pakker i containeren kan den ikke slettes i systemet");
+                }
+            }
         }  
+ 
 
-        public void Update(string containerNo, string newContainerNo, string weekYear)
+        public void Update(Container container)
         {
-            if (string.IsNullOrEmpty(containerNo) || string.IsNullOrEmpty(weekYear) || string.IsNullOrEmpty(newContainerNo))
+            if (string.IsNullOrEmpty(container.ContainerNo) || container.Week == null || container.Year == null)
             {
-                throw new ArgumentException("Udfyld venligst både ContainerNo, Nyt ContainerNo og Uge-År.");
+                throw new ArgumentException("Udfyld venligst både ContainerNo, uge og år.");
             }
 
-            string[] parts = weekYear.Split(new char[] { '-', ' ', '/' }, StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length != 2)
+
+            if (container.ContainerNo.Length != 11)
             {
-                throw new ArgumentException("Uge-År formatet er forkert. Brug formatet 'Uge-År' (f.eks. '12-2024').");
+                throw new ArgumentException("Udfyld venligst et korrekt container nr.");
             }
 
-            int week = int.Parse(parts[0]);
-            int year = int.Parse(parts[1]);
 
-            Container? container = _containerRepository.GetByID(containerNo);
-            if (container == null)
+            for (int i = 0; i < container.ContainerNo.Length; i++)
             {
-                throw new Exception($"Container {containerNo} blev ikke fundet.");
+                if (i <= 3)
+                {
+                    char c = container.ContainerNo[i];
+                    if (!(c >= 'A' && c <= 'Z'))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
+                if (i > 3)
+                {
+                    if (!char.IsDigit(container.ContainerNo[i]))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
             }
 
-            container.ContainerNo = newContainerNo;
-            container.Week = week;
-            container.Year = year;
+            if (container.Year < 1949)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt År.");
+            }
 
-            _containerRepository.Update(container);
+            if (container.Week <= 0 || container.Week >= 54)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt uge nr.");
+            }
+
+
+            Container? containerDB = _containerRepository.GetByID(container.ContainerNo);
+            if (containerDB == null)
+            {
+                throw new Exception($"Container {container.ContainerNo} blev ikke fundet.");
+            }
+
+            else
+            {
+                try
+                {
+                    _containerRepository.Update(container);
+                }
+                catch (Exception ex) 
+                {
+                    throw new Exception("Containeren kunne ikke opdateres");
+                }
+            }
         }
     }
 }

@@ -9,10 +9,9 @@ namespace NEFAB.Domains
     public class Supplier
     {
 
-        public string SupplierName { get; set; }
+        public string? SupplierName { get; set; }
 
        
-        
 
     }
 }

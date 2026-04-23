@@ -9,12 +9,12 @@ namespace NEFAB.Services
 {
     internal class SupplierService
     {
-        public SupplierRepository SupplierRepository { get; set; }
+        private readonly SupplierRepository _supplierRepository;
 
 
         public SupplierService() 
-        { 
-            SupplierRepository = new SupplierRepository();
+        {
+            _supplierRepository = new SupplierRepository();
         }
 
         public void Add(Supplier supplier) 
@@ -23,9 +23,16 @@ namespace NEFAB.Services
             {
                 throw new Exception("indtast et navn på leverandør");
             }
-            else 
-            { 
-                SupplierRepository.Add(supplier);
+            else
+            {
+                try
+                {
+                    _supplierRepository.Add(supplier);
+                }
+                catch(Exception) 
+                {
+                    throw new Exception("Leverandøren kunne ikke oprettes, navnet findes allerede i systemet");
+                }
             }
         }
     }

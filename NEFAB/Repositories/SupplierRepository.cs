@@ -32,10 +32,11 @@ namespace NEFAB.Repositories
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO SUPPLIER (SupplierName) VALUE (@SupplierName);",
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO SUPPLIER (SupplierName) VALUES (@SupplierName)",
                     con))
                 {
                     cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar).Value = supplier.SupplierName;
+                    cmd.ExecuteNonQuery();
                     suppliers.Add(supplier);
                 }
             }
