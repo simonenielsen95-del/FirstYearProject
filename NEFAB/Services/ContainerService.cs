@@ -7,7 +7,7 @@ namespace NEFAB.Services
 {
     public class ContainerService 
     {
-        //private readonly IRepoGetAddUpdateRemove<Container, string> _containerRepository;
+        private readonly IRepoGetAddUpdateRemove<Container, string> _containerRepository;
 
         //public ContainerService(IRepoGetAddUpdateRemove<Container, string> containerRepository)
         public ContainerRepository ContainerRepository {  get; set; }
@@ -33,19 +33,19 @@ namespace NEFAB.Services
             {
                 throw new ArgumentException("Udfyld venligst et korrekt container nr.");
             }
-            
-            
+           
+
             for (int i = 0; i < container.ContainerNo.Length; i++)
             {
-                if (i <= 3 )
+                if (i <= 3)
                 {
                     char c = container.ContainerNo[i];
-                    if(!(c>= 'A' && c <= 'Z'))
+                    if (!(c >= 'A' && c <= 'Z'))
                     {
                         throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
                     }
                 }
-                if (i > 3) 
+                if (i > 3)
                 {
                     if (!char.IsDigit(container.ContainerNo[i]))
                     {
@@ -54,7 +54,7 @@ namespace NEFAB.Services
                 }
             }
 
-            if (container.Year <1949)
+            if (container.Year <1949) 
             {
                 throw new ArgumentException("Udfyld venligst et korrekt År.");
             }
