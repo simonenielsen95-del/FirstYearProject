@@ -1,22 +1,171 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NEFAB.Repositories;
 using NEFAB.Domains;
+using NEFAB.Repositories.Interfaces;
+using NEFAB.Repositories;
 
 namespace NEFAB.Services
 {
     public class ContainerService 
     {
-        private readonly ContainerRepository _containerRepository;
+        private readonly IRepoGetAddUpdateRemove<Container, string> _containerRepository;
+
+        //public ContainerService(IRepoGetAddUpdateRemove<Container, string> containerRepository)
+        public ContainerRepository ContainerRepository {  get; set; }
 
         public ContainerService()
         {
-            _containerRepository = new ContainerRepository(); 
+            ContainerRepository = new ContainerRepository(); 
         }
 
-        public void Add(string ContainerNo )
+        public void Add(Container container)
+        {
+            if (string.IsNullOrEmpty(container.ContainerNo) || (container.Year == null) || (container.Week== null))
+            {
+                throw new ArgumentException("Udfyld venligst både ContainerNo, Uge og År.");
+            }
+
+            
+            if (container.ContainerNo.Length != 11)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt container nr.");
+            }
+           
+
+            for (int i = 0; i < container.ContainerNo.Length; i++)
+            {
+                if (i <= 3)
+                {
+                    char c = container.ContainerNo[i];
+                    if (!(c >= 'A' && c <= 'Z'))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
+                if (i > 3)
+                {
+                    if (!char.IsDigit(container.ContainerNo[i]))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
+            }
+
+            if (container.Year <1949) 
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt År.");
+            }
+            
+            if (container.Week <=0 || container.Week >= 54)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt uge nr.");
+            }
+
+           
+            else
+            {
+                try 
+                {
+                    ContainerRepository.Add(container);
+                }
+                catch 
+                { 
+                    throw new ArgumentException("Noget gik galt, prøv igen");
+                }
+
+                    
+               
+            }
+            
+        }
+
+        public void Remove(Container container)
+        {
+            if (string.IsNullOrEmpty(container.ContainerNo))
+            {
+                throw new ArgumentException("Udfyld venligst ContainerNo.");
+            }
+
+            Container? containerDB = ContainerRepository.GetByID(container.ContainerNo);
+
+            if (containerDB == null)
+            {
+                throw new Exception($"Container {container.ContainerNo} blev ikke fundet.");
+            }
+            else
+            {
+                try
+                {
+                    ContainerRepository.Remove(container);
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Containeren kunne ikke slettes, hvis der er pakker i containeren kan den ikke slettes i systemet");
+                }
+            }
+        }  
+ 
+
+        public void Update(Container container)
+        {
+            if (string.IsNullOrEmpty(container.ContainerNo) || container.Week == null || container.Year == null)
+            {
+                throw new ArgumentException("Udfyld venligst både ContainerNo, uge og år.");
+            }
 
 
+            if (container.ContainerNo.Length != 11)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt container nr.");
+            }
+
+
+            for (int i = 0; i < container.ContainerNo.Length; i++)
+            {
+                if (i <= 3)
+                {
+                    char c = container.ContainerNo[i];
+                    if (!(c >= 'A' && c <= 'Z'))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
+                if (i > 3)
+                {
+                    if (!char.IsDigit(container.ContainerNo[i]))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
+            }
+
+            if (container.Year < 1949)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt År.");
+            }
+
+            if (container.Week <= 0 || container.Week >= 54)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt uge nr.");
+            }
+
+
+            Container? containerDB = ContainerRepository.GetByID(container.ContainerNo);
+            if (containerDB == null)
+            {
+                throw new Exception($"Container {container.ContainerNo} blev ikke fundet.");
+            }
+
+            else
+            {
+                try
+                {
+                    ContainerRepository.Update(container);
+                }
+                catch (Exception ex) 
+                {
+                    throw new Exception("Containeren kunne ikke opdateres");
+                }
+            }
+        }
     }
 }

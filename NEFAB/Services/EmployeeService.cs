@@ -1,10 +1,8 @@
 ﻿using NEFAB.Domains;
 using NEFAB.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using NEFAB.Repositories.Interfaces;
+using System;
+using System.ComponentModel;
 
 namespace NEFAB.Services
 {
@@ -12,45 +10,110 @@ namespace NEFAB.Services
     {
         private readonly IRepoGetAddUpdate<Employee, string> _employeeRepository;
 
-        public EmployeeService(IRepoGetAddUpdate<Employee, string> employeeRepository)
+        public EmployeeRepository EmployeeRepository { get; set; }
+
+        public EmployeeService()
         {
-            _employeeRepository = employeeRepository;
+            EmployeeRepository = new EmployeeRepository();
         }
 
-        public void Add(string employeeID, string employeeName)
+        public void Add(Employee employee)
         {
-            if (string.IsNullOrEmpty(employeeID) || string.IsNullOrEmpty(employeeName))
-                throw new ArgumentException("Udfyld venligst både EmployeeID og Name.");
-
-            Employee newEmployee = new Employee(employeeID, employeeName)
+            if (string.IsNullOrEmpty(employee.EmployeeID) || (employee.EmployeeName == null))
             {
-                EmployeeID = employeeID,
-                EmployeeName = employeeName
-            };
+                throw new ArgumentException("Udfyld venligst både EmployeeID og EmployeeName.");
+            }
 
-            _employeeRepository.Add(newEmployee);
+            if (employee.EmployeeID.Length != 8)
+            {
+                throw new ArgumentException("EmployeeID skal være præcis 8 tegn langt.");
+            }
+
+            for (int i = 0; i < employee.EmployeeID.Length; i++)
+            {
+                if (i <= 3)
+                {
+                    char e = employee.EmployeeID[i];
+                    if (!(e >= 'A' && e <= 'Z'))
+                    {
+                        throw new ArgumentException("De første 4 tegn i EmployeeID skal være store bogstaver (A-Z).");
+                    }
+                }
+                if (i > 3)
+                {
+                    char e = employee.EmployeeID[i];
+                    if (!(e >= '0' && e <= '9'))
+                    {
+                        throw new ArgumentException("De sidste 4 tegn i EmployeeID skal være tal (0-9).");
+                    }
+
+
+                    else
+                    {
+                        try
+                        {
+                            EmployeeRepository.Add(employee);
+
+                        }
+                        catch
+                        {
+                            throw new ArgumentException("Noget gik galt, prøv igen");
+                        }
+
+                    }
+                }
+            }
         }
 
-        public void Update(string employeeID, string newEmployeeID, string employeeName)
+        public void Update(Employee employee)
         {
-            if (string.IsNullOrEmpty(employeeID) || string.IsNullOrEmpty(employeeName) || string.IsNullOrEmpty(newEmployeeID))
+            if (string.IsNullOrEmpty(employee.EmployeeID) || employee.EmployeeName == null)
             {
-                throw new ArgumentException("Udfyld venligst både EmployeeID, Nyt EmployeeID og Name.");
-            }
-           
-            Employee? employee = _employeeRepository.GetByID(employeeID);
-            if (employee == null)
-            {
-                throw new Exception($"Employee {employeeID} blev ikke fundet.");
+                throw new ArgumentException("Udfyld venligst både EmployeeID, Nyt EmployeeID og EmployeeName.");
             }
 
-            employee.EmployeeID = newEmployeeID;
-            employee.EmployeeName = employeeName;
+            if (employee.EmployeeID.Length != 8)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt employeeID");
+            }
 
-            _employeeRepository.Update(employee);
+            for (int i = 0; i < employee.EmployeeID.Length; i++)
+            {
+                if (i <= 3)
+                {
+                    char e = employee.EmployeeID[i];
+                    if (!(e >= 'A' && e <= 'Z'))
+                    {
+                        throw new ArgumentException("EmployeeID er ikke af korrekt type: ABCD1234");
+                    }
+
+                }
+                if (i > 3)
+                {
+                    if (char.IsDigit(employee.EmployeeID[i]))
+                    {
+                        throw new ArgumentException("EmployeeID er ikke af korrekt type: ABCD1234");
+                    }
+
+                    Employee? employeeDB = EmployeeRepository.GetByID(employee.EmployeeID);
+                    if (employeeDB == null)
+                    {
+                        throw new Exception($"Employee {employee.EmployeeID} blev ikke fundet.");
+                    }
+
+                    else
+                    {
+                        try
+                        {
+                            EmployeeRepository.Update(employee);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception("Employee kunne ikke opdateres");
+                        }
+                    }
+                }
+            }
         }
     }
 }
-
-
-   

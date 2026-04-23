@@ -11,10 +11,9 @@ namespace NEFAB.Domains
             public string EmployeeName { get; set; }
         public string? Name { get; internal set; }
 
-        public Employee(string employeeID, string employeeName)
+        public Employee(string employeeID)
             {
-                EmployeeID = employeeID;
-                EmployeeName = employeeName;    
+                EmployeeID = employeeID; 
         }
         
     }
