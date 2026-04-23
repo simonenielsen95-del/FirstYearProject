@@ -12,62 +12,45 @@ namespace NEFAB.Services
     {
         private readonly IRepoGetAddUpdate<Employee, string> _employeeRepository;
 
-        public EmployeeService(IRepoGetAddUpdate<Employee, string> _employeeRepository)
+        public EmployeeService(IRepoGetAddUpdate<Employee, string> employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }
 
-        public void Add(Employee employee)
+        public void Add(string employeeID, string employeeName)
         {
-            if (employee == null)
-            {
-                throw new ArgumentNullException(nameof(employee), "Du skal først vælge en medarbejder.");
-            }
+            if (string.IsNullOrEmpty(employeeID) || string.IsNullOrEmpty(employeeName))
+                throw new ArgumentException("Udfyld venligst både EmployeeID og Name.");
 
-            if (string.IsNullOrWhiteSpace(employee.Name))
+            Employee newEmployee = new Employee(employeeID, employeeName)
             {
-                throw new ArgumentException("Medarbejderens navn må ikke være tomt.", nameof(employee));
-            }
+                EmployeeID = employeeID,
+                EmployeeName = employeeName
+            };
 
-            if (string.IsNullOrWhiteSpace(employee.EmployeeID))
-            {
-                throw new ArgumentException("Medarbejderens ID må ikke være tomt.", nameof(employee));
-            }
-
-             _employeeRepository.Add(employee);
+            _employeeRepository.Add(newEmployee);
         }
 
-        public void Update(Employee employee)
+        public void Update(string employeeID, string newEmployeeID, string employeeName)
         {
+            if (string.IsNullOrEmpty(employeeID) || string.IsNullOrEmpty(employeeName) || string.IsNullOrEmpty(newEmployeeID))
+            {
+                throw new ArgumentException("Udfyld venligst både EmployeeID, Nyt EmployeeID og Name.");
+            }
+           
+            Employee? employee = _employeeRepository.GetByID(employeeID);
             if (employee == null)
             {
-                throw new ArgumentNullException(nameof(employee), "Du skal først vælge en medarbejder.");
+                throw new Exception($"Employee {employeeID} blev ikke fundet.");
             }
-            if (string.IsNullOrWhiteSpace(employee.Name))
-            {
-                throw new ArgumentException("Medarbejderens navn må ikke være tomt.", nameof(employee));
-            }
-            if (string.IsNullOrWhiteSpace(employee.EmployeeID))
-            {
-                throw new ArgumentException("Medarbejderens ID må ikke være tomt.", nameof(employee));
-            }
+
+            employee.EmployeeID = newEmployeeID;
+            employee.EmployeeName = employeeName;
 
             _employeeRepository.Update(employee);
         }
-
-        public List<Employee> GetAll()
-        {
-            return _employeeRepository.GetAll();
-        }
-
-        public Employee? GetByID(string EmployeeID)
-        {
-            return _employeeRepository.GetByID(EmployeeID);
-        }
     }
 }
-
-
 
 
    
