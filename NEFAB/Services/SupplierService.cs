@@ -9,12 +9,12 @@ namespace NEFAB.Services
 {
     internal class SupplierService
     {
-        public SupplierRepository SupplierRepository { get; set; }
+        private readonly SupplierRepository _supplierRepository;
 
 
         public SupplierService() 
-        { 
-            SupplierRepository = new SupplierRepository();
+        {
+            _supplierRepository = new SupplierRepository();
         }
 
         public void Add(Supplier supplier) 
@@ -27,7 +27,7 @@ namespace NEFAB.Services
             {
                 try
                 {
-                    SupplierRepository.Add(supplier);
+                    _supplierRepository.Add(supplier);
                 }
                 catch(Exception) 
                 {

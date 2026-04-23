@@ -7,14 +7,13 @@ namespace NEFAB.Services
 {
     public class ContainerService 
     {
-        private readonly IRepoGetAddUpdateRemove<Container, string> _containerRepository;
+        
 
         //public ContainerService(IRepoGetAddUpdateRemove<Container, string> containerRepository)
-        public ContainerRepository ContainerRepository {  get; set; }
-
+        private readonly ContainerRepository _containerRepository;
         public ContainerService()
         {
-            ContainerRepository = new ContainerRepository(); 
+            _containerRepository = new ContainerRepository(); 
         }
 
         public void Add(Container container)
@@ -65,7 +64,7 @@ namespace NEFAB.Services
             {
                 try 
                 {
-                    ContainerRepository.Add(container);
+                    _containerRepository.Add(container);
                 }
                 catch 
                 { 
@@ -85,7 +84,7 @@ namespace NEFAB.Services
                 throw new ArgumentException("Udfyld venligst ContainerNo.");
             }
 
-            Container? containerDB = ContainerRepository.GetByID(container.ContainerNo);
+            Container? containerDB = _containerRepository.GetByID(container.ContainerNo);
 
             if (containerDB == null)
             {
@@ -95,7 +94,7 @@ namespace NEFAB.Services
             {
                 try
                 {
-                    ContainerRepository.Remove(container);
+                    _containerRepository.Remove(container);
                 }
                 catch (Exception)
                 {
@@ -149,7 +148,7 @@ namespace NEFAB.Services
             }
 
 
-            Container? containerDB = ContainerRepository.GetByID(container.ContainerNo);
+            Container? containerDB = _containerRepository.GetByID(container.ContainerNo);
             if (containerDB == null)
             {
                 throw new Exception($"Container {container.ContainerNo} blev ikke fundet.");
@@ -159,7 +158,7 @@ namespace NEFAB.Services
             {
                 try
                 {
-                    ContainerRepository.Update(container);
+                    _containerRepository.Update(container);
                 }
                 catch (Exception ex) 
                 {
