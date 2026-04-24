@@ -24,6 +24,13 @@
                 <DataTemplate DataType="{x:Type viewmodels:SupplierViewModel}">
                     <views:SupplierView/>
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:PackageViewModel}">
+                        <views:PackageView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:PackageCreateViewModel}">
+                            <views:PackageCreateView/>
+                        </DataTemplate>
+
             </ContentControl.Resources>
         </ContentControl>
     </Grid>
