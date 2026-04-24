@@ -1,10 +1,93 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO.Packaging;
 using System.Text;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using NEFAB.Domains;
+using NEFAB.Repositories.Interfaces;
 
 namespace NEFAB.Repositories
 {
-    internal class PackageRepository
+    public class PackageRepository : IRepoGetAdd<Package, string>
     {
+            private readonly string ConnectionString;
+            private List<Package> packages;
+
+            public PackageRepository()
+            {
+                IConfigurationRoot config = new ConfigurationBuilder()
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+                packages = new List<Packages>();
+
+                ConnectionString = config.GetConnectionString("MyDBConnection");
+
+            }
+
+
+            public void Add(Package package)
+            {
+                using (SqlConnection con = new SqlConnection(ConnectionString))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("INSERT INTO SUPPLIER (SupplierName) VALUES (@SupplierName)",
+                        con))
+                    {
+                        cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar).Value = supplier.SupplierName;
+                        cmd.ExecuteNonQuery();
+                        suppliers.Add(supplier);
+                    }
+                }
+                return;
+            }
+
+
+
+            public List<Supplier> GetAll()
+            {
+                List<Supplier> suppliers = new List<Supplier>();
+                using (SqlConnection con = new SqlConnection(ConnectionString))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("SELECT SupplierName FROM Supplier", con);
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            Supplier supplier = new Supplier()
+                            {
+                                SupplierName = dr.GetString(0)
+                            };
+                            suppliers.Add(supplier);
+                        }
+                    }
+                }
+                return suppliers;
+            }
+
+            public Supplier? GetByID(string Name)
+            {
+                Supplier? supplier = null;
+                using (SqlConnection con = new SqlConnection(ConnectionString))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("SELECT SupplierName FROM SUPPLIER WHERE SupplierName = @SupplierName", con);
+                    cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar).Value = Name;
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            supplier = new Supplier()
+                            {
+                                SupplierName = dr.GetString(0)
+                            };
+                        }
+                    }
+                }
+                return supplier;
+            }
+        }
     }
-}
+
