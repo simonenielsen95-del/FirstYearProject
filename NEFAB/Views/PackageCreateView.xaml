@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Label Content="Opret Pakke" HorizontalAlignment="Left" Margin="279,120,0,0" VerticalAlignment="Top" FontSize="22"/>
+        <Button Content="Tilbage" Command="{Binding NavigateToPackageViewCommand}" HorizontalAlignment="Left" Margin="333,248,0,0" VerticalAlignment="Top"/>
+
     </Grid>
 </UserControl>
