@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="NEFAB.Views.PackageEdit"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NEFAB.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="800"/>
+
+        <Label Content="Pakke" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" Width="118" FontSize="36" FontWeight="Bold" Foreground="White"/>
+        <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="34,378,0,0" VerticalAlignment="Top" Height="35" Width="88"/>
+
+
+        <Label Content="Rediger:" HorizontalAlignment="Left" Margin="37,121,0,0" VerticalAlignment="Top" Height="34" Width="72" FontSize="15" FontWeight="Bold"/>
+        <Label Content="Container No." HorizontalAlignment="Left" Margin="37,160,0,0" VerticalAlignment="Top"/>
+        <Label Content="Supplier" HorizontalAlignment="Left" Margin="37,186,0,0" VerticalAlignment="Top"/>
+        <Label Content="PO No." HorizontalAlignment="Left" Margin="37,0,0,0" VerticalAlignment="Center"/>
+        <Label Content="PO Item No." HorizontalAlignment="Left" Margin="37,238,0,0" VerticalAlignment="Top"/>
+        <Label Content="Size" HorizontalAlignment="Left" Margin="37,264,0,0" VerticalAlignment="Top"/>
+        <Label Content="Box Weight" HorizontalAlignment="Left" Margin="37,290,0,0" VerticalAlignment="Top"/>
+        <Label Content="Kommentar: " HorizontalAlignment="Left" Margin="522,164,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+
+        <TextBox x:Name="txtUpdateContainerNo" HorizontalAlignment="Left" Margin="150,164,0,0" TextWrapping="Wrap" Text="{Binding SelectedUpdateContainer.ContainerNo, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtUpdatePackageSupplier" HorizontalAlignment="Left" Margin="150,190,0,0" TextWrapping="Wrap" Text="{Binding SelectedUpdatePackage.Supplier, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtUpdatePackagePONo" HorizontalAlignment="Left" Margin="150,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedUpdateUpdatePackage.PONo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name="txtUpdatePackagePOItemNo" HorizontalAlignment="Left" Margin="150,242,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+        <TextBox x:Name="txtUpdatePackageSize" HorizontalAlignment="Left" Margin="150,268,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtUpdatePackageBoxWeight" HorizontalAlignment="Left" Margin="150,294,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtUpdatePackageKommentar" HorizontalAlignment="Left" Margin="522,199,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="224" Height="117"/>
+        <Button Content="Gem" HorizontalAlignment="Left" Margin="717,340,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+
+
+
+    </Grid>
+</UserControl>
