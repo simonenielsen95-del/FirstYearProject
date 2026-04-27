@@ -11,17 +11,29 @@
         <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="800"/>
         <Image Margin="9,22,656,372" Source="/images/nefab white.png" Width="135" Height="55"/>
         <Label Content="Opret Pakke" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" Width="218" FontSize="36" FontWeight="Bold" Foreground="White"/>
-        <Label Content="Container nummer:" HorizontalAlignment="Left" Margin="60,143,0,0" VerticalAlignment="Top"/>
+        <Label Content="Container nummer:" HorizontalAlignment="Left" Margin="60,147,0,0" VerticalAlignment="Top"/>
         <Button Content="Tilbage" Command="{Binding NavigateToPackageViewCommand}" HorizontalAlignment="Left" Margin="32,391,0,0" VerticalAlignment="Top" Height="35" Width="88"/>
         <Label Content="Leverandør:" HorizontalAlignment="Left" Margin="64,191,0,0" VerticalAlignment="Top"/>
         <Label Content="Indholdsmængde:" HorizontalAlignment="Left" Margin="60,232,0,0" VerticalAlignment="Top"/>
         <Label Content="Antal pakker:" HorizontalAlignment="Left" Margin="60,279,0,0" VerticalAlignment="Top"/>
         <Label Content="Vægt:" HorizontalAlignment="Left" Margin="60,326,0,0" VerticalAlignment="Top"/>
+        <Label Content="Længde:" HorizontalAlignment="Left" Margin="350,147,0,0" VerticalAlignment="Top"/>
+        <Label Content="Bredde:" HorizontalAlignment="Left" Margin="350,191,0,0" VerticalAlignment="Top"/>
+        <Label Content="Højde:" HorizontalAlignment="Left" Margin="350,232,0,0" VerticalAlignment="Top"/>
+        <Label Content="Projekt nummer:" HorizontalAlignment="Center" Margin="0,278,0,0" VerticalAlignment="Top"/>
+        <Label Content="Projekt produkt nummer:" HorizontalAlignment="Left" Margin="350,326,0,0" VerticalAlignment="Top"/>
 
-        <TextBox x:Name="txtContainerNo" HorizontalAlignment="Left" Margin="222,147,0,0" TextWrapping="Wrap" Text="{Binding SelectedContainer.ContainerNo, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
-        <TextBox x:Name="txtSupplier" HorizontalAlignment="Left" Margin="222,195,0,0" TextWrapping="Wrap" Text="{Binding SelectedSupplier.SupplierName, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
-        <TextBox x:Name="txtInnerQuantaty" HorizontalAlignment="Left" Margin="222,240,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.InnerQuantity, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
-        <TextBox x:Name="txtAmount" HorizontalAlignment="Left" Margin="222,287,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.Amount, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
-        <TextBox x:Name="txtWeight" HorizontalAlignment="Left" Margin="222,334,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.Weight, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtContainerNo" HorizontalAlignment="Left" Margin="185,151,0,0" TextWrapping="Wrap" Text="{Binding SelectedContainer.ContainerNo, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtSupplier" HorizontalAlignment="Left" Margin="185,195,0,0" TextWrapping="Wrap" Text="{Binding SelectedSupplier.SupplierName, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtInnerQuantaty" HorizontalAlignment="Left" Margin="185,240,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.InnerQuantity, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtAmount" HorizontalAlignment="Left" Margin="185,287,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.Amount, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtWeight" HorizontalAlignment="Left" Margin="185,334,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageWeight, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtLenth" HorizontalAlignment="Left" Margin="510,151,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageLength, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtWith" HorizontalAlignment="Left" Margin="510,195,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageWidth, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtHeight" HorizontalAlignment="Left" Margin="510,240,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageHeight, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtProjectNo" HorizontalAlignment="Left" Margin="510,282,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ProjectNo, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtProjectItemNo" HorizontalAlignment="Left" Margin="510,330,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ProjectItemNo, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+
+
     </Grid>
 </UserControl>
