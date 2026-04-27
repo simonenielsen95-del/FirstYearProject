@@ -1,14 +1,8 @@
 ﻿using NEFAB.Commands;
 using NEFAB.Domains;
-using NEFAB.Repositories;
-using NEFAB.Repositories.Interfaces;
 using NEFAB.Services;
 using NEFAB.Stores;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace NEFAB.ViewModels
