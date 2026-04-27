@@ -41,7 +41,7 @@
         <TextBox x:Name="txtImage" HorizontalAlignment="Left" Margin="685,151,0,0" TextWrapping="Wrap" Text="{Binding SelectedImage.path?, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
         <TextBlock HorizontalAlignment="Left" Margin="707,291,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.Comment, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Height="142" Width="165" Background="#FFC7C7C7"/>
 
-
+        <Button x:Name="btnCreateNewPackage" Content="OPRET" Command="{Binding CreateNewPackageCommand}" HorizontalAlignment="Left" Margin="546,411,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.08,0.927"/>
 
 
     </Grid>
