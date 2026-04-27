@@ -7,8 +7,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label Content="Opret Pakke" HorizontalAlignment="Left" Margin="279,120,0,0" VerticalAlignment="Top" FontSize="22"/>
-        <Button Content="Tilbage" Command="{Binding NavigateToPackageViewCommand}" HorizontalAlignment="Left" Margin="333,248,0,0" VerticalAlignment="Top"/>
 
+        <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="800"/>
+        <Image Margin="9,22,656,372" Source="/images/nefab white.png" Width="135" Height="55"/>
+        <Label Content="Opret Pakke" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" Width="218" FontSize="36" FontWeight="Bold" Foreground="White"/>
+        <Label Content="Container nummer:" HorizontalAlignment="Left" Margin="60,143,0,0" VerticalAlignment="Top"/>
+        <Button Content="Tilbage" Command="{Binding NavigateToPackageViewCommand}" HorizontalAlignment="Left" Margin="32,391,0,0" VerticalAlignment="Top" Height="35" Width="88"/>
+        <Label Content="Leverandør:" HorizontalAlignment="Left" Margin="64,191,0,0" VerticalAlignment="Top"/>
+        <Label Content="Indholdsmængde:" HorizontalAlignment="Left" Margin="60,232,0,0" VerticalAlignment="Top"/>
+        <Label Content="Antal pakker:" HorizontalAlignment="Left" Margin="60,279,0,0" VerticalAlignment="Top"/>
+        <Label Content="Vægt:" HorizontalAlignment="Left" Margin="60,326,0,0" VerticalAlignment="Top"/>
+
+        <TextBox x:Name="txtContainerNo" HorizontalAlignment="Left" Margin="222,147,0,0" TextWrapping="Wrap" Text="{Binding SelectedContainer.ContainerNo, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtSupplier" HorizontalAlignment="Left" Margin="222,195,0,0" TextWrapping="Wrap" Text="{Binding SelectedSupplier.SupplierName, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtInnerQuantaty" HorizontalAlignment="Left" Margin="222,240,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.InnerQuantity, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtAmount" HorizontalAlignment="Left" Margin="222,287,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.Amount, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtWeight" HorizontalAlignment="Left" Margin="222,334,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.Weight, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
     </Grid>
 </UserControl>
