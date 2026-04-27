@@ -134,7 +134,9 @@ namespace NEFAB.Repositories
                     {
                         while (dr.Read())
                         {
-                            PackageId = dr.GetInt32(0),
+                            Package package = new Package();
+                            {
+                                PackageId = dr.GetInt32(0),
                                 ProjectNo = dr.GetInt32(1),
                                 ProjectItemNo = dr.GetInt32(2),
                                 PackageWeight = dr.GetInt32(3),
@@ -145,7 +147,9 @@ namespace NEFAB.Repositories
                                 Comment = dr.IsDBNull(8) ? null : dr.GetString(8),
                                 ContainerNo = dr.GetString(9),
                                 SupplierName = dr.GetString(10)
+                            }
                         }
+                                result.Add(package);
                     }
                 }
             }
