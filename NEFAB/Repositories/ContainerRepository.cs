@@ -4,13 +4,16 @@ using System.Data;
 using System.Linq;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using NEFAB.Domains; 
+using NEFAB.Domains;
+using NEFAB.Repositories.Interfaces;
 
 namespace NEFAB.Repositories
 {
-    public class ContainerRepository
+    public class ContainerRepository : IRepoGetAddUpdateRemove<Container, string>
     {
-        private readonly string ConnectionString;
+        private readonly string connectionString;
+
+       
         private List<Container> containers;
 
         public ContainerRepository()
@@ -19,157 +22,155 @@ namespace NEFAB.Repositories
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            containers = new List<Container>();
+          containers = new List<Container>();
 
-            ConnectionString = config.GetConnectionString("MyDBConnection");
+            connectionString = config.GetConnectionString("MyDBConnection");
         }
          
 
         public List<Container> GetAll()
         {
+            //kun inde i metoden. forsvinder når metoden er færdig, så vi ikke har forældet data i cachen
+            //den gemmer ikke data til næste gang
+            //men skal bruges fordi metoden skal returnere en list<container>
+
+            List<Container> result = new List<Container>();
 
             //returner containere der allerede ligger i databasen
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                connection.Open();
-                string query = "SELECT ContainerNo, Week, Year FROM Containers";
-                SqlCommand command = new SqlCommand(query, connection);
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+                con.Open();
+
+                SqlCommand cmd = new SqlCommand("SELECT ContainerNo, Week, Year FROM CONTAINER", con);
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
                 {
-                    string containerNo = reader.GetString(0);
-                    int week = reader.GetInt32(1);
-                    int year = reader.GetInt32(2);
-                    Container container = new Container(containerNo)
+                    Container container = new Container()
                     {
-                        Week = week,
-                        Year = year
+                        ContainerNo = dr.GetString(0),
+                        Week = dr.GetInt32(1),
+                        Year = dr.GetInt32(2)
+                    };
+                   result.Add(container);
+                }
+            }
+
+          return result;
+        }
+
+        public void Add(Container container)
+        { 
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO CONTAINER (ContainerNo, Week, Year) VALUES (@ContainerNo, @Week, @Year);",
+                    con))
+                {
+                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar).Value = container.ContainerNo; 
+                    cmd.Parameters.Add("@Week", SqlDbType.Int).Value = container.Week;
+                    cmd.Parameters.Add("@Year", SqlDbType.Int).Value = container.Year;
+             
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+           containers.Add(container);
+        }
+
+        public void Remove(Container container) 
+
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("DELETE FROM CONTAINER WHERE ContainerNo = @ContainerNo", con))
+                {
+                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar).Value = container.ContainerNo; 
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            
+        }
+
+        public Container? GetByID(string containerNo)
+        {
+
+            Container? container = null; 
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+
+                using var cmd = new SqlCommand("SELECT ContainerNo, Week, Year FROM CONTAINER WHERE ContainerNo = @ContainerNo", con);
+                cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar).Value = containerNo;
+                using var dr = cmd.ExecuteReader();
+                {
+                    if (dr.Read())
+                    {
+                        container = new Container() 
+                        {
+                            ContainerNo = dr.GetString(0),
+                            Week = dr.GetInt32(1), 
+                            Year = dr.GetInt32(2) 
+                        };
+                        
+                       
+
+                    }
+                }
+
+               
+            }
+            return container;
+        }
+
+        public List<Container> GetByWeek(int week, int year)
+        {
+
+            List<Container> containers = new List<Container>();
+
+           
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                using var cmd = new SqlCommand("SELECT ContainerNo, Week, Year FROM CONTAINER WHERE Week = @Week AND Year = @Year", con);
+                using (SqlDataReader dr = cmd.ExecuteReader()) 
+                while (dr.Read())
+                {
+                    Container container = new Container()
+                    {
+                        ContainerNo = dr.GetString(0),
+                        Week = dr.GetInt32(1), 
+                        Year = dr.GetInt32(2)
                     };
                     containers.Add(container);
+                    
+                    
                 }
             }
 
             return containers;
         }
 
-        public void Add(Container container)
-        {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
-            {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Containers (ContainerNo, Week, Year) VALUES (@ContainerNo, @Week, @Year);",
-                    con))
-                {
-                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = container.ContainerNo;
-                    cmd.Parameters.Add("@Week", SqlDbType.Int).Value = container.Week;
-                    cmd.Parameters.Add("@Year", SqlDbType.Int).Value = container.Year;
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            containers.Add(container);
-        }
-
-        public void Remove(Container container) 
-
-        {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
-            {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("DELETE FROM Containers WHERE ContainerNo = @ContainerNo", con))
-                {
-                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = container.ContainerNo;
-                    cmd.ExecuteNonQuery();
-                }
-            }
-
-            //Fjern også fra local liste
-            containers.RemoveAll(c => c.ContainerNo == container.ContainerNo);
-        
-        }
-        
-        public Container GetByContainerNumber(string containerNo)
-        {
-            // check in-memory cache first
-            var found = containers.FirstOrDefault(c => c.ContainerNo == containerNo);
-            if (found != null) return found;
-
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string query = "SELECT ContainerNo, Week, Year FROM Containers WHERE ContainerNo = @ContainerNo";
-                using var command = new SqlCommand(query, connection);
-                command.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = containerNo;
-                using var reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    string dbContainerNo = reader.GetString(0);
-                    int week = reader.GetInt32(1);
-                    int year = reader.GetInt32(2);
-                    var container = new Container(dbContainerNo) { Week = week, Year = year };
-                    containers.Add(container);
-                    return container;
-                }
-            }
-
-            return null;
-        }
-
-        public List<Container> GetByWeek(int week, int year)
-        {
-            var results = containers.Where(c => c.Week == week && c.Year == year).ToList();
-
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string query = "SELECT ContainerNo, Week, Year FROM Containers WHERE Week = @Week AND Year = @Year";
-                using var command = new SqlCommand(query, connection);
-                command.Parameters.Add("@Week", SqlDbType.Int).Value = week;
-                command.Parameters.Add("@Year", SqlDbType.Int).Value = year;
-                using var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    string containerNo = reader.GetString(0);
-                    int w = reader.GetInt32(1);
-                    int y = reader.GetInt32(2);
-                    if (!results.Any(c => c.ContainerNo == containerNo))
-                    {
-                        var container = new Container(containerNo) { Week = w, Year = y };
-                        results.Add(container);
-                        containers.Add(container);
-                    }
-                }
-            }
-
-            return results;
-        }
-
         
         public void Update(Container container)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("UPDATE Containers SET Week = @Week, Year = @Year WHERE ContainerNo = @ContainerNo",
+                using (SqlCommand cmd = new SqlCommand("UPDATE CONTAINER SET Week = @Week, Year = @Year WHERE ContainerNo = @ContainerNo",
                     con))
                 {
-                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = container.ContainerNo;
+                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar).Value = container.ContainerNo; 
                     cmd.Parameters.Add("@Week", SqlDbType.Int).Value = container.Week;
                     cmd.Parameters.Add("@Year", SqlDbType.Int).Value = container.Year;
 
-                    cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery(); 
                 }
 
             }
 
-
-            //Opdaterer listen lokalt 
-            Container containerToUpdate = containers.FirstOrDefault(c => c.ContainerNo == container.ContainerNo);
-            if (containerToUpdate != null)
-            {
-                containerToUpdate.Week = container.Week;
-                containerToUpdate.Year = container.Year;
-            }
         }
     }
 }

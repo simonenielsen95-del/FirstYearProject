@@ -14,18 +14,13 @@ using System.Windows.Shapes;
 namespace NEFAB.Views
 {
     /// <summary>
-    /// Interaction logic for EmployeeView.xaml
+    /// Interaction logic for PackageCreateView.xaml
     /// </summary>
-    public partial class EmployeeView : UserControl
+    public partial class PackageCreateView : UserControl
     {
-        public EmployeeView()
+        public PackageCreateView()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

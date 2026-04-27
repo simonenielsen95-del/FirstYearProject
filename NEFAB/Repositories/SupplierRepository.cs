@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using NEFAB.Domains;
+using NEFAB.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +10,7 @@ using System.Linq;
 
 namespace NEFAB.Repositories
 {
-    public class SupplierRepository
+    public class SupplierRepository : IRepoGetAdd<Supplier, string>
     {
         private readonly string ConnectionString;
         private List<Supplier> suppliers;
@@ -31,10 +32,11 @@ namespace NEFAB.Repositories
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO SUPPLIER (SupplierName) VALUE (@SupplierName);",
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO SUPPLIER (SupplierName) VALUES (@SupplierName)",
                     con))
                 {
                     cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar).Value = supplier.SupplierName;
+                    cmd.ExecuteNonQuery();
                     suppliers.Add(supplier);
                 }
             }
@@ -54,7 +56,10 @@ namespace NEFAB.Repositories
                 {
                     while (dr.Read())
                     {
-                        Supplier supplier = new Supplier(dr.GetString(0));
+                        Supplier supplier = new Supplier()
+                        {
+                            SupplierName = dr.GetString(0)
+                        };
                         suppliers.Add(supplier);
                     }                    
                 }
@@ -62,25 +67,26 @@ namespace NEFAB.Repositories
             return suppliers;
         }
 
-        public Supplier? GetBySupplierName(string Name)
+        public Supplier? GetByID(string Name)
         {
             Supplier? supplier = null;
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand("SELECT SupplierName FROM SUPPLIER WHERE SupplierName = @SupplierName", con);
-                cmd.Parameters.AddWithValue("@SupplierName", Name);
+                cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar).Value = Name;
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
                     if (dr.Read())
                     {
-                        supplier = new Supplier(dr.GetString(0));
+                        supplier = new Supplier()
+                        {
+                            SupplierName = dr.GetString(0)
+                        };
                     }
                 }
             }
             return supplier;
         }
-
     }   
-
 }
