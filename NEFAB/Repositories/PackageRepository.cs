@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO.Packaging;
-using System.Text;
+using System.Xml.Linq;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using NEFAB.Domains;
@@ -12,82 +13,143 @@ namespace NEFAB.Repositories
 {
     public class PackageRepository : IRepoGetAdd<Package, string>
     {
-            private readonly string ConnectionString;
-            private List<Package> packages;
+        private readonly string ConnectionString;
+        private List<Package> packages;
 
-            public PackageRepository()
+        public PackageRepository()
+        {
+            IConfigurationRoot config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+            packages = new List<Package>(); // rettet fra List<Packages> til List<Package>
+
+            ConnectionString = config.GetConnectionString("MyDBConnection");
+        }
+
+        public void Add(Package package)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
-                IConfigurationRoot config = new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json")
-                    .Build();
-                packages = new List<Packages>();
-
-                ConnectionString = config.GetConnectionString("MyDBConnection");
-
-            }
-
-
-            public void Add(Package package)
-            {
-                using (SqlConnection con = new SqlConnection(ConnectionString))
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("spAddPackage", con))
                 {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand("INSERT INTO SUPPLIER (SupplierName) VALUES (@SupplierName)",
-                        con))
-                    {
-                        cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar).Value = supplier.SupplierName;
-                        cmd.ExecuteNonQuery();
-                        suppliers.Add(supplier);
-                    }
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@ProjectNo", SqlDbType.Int).Value = package.ProjectNo;
+                    cmd.Parameters.Add("@ProjectItemNo", SqlDbType.Int).Value = package.ProjectItemNo;
+                    cmd.Parameters.Add("@PackageWeight", SqlDbType.Int).Value = package.PackageWeight;
+                    cmd.Parameters.Add("@Amount", SqlDbType.Int).Value = package.Amount;
+                    cmd.Parameters.Add("@PackageLength", SqlDbType.Float).Value = package.PackageLength;
+                    cmd.Parameters.Add("@PackageWidth", SqlDbType.Float).Value = package.PackageWidth;
+                    cmd.Parameters.Add("@PackageHeight", SqlDbType.Float).Value = package.PackageHeight;
+                    cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, 400).Value = package.Comment ?? (object)DBNull.Value;
+                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = package.ContainerNo;
+                    cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar, 100).Value = package.SupplierName;
+                    cmd.ExecuteNonQuery();
+                    packages.Add(package);
                 }
-                return;
             }
+        }
 
-
-
-            public List<Supplier> GetAll()
+        public List<Package> GetAll()
+        {
+            List<Package> packages = new List<Package>();
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
-                List<Supplier> suppliers = new List<Supplier>();
-                using (SqlConnection con = new SqlConnection(ConnectionString))
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("spGetAllPackages", con))
                 {
-                    con.Open();
-                    SqlCommand cmd = new SqlCommand("SELECT SupplierName FROM Supplier", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
                         while (dr.Read())
                         {
-                            Supplier supplier = new Supplier()
+                            Package package = new Package()
                             {
-                                SupplierName = dr.GetString(0)
+                                PackageId = dr.GetInt32(0),
+                                ProjectNo = dr.GetInt32(1),
+                                ProjectItemNo = dr.GetInt32(2),
+                                PackageWeight = dr.GetInt32(3),
+                                Amount = dr.GetInt32(4),
+                                PackageLength = (float)dr.GetDouble(5),
+                                PackageWidth = (float)dr.GetDouble(6),
+                                PackageHeight = (float)dr.GetDouble(7),
+                                Comment = dr.IsDBNull(8) ? null : dr.GetString(8),
+                                ContainerNo = dr.GetString(9),
+                                SupplierName = dr.GetString(10)
                             };
-                            suppliers.Add(supplier);
+                            packages.Add(package);
                         }
                     }
                 }
-                return suppliers;
             }
+            return packages;
+        }
 
-            public Supplier? GetByID(string Name)
+        public Package? GetByID(string containerNo)
+        {
+            Package? package = null;
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
-                Supplier? supplier = null;
-                using (SqlConnection con = new SqlConnection(ConnectionString))
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("spGetPackagesByContainerNo", con))
                 {
-                    con.Open();
-                    SqlCommand cmd = new SqlCommand("SELECT SupplierName FROM SUPPLIER WHERE SupplierName = @SupplierName", con);
-                    cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar).Value = Name;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = containerNo;
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
                         if (dr.Read())
                         {
-                            supplier = new Supplier()
+                            package = new Package()
                             {
-                                SupplierName = dr.GetString(0)
+                                PackageId = dr.GetInt32(0),
+                                ProjectNo = dr.GetInt32(1),
+                                ProjectItemNo = dr.GetInt32(2),
+                                PackageWeight = dr.GetInt32(3),
+                                Amount = dr.GetInt32(4),
+                                PackageLength = (float)dr.GetDouble(5),
+                                PackageWidth = (float)dr.GetDouble(6),
+                                PackageHeight = (float)dr.GetDouble(7),
+                                Comment = dr.IsDBNull(8) ? null : dr.GetString(8),
+                                ContainerNo = dr.GetString(9),
+                                SupplierName = dr.GetString(10)
                             };
                         }
                     }
                 }
-                return supplier;
             }
+            return package;
+        }
+        //fulde liste til combobox, da der kan være flere pakker i en container
+        public List<Package> GetPackagesByContainerNo(string containerNo)
+        {
+            List<Package> result = new List<Package>();
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("spGetPackagesByContainerNo", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = containerNo;
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            PackageId = dr.GetInt32(0),
+                                ProjectNo = dr.GetInt32(1),
+                                ProjectItemNo = dr.GetInt32(2),
+                                PackageWeight = dr.GetInt32(3),
+                                Amount = dr.GetInt32(4),
+                                PackageLength = (float)dr.GetDouble(5),
+                                PackageWidth = (float)dr.GetDouble(6),
+                                PackageHeight = (float)dr.GetDouble(7),
+                                Comment = dr.IsDBNull(8) ? null : dr.GetString(8),
+                                ContainerNo = dr.GetString(9),
+                                SupplierName = dr.GetString(10)
+                        }
+                    }
+                }
+            }
+            return result;
         }
     }
-
+}
