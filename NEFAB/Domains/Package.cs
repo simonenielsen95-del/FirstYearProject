@@ -17,7 +17,7 @@ namespace NEFAB.Domains
         public float? PackageHeight { get; set; }
         public string? Comment { get; set; }
         
-
+        //link og udvidelse?
 
 
 
