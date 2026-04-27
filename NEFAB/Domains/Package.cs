@@ -16,6 +16,8 @@ namespace NEFAB.Domains
         public float? PackageWidth { get; set; }
         public float? PackageHeight { get; set; }
         public string? Comment { get; set; }
+        
+
 
 
 
