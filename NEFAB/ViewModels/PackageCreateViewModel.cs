@@ -45,7 +45,7 @@ namespace NEFAB.ViewModels
 
             NavigateToPackageViewCommand = new NavigateCommand(packageNavigationService);
 
-            CreateNewPackageCommand = new CommandHandler(() => CreateNewPackage());
+            CreateNewPackageCommand = new CommandHandler(() => CreatePackage());
             _packageService = new PackageService();
 
             SelectedContainer = new Container();
@@ -53,7 +53,7 @@ namespace NEFAB.ViewModels
             SelectedPackage = new Package();
         }
 
-        public void CreateNewPackage()
+        public void CreatePackage()
         {
             try
             {

@@ -34,7 +34,7 @@ namespace NEFAB.Services
 
             try
             {
-                _packageRepo.Add(package, containerDB.ContainerNo, supplierDB.SupplierName);
+                //_packageRepo.Add(package, containerDB.ContainerNo, supplierDB.SupplierName);
             }
             catch (Exception ex)
             {
