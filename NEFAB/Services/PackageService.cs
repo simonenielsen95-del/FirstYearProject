@@ -30,17 +30,17 @@ namespace NEFAB.Services
             }
 
             Container containerDB = _containerService.GetByID(container.ContainerNo);
-            //if (container.ContainerNo != containerDB.ContainerNo)
-            //{
-            //    throw new ArgumentException("Container nummeret findes ikke");
-            //}
-
             Supplier supplierDB = _supplierService.GetByID(supplier.SupplierName);
-            //if()
-            //try 
-            //{ 
-                
-            //}
+
+            try
+            {
+                _packageRepo.Add(package, containerDB.ContainerNo, supplierDB.SupplierName);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("pakken kunne ikke oprettes");
+            }
+   
         }
     }
 }
