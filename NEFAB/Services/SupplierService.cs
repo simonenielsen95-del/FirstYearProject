@@ -35,5 +35,17 @@ namespace NEFAB.Services
                 }
             }
         }
+
+        public Supplier? GetByID(string name)
+        {
+            try
+            {
+                return _supplierRepository.GetByID(name);
+            }
+            catch (Exception)
+            {
+                throw new Exception("leveradøren findes ikke");
+            }
+        }
     }
 }

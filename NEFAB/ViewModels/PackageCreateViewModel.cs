@@ -16,6 +16,8 @@ namespace NEFAB.ViewModels
 
         public ICommand CreateNewPackageCommand { get; }
 
+        private readonly PackageService _packageService;
+
         private Container _selectedContainer;
         public Container SelectedContainer
         {
@@ -51,23 +53,17 @@ namespace NEFAB.ViewModels
             SelectedPackage = new Package();
         }
 
-       
-
         public void CreateNewPackage()
         {
             try
             {
-                _packageService.Add(SelectedPackage);
+                _packageService.Add(SelectedContainer, SelectedSupplier, SelectedPackage);
                 MessageBox.Show("Ny pakke er blevet oprettet!", "Succes", MessageBoxButton.OK);
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show($"Pakke kunne ikke oprettes! {ex}", "Fejl", MessageBoxButton.OK);
             }
         }
-
     }
 }
-
-        
