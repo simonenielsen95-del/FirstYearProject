@@ -14,7 +14,68 @@ namespace NEFAB.Services
         private readonly ContainerRepository _containerRepository;
         public ContainerService()
         {
-            _containerRepository = new ContainerRepository(); 
+            ContainerRepository = new ContainerRepository(); 
+        }
+
+        public void Add(Container container)
+        {
+            if (string.IsNullOrEmpty(container.ContainerNo) || (container.Year == null) || (container.Week== null))
+            {
+                throw new ArgumentException("Udfyld venligst både ContainerNo, Uge og År.");
+            }
+
+            
+            if (container.ContainerNo.Length != 11)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt container nr.");
+            }
+           
+
+            for (int i = 0; i < container.ContainerNo.Length; i++)
+            {
+                if (i <= 3)
+                {
+                    char c = container.ContainerNo[i];
+                    if (!(c >= 'A' && c <= 'Z'))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
+                if (i > 3)
+                {
+                    if (!char.IsDigit(container.ContainerNo[i]))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
+            }
+
+            if (container.Year <1949) 
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt År.");
+            }
+            
+            if (container.Week <=0 || container.Week >= 54)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt uge nr.");
+            }
+
+           
+            else
+            {
+                try 
+                {
+                    ContainerRepository.Add(container);
+                }
+                catch 
+                { 
+                    throw new ArgumentException("Noget gik galt, prøv igen");
+                }
+
+                    
+               
+            }
+            
         }
 
         public void Add(Container container)
