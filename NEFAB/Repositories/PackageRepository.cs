@@ -155,5 +155,30 @@ namespace NEFAB.Repositories
             }
             return result;
         }
+
+
+        public void Update(Container container, Supplier supplier, Package package)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("spUpdatePackage", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@ProjectNo", SqlDbType.Int).Value = package.ProjectNo;
+                    cmd.Parameters.Add("@ProjectItemNo", SqlDbType.Int).Value = package.ProjectItemNo;
+                    cmd.Parameters.Add("@PackageWeight", SqlDbType.Int).Value = package.PackageWeight;
+                    cmd.Parameters.Add("@Amount", SqlDbType.Int).Value = package.Amount;
+                    cmd.Parameters.Add("@PackageLength", SqlDbType.Float).Value = package.PackageLength;
+                    cmd.Parameters.Add("@PackageWidth", SqlDbType.Float).Value = package.PackageWidth;
+                    cmd.Parameters.Add("@PackageHeight", SqlDbType.Float).Value = package.PackageHeight;
+                    cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, 400).Value = package.Comment ?? (object)DBNull.Value;
+                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = container.ContainerNo;
+                    cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar, 100).Value = supplier.SupplierName;
+                    cmd.ExecuteNonQuery();
+                    packages.Add(package);
+                }
+            }
+        }
     }
 }

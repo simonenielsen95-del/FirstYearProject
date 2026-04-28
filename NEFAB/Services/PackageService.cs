@@ -1,6 +1,7 @@
 ﻿using NEFAB.Domains;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace NEFAB.Services
@@ -11,7 +12,7 @@ namespace NEFAB.Services
         private readonly ContainerService _containerService;
         private readonly SupplierService _supplierService;
 
-        public PackageService() 
+        public PackageService()
         {
             //_packageRepository = new PackageRepository();
             _containerService = new ContainerService();
@@ -20,8 +21,8 @@ namespace NEFAB.Services
 
         public void Add(Container container, Supplier supplier, Package package)
         {
-            if (container.ContainerNo == null || supplier.SupplierName == null|| package.ProjectNo == null ||
-               package.ProjectItemNo == null || package.PackageWeight == null || package.Amount == null || 
+            if (container.ContainerNo == null || supplier.SupplierName == null || package.ProjectNo == null ||
+               package.ProjectItemNo == null || package.PackageWeight == null || package.Amount == null ||
                package.InnerQuantaty == null || package.PackageLength == null || package.PackageWidth == null ||
                package.PackageHeight == null)
             {
@@ -40,7 +41,21 @@ namespace NEFAB.Services
             {
                 throw new ArgumentException("pakken kunne ikke oprettes");
             }
-   
+        }
+
+        public void Update(Container container, Supplier supplier, Package package)
+        {
+
+            if (container.ContainerNo == null || supplier.SupplierName == null || package.ProjectNo == null ||
+                package.ProjectItemNo == null || package.PackageWeight == null || package.Amount == null ||
+                package.InnerQuantaty == null || package.PackageLength == null || package.PackageWidth == null ||
+                package.PackageHeight == null)
+            {
+                throw new ArgumentException("Udfyld alle basis informationer om pakken: Container nummer, leverandør, indholdsmængde, antal pakker," +
+                    " vægt, længde, bredde, højde, projekt-nummer og projekt produkt nummer");
+            }
         }
     }
 }
+
+        
