@@ -11,10 +11,13 @@ namespace NEFAB.Domains
         public int? ProjectItemNo { get; set; }
         public int? PackageWeight { get; set; }
         public int? Amount { get; set; }
+        public int? InnerQuantaty { get; set; }
         public float? PackageLength {  get; set; }
         public float? PackageWidth { get; set; }
         public float? PackageHeight { get; set; }
         public string? Comment { get; set; }
+        
+        //link og udvidelse?
 
 
 
