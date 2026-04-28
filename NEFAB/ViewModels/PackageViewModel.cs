@@ -18,13 +18,17 @@ namespace NEFAB.ViewModels
         public ICommand NavigateToHomeViewCommand { get; }
         public ICommand NavigateToPackageCreateViewCommand { get; }
 
+        public ICommand NavigateToPackageEditViewCommand { get; }
+
         public PackageViewModel(NavigationStore navigationStore)
         {
             NavigationService homeNavigationService = new NavigationService(navigationStore, () => new HomeViewModel(navigationStore));
             NavigationService packageCreateNavigationService = new NavigationService(navigationStore, () => new PackageCreateViewModel(navigationStore));
+            NavigationService packageEditNavigationService = new NavigationService(navigationStore, () => new PackageEditViewModel(navigationStore));
 
             NavigateToHomeViewCommand = new NavigateCommand(homeNavigationService);
             NavigateToPackageCreateViewCommand = new NavigateCommand(packageCreateNavigationService);
+            NavigateToPackageEditViewCommand = new NavigateCommand(packageEditNavigationService);
 
 
         }

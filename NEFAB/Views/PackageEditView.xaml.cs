@@ -16,9 +16,9 @@ namespace NEFAB.Views
     /// <summary>
     /// Interaction logic for PackageEdit.xaml
     /// </summary>
-    public partial class PackageEdit : UserControl
+    public partial class PackageEditView : UserControl
     {
-        public PackageEdit()
+        public PackageEditView()
         {
             InitializeComponent();
         }
