@@ -10,7 +10,6 @@
         <Label Content="Pakke oversigt" HorizontalAlignment="Left" Margin="302,132,0,0" VerticalAlignment="Top" FontSize="22"/>
         <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="356,253,0,0" VerticalAlignment="Top"/>
         <Button Content="Opret pakke" Command="{Binding NavigateToPackageCreateViewCommand}" HorizontalAlignment="Left" Margin="601,171,0,0" VerticalAlignment="Top"/>
-        <Button Content="Rediger pakke" Command="{Binding NavigateToPackageEditViewCommand}" HorizontalAlignment="Left" Margin="99,181,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>
