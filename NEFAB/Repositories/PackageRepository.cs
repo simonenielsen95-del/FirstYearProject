@@ -25,7 +25,7 @@ namespace NEFAB.Repositories
             ConnectionString = config.GetConnectionString("MyDBConnection");
         }
 
-        public void Add(Container container, Supplier supplier, Package package)
+        public void Add(Container container, Supplier supplier, Package package)// eller (package , string supplierName , string containerNo)
         {
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
