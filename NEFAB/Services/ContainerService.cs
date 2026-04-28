@@ -1,7 +1,8 @@
-﻿using System;
-using NEFAB.Domains;
-using NEFAB.Repositories.Interfaces;
+﻿using NEFAB.Domains;
 using NEFAB.Repositories;
+using NEFAB.Repositories.Interfaces;
+using System;
+//using System.ComponentModel;
 
 namespace NEFAB.Services
 {
@@ -164,6 +165,18 @@ namespace NEFAB.Services
                 {
                     throw new Exception("Containeren kunne ikke opdateres");
                 }
+            }
+        }
+        public Container? GetByID(string containerNo)
+        {
+            try
+            {
+                Container? containerDB = _containerRepository.GetByID(containerNo);
+                return containerDB;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Container nummer kunne ikke findes");
             }
         }
     }
