@@ -37,8 +37,9 @@ namespace NEFAB.Repositories
                 using (SqlDataReader dr = cmd.ExecuteReader())
                     while (dr.Read())
                     {
-                        Employee employee = new Employee(dr.GetString(0))
+                        Employee employee = new Employee()
                         {
+                            EmployeeID = dr.GetString(0),
                             EmployeeName = dr.GetString(1)
                         };
 
@@ -95,8 +96,9 @@ namespace NEFAB.Repositories
                 {
                     if (dr.Read())
                     {
-                        employee = new Employee(dr.GetString(0))
+                        employee = new Employee()
                         {
+                            EmployeeID = dr.GetString(0),
                             EmployeeName = dr.GetString(1)
                         };
                     }
