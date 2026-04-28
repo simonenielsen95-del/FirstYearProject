@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace NEFAB.Views
 {
     /// <summary>
-    /// Interaction logic for SupplierView.xaml
+    /// Interaction logic for PackageView.xaml
     /// </summary>
-    public partial class SupplierView : UserControl
+    public partial class PackageView : UserControl
     {
-        public SupplierView()
+        public PackageView()
         {
             InitializeComponent();
         }

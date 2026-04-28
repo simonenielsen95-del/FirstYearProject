@@ -7,30 +7,39 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        
         <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="800"/>
 
         <Label Content="Container" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" Width="176" FontSize="36" FontWeight="Bold" Foreground="White"/>
         <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="34,378,0,0" VerticalAlignment="Top" Height="35" Width="88"/>
         <Label Content="Tast nyt ContainerID" HorizontalAlignment="Left" Margin="60,143,0,0" VerticalAlignment="Top"/>
-        <Label Content="Dato: uge - år" HorizontalAlignment="Left" Margin="60,182,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.126,0.636"/>
+        <Label Content="Dato:" HorizontalAlignment="Left" Margin="60,167,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.126,0.636"/>
         <Label Content="Opret:" HorizontalAlignment="Left" Margin="34,110,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" RenderTransformOrigin="-0.107,1.765"/>
-        <TextBox x:Name="txtCreateContainerNo" HorizontalAlignment="Left" Margin="222,152,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtCreateWeekAndYear" HorizontalAlignment="Left" Margin="222,189,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-      
+
+        <TextBox x:Name="txtCreateContainerNo" HorizontalAlignment="Left" Margin="222,152,0,0" TextWrapping="Wrap" Text="{Binding SelectedNewContainer.ContainerNo, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtCreateWeek" HorizontalAlignment="Left" Margin="222,194,0,0" TextWrapping="Wrap" Text="{Binding SelectedNewContainer.Week, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtCreateYear" HorizontalAlignment="Left" Margin="222,229,0,0" TextWrapping="Wrap" Text="{Binding SelectedNewContainer.Year, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
+
         <Label Content="Rediger:" HorizontalAlignment="Left" Margin="438,114,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
         <Label Content="Tast ContainerID" HorizontalAlignment="Left" Margin="451,147,0,0" VerticalAlignment="Top"/>
-        <Label Content="Tast nyt ContainerID" HorizontalAlignment="Left" Margin="451,185,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtUpdateContainerNo" HorizontalAlignment="Left" Margin="598,151,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtUpdateNewContainerNo" HorizontalAlignment="Left" Margin="598,193,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtUpdateWeekAndYear" HorizontalAlignment="Left" Margin="598,229,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Dato: uge - år" HorizontalAlignment="Left" Margin="451,225,0,0" VerticalAlignment="Top"/>
+        <Label Content="Tast ny uge:" HorizontalAlignment="Left" Margin="451,185,0,0" VerticalAlignment="Top"/>
+
+        <TextBox x:Name="txtUpdateContainerNo" HorizontalAlignment="Left" Margin="598,151,0,0" TextWrapping="Wrap" Text="{Binding SelectedUpdateContainer.ContainerNo, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtUpdateContainerWeek" HorizontalAlignment="Left" Margin="598,193,0,0" TextWrapping="Wrap" Text="{Binding SelectedUpdateContainer.Week, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtUpdateContainerYear" HorizontalAlignment="Left" Margin="598,229,0,0" TextWrapping="Wrap" Text="{Binding SelectedUpdateContainer.Year, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120"/>
+
+        <Label Content="Tast nyt år:" HorizontalAlignment="Left" Margin="451,225,0,0" VerticalAlignment="Top"/>
         <Label Content="Slet:" HorizontalAlignment="Left" Margin="60,247,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
         <Label Content="Tast ContainerID" HorizontalAlignment="Left" Margin="70,280,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtRemoveContainerNo" HorizontalAlignment="Left" Margin="222,284,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        
-        <Button x:Name="btnUpdateContainer" Content="GEM" HorizontalAlignment="Left" Margin="744,247,0,0" VerticalAlignment="Top" Click="btnUpdateContainer_Click"/>
-        <Button x:Name="btnRemoveContainer" Content="SLET" HorizontalAlignment="Left" Margin="364,306,0,0" VerticalAlignment="Top" Width="37" Click="btnRemoveContainer_Click"/>
-        <Button x:Name="btnCreateNewContainer" Content="OPRET" HorizontalAlignment="Left" Margin="362,198,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.08,0.927" Click="btnCreateNewContainer_Click"/>
+
+        <TextBox x:Name="txtRemoveContainerNo" HorizontalAlignment="Left" Margin="222,284,0,0" TextWrapping="Wrap" Text="{Binding SelectedRemoveContainer.ContainerNo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
+
+        <Button x:Name="btnUpdateContainer" Content="GEM" Command="{Binding UpdateContainerCommand}" HorizontalAlignment="Left" Margin="744,247,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnRemoveContainer" Content="SLET" Command="{Binding RemoveContainerCommand}" HorizontalAlignment="Left" Margin="364,306,0,0" VerticalAlignment="Top" Width="37"/>
+        <Button x:Name="btnCreateNewContainer" Content="OPRET" Command="{Binding CreateNewContainerCommand}" HorizontalAlignment="Left" Margin="362,198,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.08,0.927"/>
+        <Label Content="Uge:" HorizontalAlignment="Left" Margin="60,190,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.126,0.636"/>
+        <Label Content="År:" HorizontalAlignment="Left" Margin="60,216,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.126,0.636"/>
+       
 
     </Grid>
 </UserControl>

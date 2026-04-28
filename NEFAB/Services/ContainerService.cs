@@ -1,17 +1,17 @@
-﻿using System;
-using NEFAB.Domains;
-using NEFAB.Repositories.Interfaces;
+﻿using NEFAB.Domains;
 using NEFAB.Repositories;
+using NEFAB.Repositories.Interfaces;
+using System;
+//using System.ComponentModel;
 
 namespace NEFAB.Services
 {
     public class ContainerService 
     {
-        private readonly IRepoGetAddUpdateRemove<Container, string> _containerRepository;
+        
 
         //public ContainerService(IRepoGetAddUpdateRemove<Container, string> containerRepository)
-        public ContainerRepository ContainerRepository {  get; set; }
-
+        private readonly ContainerRepository _containerRepository;
         public ContainerService()
         {
             ContainerRepository = new ContainerRepository(); 
@@ -78,6 +78,67 @@ namespace NEFAB.Services
             
         }
 
+        public void Add(Container container)
+        {
+            if (string.IsNullOrEmpty(container.ContainerNo) || (container.Year == null) || (container.Week== null))
+            {
+                throw new ArgumentException("Udfyld venligst både ContainerNo, Uge og År.");
+            }
+
+            
+            if (container.ContainerNo.Length != 11)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt container nr.");
+            }
+           
+
+            for (int i = 0; i < container.ContainerNo.Length; i++)
+            {
+                if (i <= 3)
+                {
+                    char c = container.ContainerNo[i];
+                    if (!(c >= 'A' && c <= 'Z'))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
+                if (i > 3)
+                {
+                    if (!char.IsDigit(container.ContainerNo[i]))
+                    {
+                        throw new ArgumentException("Container nr er ikke af korrekt type: 'ABCD1234567'");
+                    }
+                }
+            }
+
+            if (container.Year <1949) 
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt År.");
+            }
+            
+            if (container.Week <=0 || container.Week >= 54)
+            {
+                throw new ArgumentException("Udfyld venligst et korrekt uge nr.");
+            }
+
+           
+            else
+            {
+                try 
+                {
+                    _containerRepository.Add(container);
+                }
+                catch 
+                { 
+                    throw new ArgumentException("Noget gik galt, prøv igen");
+                }
+
+                    
+               
+            }
+            
+        }
+
         public void Remove(Container container)
         {
             if (string.IsNullOrEmpty(container.ContainerNo))
@@ -85,7 +146,7 @@ namespace NEFAB.Services
                 throw new ArgumentException("Udfyld venligst ContainerNo.");
             }
 
-            Container? containerDB = ContainerRepository.GetByID(container.ContainerNo);
+            Container? containerDB = _containerRepository.GetByID(container.ContainerNo);
 
             if (containerDB == null)
             {
@@ -95,7 +156,7 @@ namespace NEFAB.Services
             {
                 try
                 {
-                    ContainerRepository.Remove(container);
+                    _containerRepository.Remove(container);
                 }
                 catch (Exception)
                 {
@@ -149,7 +210,7 @@ namespace NEFAB.Services
             }
 
 
-            Container? containerDB = ContainerRepository.GetByID(container.ContainerNo);
+            Container? containerDB = _containerRepository.GetByID(container.ContainerNo);
             if (containerDB == null)
             {
                 throw new Exception($"Container {container.ContainerNo} blev ikke fundet.");
@@ -159,12 +220,24 @@ namespace NEFAB.Services
             {
                 try
                 {
-                    ContainerRepository.Update(container);
+                    _containerRepository.Update(container);
                 }
                 catch (Exception ex) 
                 {
                     throw new Exception("Containeren kunne ikke opdateres");
                 }
+            }
+        }
+        public Container? GetByID(string containerNo)
+        {
+            try
+            {
+                Container? containerDB = _containerRepository.GetByID(containerNo);
+                return containerDB;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Container nummer kunne ikke findes");
             }
         }
     }
