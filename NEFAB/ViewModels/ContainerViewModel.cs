@@ -17,20 +17,20 @@ namespace NEFAB.ViewModels
 
         private readonly ContainerService _containerService;
 
-        private Container _selectedNewContainer;
-        public Container SelectedNewContainer
+        private ContainerNo _selectedNewContainer;
+        public ContainerNo SelectedNewContainer
         {
             get { return _selectedNewContainer; }
             set { _selectedNewContainer = value; OnPropertyChanged(); }
         }
-        private Container _selectedRemoveContainer;
-        public Container SelectedRemoveContainer 
+        private ContainerNo _selectedRemoveContainer;
+        public ContainerNo SelectedRemoveContainer 
         {
             get { return _selectedRemoveContainer; }
             set { _selectedRemoveContainer = value; OnPropertyChanged(); }
         }
-        private Container _selectedUpdateContainer;
-        public Container SelectedUpdateContainer 
+        private ContainerNo _selectedUpdateContainer;
+        public ContainerNo SelectedUpdateContainer 
         {
             get { return _selectedUpdateContainer; }
             set { _selectedUpdateContainer = value; OnPropertyChanged(); }
@@ -50,9 +50,9 @@ namespace NEFAB.ViewModels
             //IRepoGetAddUpdateRemove<Container, string> repo = new ContainerRepository(); 
             _containerService = new ContainerService();
 
-            SelectedNewContainer = new Container();
-            SelectedRemoveContainer = new Container();
-            SelectedUpdateContainer = new Container();
+            SelectedNewContainer = new ContainerNo();
+            SelectedRemoveContainer = new ContainerNo();
+            SelectedUpdateContainer = new ContainerNo();
         }
 
       

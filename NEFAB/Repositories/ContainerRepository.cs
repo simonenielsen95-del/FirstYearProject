@@ -9,12 +9,12 @@ using NEFAB.Repositories.Interfaces;
 
 namespace NEFAB.Repositories
 {
-    public class ContainerRepository : IRepoGetAddUpdateRemove<Container, string>
+    public class ContainerRepository : IRepoGetAddUpdateRemove<ContainerNo, string>
     {
         private readonly string connectionString;
 
        
-        private List<Container> containers;
+        private List<ContainerNo> containers;
 
         public ContainerRepository()
         {
@@ -22,19 +22,19 @@ namespace NEFAB.Repositories
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-          containers = new List<Container>();
+          containers = new List<ContainerNo>();
 
             connectionString = config.GetConnectionString("MyDBConnection");
         }
          
 
-        public List<Container> GetAll()
+        public List<ContainerNo> GetAll()
         {
             //kun inde i metoden. forsvinder når metoden er færdig, så vi ikke har forældet data i cachen
             //den gemmer ikke data til næste gang
             //men skal bruges fordi metoden skal returnere en list<container>
 
-            List<Container> result = new List<Container>();
+            List<ContainerNo> result = new List<ContainerNo>();
 
             //returner containere der allerede ligger i databasen
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -45,7 +45,7 @@ namespace NEFAB.Repositories
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    Container container = new Container()
+                    ContainerNo container = new ContainerNo()
                     {
                         ContainerNo = dr.GetString(0),
                         Week = dr.GetInt32(1),
@@ -58,7 +58,7 @@ namespace NEFAB.Repositories
           return result;
         }
 
-        public void Add(Container container)
+        public void Add(ContainerNo container)
         { 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -77,7 +77,7 @@ namespace NEFAB.Repositories
            containers.Add(container);
         }
 
-        public void Remove(Container container) 
+        public void Remove(ContainerNo container) 
 
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -93,10 +93,10 @@ namespace NEFAB.Repositories
             
         }
 
-        public Container? GetByID(string containerNo)
+        public ContainerNo? GetByID(string containerNo)
         {
 
-            Container? container = null; 
+            ContainerNo? container = null; 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
@@ -107,7 +107,7 @@ namespace NEFAB.Repositories
                 {
                     if (dr.Read())
                     {
-                        container = new Container() 
+                        container = new ContainerNo() 
                         {
                             ContainerNo = dr.GetString(0),
                             Week = dr.GetInt32(1), 
@@ -124,10 +124,10 @@ namespace NEFAB.Repositories
             return container;
         }
 
-        public List<Container> GetByWeek(int week, int year)
+        public List<ContainerNo> GetByWeek(int week, int year)
         {
 
-            List<Container> containers = new List<Container>();
+            List<ContainerNo> containers = new List<ContainerNo>();
 
            
 
@@ -138,7 +138,7 @@ namespace NEFAB.Repositories
                 using (SqlDataReader dr = cmd.ExecuteReader()) 
                 while (dr.Read())
                 {
-                    Container container = new Container()
+                    ContainerNo container = new ContainerNo()
                     {
                         ContainerNo = dr.GetString(0),
                         Week = dr.GetInt32(1), 
@@ -154,7 +154,7 @@ namespace NEFAB.Repositories
         }
 
         
-        public void Update(Container container)
+        public void Update(ContainerNo container)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {

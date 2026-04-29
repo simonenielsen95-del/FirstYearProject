@@ -18,8 +18,8 @@ namespace NEFAB.ViewModels
 
         private readonly PackageService _packageService;
 
-        private Container _selectedContainer;
-        public Container SelectedContainer
+        private ContainerNo _selectedContainer;
+        public ContainerNo SelectedContainer
         {
             get { return _selectedContainer; }
             set { _selectedContainer = value; OnPropertyChanged(); }
@@ -48,7 +48,7 @@ namespace NEFAB.ViewModels
             CreateNewPackageCommand = new CommandHandler(() => CreatePackage());
             _packageService = new PackageService();
 
-            SelectedContainer = new Container();
+            SelectedContainer = new ContainerNo();
             SelectedSupplier = new Supplier();
             SelectedPackage = new Package();
         }

@@ -29,7 +29,7 @@
                     <TextBlock Text="{Binding PackageWeight}" Margin="5"/>
                     <TextBlock Text="{Binding ProjectNo}" Margin="5"/>
                     <TextBlock Text="{Binding ProjectItemNo}" Margin="5"/>
-                    <TextBlock Text="{Binding Supplier}" Margin="5"/>
+                    <TextBlock Text="{Binding SupplierName}" Margin="5"/>
                     <TextBlock Text="{Binding InnerQuantity}" Margin="5"/>
                 </StackPanel>
             </DataTemplate>

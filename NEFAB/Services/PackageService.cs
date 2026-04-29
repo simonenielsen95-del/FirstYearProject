@@ -18,7 +18,7 @@ namespace NEFAB.Services
             _supplierService = new SupplierService();
         }
 
-        public void Add(Container container, Supplier supplier, Package package)
+        public void Add(ContainerNo container, Supplier supplier, Package package)
         {
             if (container.ContainerNo == null || supplier.SupplierName == null|| package.ProjectNo == null ||
                package.ProjectItemNo == null || package.PackageWeight == null || package.Amount == null || 
@@ -29,7 +29,7 @@ namespace NEFAB.Services
                     " vægt, længde, brede, højde, projekt-nummer og projet produkt nummer");
             }
 
-            Container containerDB = _containerService.GetByID(container.ContainerNo);
+            ContainerNo containerDB = _containerService.GetByID(container.ContainerNo);
             Supplier supplierDB = _supplierService.GetByID(supplier.SupplierName);
 
             try
