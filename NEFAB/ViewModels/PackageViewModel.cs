@@ -34,9 +34,32 @@ namespace NEFAB.ViewModels
         public string SupplierName { get; set; }
         public int InnerQuantity { get; set; }
 
-        public string? ContainerNo { get; }
 
-        public ObservableCollection<ContainerNo> OCContainerNos { get; set; }
+        private string? _containerNo;
+        public string? ContainerNo
+        {
+            get => _containerNo;
+            set
+            {
+                _containerNo = value;
+                OnPropertyChanged();
+                FilterPackages();
+            }
+        }
+
+        private void FilterPackages()
+        {
+            OCPackages.Clear();
+            if (string.IsNullOrWhiteSpace(ContainerNo))
+            {
+                foreach (Package package in packageRepository.GetAll())
+                {
+                    OCPackages.Add(package);
+                }
+            }
+        }
+
+        public ObservableCollection<Container> OCContainers { get; set; }
         public ObservableCollection<Package> OCPackages { get; set; } = new ObservableCollection<Package>();
 
         public PackageViewModel(NavigationStore navigationStore)
@@ -50,7 +73,7 @@ namespace NEFAB.ViewModels
             NavigateToPackageEditViewCommand = new NavigateCommand(packageEditNavigationService);
 
 
-            OCContainerNos = new ObservableCollection<ContainerNo>();
+            OCContainers = new ObservableCollection<Container>();
 
             foreach (Package package in packageRepository.GetAll())
             {
@@ -60,12 +83,12 @@ namespace NEFAB.ViewModels
         }
         public void LoadAllNotes()
         {
-            foreach (ContainerNo container in containerRepository.GetAll())
+            foreach (Container container in containerRepository.GetAll())
             {
-                OCContainerNos.Add(container);
+                OCContainers.Add(container);
             }
         }
     
 
-}
+    }
 }

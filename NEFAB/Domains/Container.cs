@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NEFAB.Domains
 {
-    public class ContainerNo
+    public class Container
     {
        
             public string? ContainerNo { get; set; }

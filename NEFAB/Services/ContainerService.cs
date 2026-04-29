@@ -17,7 +17,7 @@ namespace NEFAB.Services
 
         
 
-        public void Add(ContainerNo container)
+        public void Add(Container container)
         {
             if (string.IsNullOrEmpty(container.ContainerNo) || (container.Year == null) || (container.Week== null))
             {
@@ -78,14 +78,14 @@ namespace NEFAB.Services
             
         }
 
-        public void Remove(ContainerNo container)
+        public void Remove(Container container)
         {
             if (string.IsNullOrEmpty(container.ContainerNo))
             {
                 throw new ArgumentException("Udfyld venligst ContainerNo.");
             }
 
-            ContainerNo? containerDB = _containerRepository.GetByID(container.ContainerNo);
+            Container? containerDB = _containerRepository.GetByID(container.ContainerNo);
 
             if (containerDB == null)
             {
@@ -105,7 +105,7 @@ namespace NEFAB.Services
         }  
  
 
-        public void Update(ContainerNo container)
+        public void Update(Container container)
         {
             if (string.IsNullOrEmpty(container.ContainerNo) || container.Week == null || container.Year == null)
             {
@@ -149,7 +149,7 @@ namespace NEFAB.Services
             }
 
 
-            ContainerNo? containerDB = _containerRepository.GetByID(container.ContainerNo);
+            Container? containerDB = _containerRepository.GetByID(container.ContainerNo);
             if (containerDB == null)
             {
                 throw new Exception($"Container {container.ContainerNo} blev ikke fundet.");
@@ -167,11 +167,11 @@ namespace NEFAB.Services
                 }
             }
         }
-        public ContainerNo? GetByID(string containerNo)
+        public Container? GetByID(string containerNo)
         {
             try
             {
-                ContainerNo containerDB = _containerRepository.GetByID(containerNo);
+                Container containerDB = _containerRepository.GetByID(containerNo);
                 return containerDB;
             }
             catch (Exception ex)
