@@ -9,7 +9,7 @@
     <Grid>
         <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="900"/>
 
-        <Label Content="Supplier" HorizontalAlignment="Center" Margin="0,22,0,0" VerticalAlignment="Top" Height="56" Width="152" FontSize="36" FontWeight="Bold" Foreground="White"/>
+        <Label Content="Leverandør" HorizontalAlignment="Center" Margin="0,22,0,0" VerticalAlignment="Top" Height="56" Width="201" FontSize="36" FontWeight="Bold" Foreground="White"/>
         <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="35,365,0,0" VerticalAlignment="Top" Width="88" Height="35" FontSize="15" Background="#FF8CB3DB"/>
         <Label Content="opret:" HorizontalAlignment="Left" Margin="35,110,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
         <Label Content="nyt navn" HorizontalAlignment="Left" Margin="35,145,0,0" VerticalAlignment="Top"/>

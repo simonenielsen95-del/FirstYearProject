@@ -24,7 +24,7 @@
         <Label Content="Projekt nummer:" HorizontalAlignment="Left" Margin="307,283,0,0" VerticalAlignment="Top"/>
         <Label Content="Projekt produkt nummer:" HorizontalAlignment="Left" Margin="305,330,0,0" VerticalAlignment="Top"/>
         <Label Content="Billed:" HorizontalAlignment="Left" Margin="627,151,0,0" VerticalAlignment="Top"/>
-        <Label Content="Commentar:" HorizontalAlignment="Left" Margin="627,287,0,0" VerticalAlignment="Top"/>
+        <Label Content="Kommentar:" HorizontalAlignment="Left" Margin="627,287,0,0" VerticalAlignment="Top"/>
 
 
         <TextBox x:Name="txtContainerNo" HorizontalAlignment="Left" Margin="145,151,0,0" TextWrapping="Wrap" Text="{Binding SelectedContainer.ContainerNo, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />

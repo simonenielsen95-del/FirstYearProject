@@ -37,8 +37,8 @@
         </ListBox>
 
         <TextBox HorizontalAlignment="Left" Margin="162,151,0,0" TextWrapping="Wrap" Text="{Binding ContainerNo, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.462,-0.139"/>
-        <TextBlock HorizontalAlignment="Left" Margin="46,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Tast et Container No "/><LineBreak/><Run Text="og vælg en pakke"/></TextBlock>
-        <Label Content="Samlet antal InnerQuantity" HorizontalAlignment="Left" Margin="222,414,0,0" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="46,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Tast et Container Nr "/><LineBreak/><Run Text="og vælg en pakke"/></TextBlock>
+        <Label Content="Samlet antal IndreAntal" HorizontalAlignment="Left" Margin="222,414,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>

@@ -9,12 +9,12 @@
     <Grid>
         <Rectangle HorizontalAlignment="Center" Height="100" Fill="#144e8c" Stroke="Black" VerticalAlignment="Top" Width="900"/>
         <Button Content="Container" Command="{Binding NavigateToContainerViewCommand}" HorizontalAlignment="Left" Margin="199,302,0,0" VerticalAlignment="Top" FontSize="15" Width="80" Height="24" Background="#FF8CB3DB"/>
-        <Button Content="Employee" Command="{Binding NavigateToEmployeeViewCommand}" HorizontalAlignment="Left" Margin="330,302,0,0" VerticalAlignment="Top" Height="24" FontSize="15" Width="80" Background="#FF8CB3DB"/>
-        <Button Content="Supplier" Command="{Binding NavigateToSupplierViewCommand}" HorizontalAlignment="Right" Margin="0,302,330,0" VerticalAlignment="Top" Height="24" FontSize="15" Width="79" Background="#FF8CB3DB" Foreground="Black"/>
-        <Button Content="Package" Command="{Binding NavigateToPackageViewCommand}" HorizontalAlignment="Right" Margin="0,302,207,0" VerticalAlignment="Top" Height="24" FontSize="15" Width="79" Background="#FF8CB3DB" Foreground="Black"/>
+        <Button Content="Medarbejder" Command="{Binding NavigateToEmployeeViewCommand}" HorizontalAlignment="Left" Margin="330,302,0,0" VerticalAlignment="Top" Height="24" FontSize="15" Width="80" Background="#FF8CB3DB"/>
+        <Button Content="Leverandør" Command="{Binding NavigateToSupplierViewCommand}" HorizontalAlignment="Right" Margin="0,302,330,0" VerticalAlignment="Top" Height="24" FontSize="15" Width="79" Background="#FF8CB3DB" Foreground="Black"/>
+        <Button Content="Pakke" Command="{Binding NavigateToPackageViewCommand}" HorizontalAlignment="Right" Margin="0,302,207,0" VerticalAlignment="Top" Height="24" FontSize="15" Width="79" Background="#FF8CB3DB" Foreground="Black"/>
 
 
-        <Label Content="NEFAB HOME" HorizontalAlignment="Center" Margin="0,14,0,0" VerticalAlignment="Top" Height="72" Width="244" Foreground="White" FontSize="36" FontWeight="Bold"/>
+        <Label Content="NEFAB HJEM" HorizontalAlignment="Center" Margin="0,14,0,0" VerticalAlignment="Top" Height="72" Width="244" Foreground="White" FontSize="36" FontWeight="Bold"/>
         <Image HorizontalAlignment="Left" Height="141" Margin="278,125,0,0" VerticalAlignment="Top" Width="350" Source="/images/nefab logo.png"/>
 
     </Grid>
