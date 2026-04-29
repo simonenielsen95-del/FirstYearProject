@@ -7,7 +7,7 @@ namespace NEFAB.Domains
     public class Package
     {
         public int? PackageId { get; set; }
-        public int? ProjectNo { get; set; }
+        public long? ProjectNo { get; set; }
         public int? ProjectItemNo { get; set; }
         public int? PackageWeight { get; set; }
         public int? Amount { get; set; }
