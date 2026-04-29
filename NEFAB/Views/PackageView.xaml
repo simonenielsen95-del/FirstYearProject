@@ -8,13 +8,38 @@
              d:DesignHeight="500" d:DesignWidth="900">
     <Grid>
         <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="34,380,0,0" Width="88" Height="34" VerticalAlignment="Top"/>
-        <Button Content="Opret pakke" Command="{Binding NavigateToPackageCreateViewCommand}" HorizontalAlignment="Left" Margin="235,232,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
-        <Button Content="Rediger pakke" Command="{Binding NavigateToPackageEditViewCommand}" HorizontalAlignment="Center" Margin="0,232,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
-        <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="900"/>
-        <Image HorizontalAlignment="Left" Height="60" VerticalAlignment="Top" Width="150" Source="/images/nefab white.png" Margin="10,10,0,0"/>
-        <Label Content="Pakke oversigt" HorizontalAlignment="Center" Margin="0,22,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontWeight="Bold"/>
-        <Button Content="Slet pakke" HorizontalAlignment="Left" Margin="584,232,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
+        <Button Content="Opret ny pakke" Command="{Binding NavigateToPackageCreateViewCommand}" HorizontalAlignment="Left" Margin="626,128,0,0" VerticalAlignment="Top" Width="120" Height="29"/>
+        <Button Content="Rediger pakke" Command="{Binding NavigateToPackageEditViewCommand}" HorizontalAlignment="Left" Margin="488,373,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
+        <Button Content="Slet pakke" Command="{Binding NavigateToPackageRemoveViewCommand}" HorizontalAlignment="Left" Margin="626,368,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
 
+
+        <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="900"/>
+        <Image HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="1350" Source="/images/nefab white.png" Margin="10,24,0,0"/>
+
+        <Label Content="Find pakke:" HorizontalAlignment="Left" Margin="46,111,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="Pakke oversigt" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontWeight="Bold"/>
+
+
+        <ListBox ItemsSource="{Binding OCPackages}" Margin="97,201,94,137">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Amount}" Margin="5"/>
+                        <TextBlock Text="{Binding PackageWeight}" Margin="5"/>
+                        <TextBlock Text="{Binding ProjectNo}" Margin="5"/>
+                        <TextBlock Text="{Binding ProjectItemNo}" Margin="5"/>
+                        <TextBlock Text="{Binding SupplierName}" Margin="5"/>
+                        <TextBlock Text="{Binding InnerQuantity}" Margin="5"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <TextBox HorizontalAlignment="Left" Margin="162,151,0,0" TextWrapping="Wrap" Text="{Binding ContainerNo, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.462,-0.139"/>
+        <TextBlock HorizontalAlignment="Left" Margin="46,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Tast et Container No "/><LineBreak/><Run Text="og vælg en pakke"/></TextBlock>
+        <Label Content="Samlet antal InnerQuantity" HorizontalAlignment="Left" Margin="222,414,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>
+
