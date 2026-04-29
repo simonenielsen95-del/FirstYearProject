@@ -39,7 +39,7 @@
         <TextBox x:Name="txtUpdateProjectNo" HorizontalAlignment="Left" Margin="442,278,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ProjectNo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtUpdateProjectItemNo" HorizontalAlignment="Left" Margin="442,333,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ProjectItemNo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Margin="608,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.Comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Center" Width="154" Height="150" TextChanged="TextBox_TextChanged_1"/>
-        <Button Content="Gem" HorizontalAlignment="Left" Margin="727,324,0,0" VerticalAlignment="Top" Click="Button_Click" FontSize="15"/>
+        <Button Content="Gem" Command="{Binding EditPackageCommand}" HorizontalAlignment="Left" Margin="727,324,0,0" VerticalAlignment="Top" FontSize="15"/>
 
 
 
