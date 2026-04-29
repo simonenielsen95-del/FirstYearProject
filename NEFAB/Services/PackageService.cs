@@ -46,5 +46,17 @@ namespace NEFAB.Services
             }
    
         }
+        public List<Package> GetByContainerNo(string containerNo) 
+        {
+            try
+            {
+                List<Package> packages = _packageRepository.GetPackagesByContainerNo(containerNo);
+                return packages;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("pakker kunne ikke findes");
+            }
+        }
     }
 }

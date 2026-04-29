@@ -9,7 +9,7 @@ using NEFAB.Commands;
 using NEFAB.Domains;
 using NEFAB.Repositories;
 using NEFAB.Services;
-using NEFAB.Services;
+
 using NEFAB.Stores;
 using NEFAB.ViewModels;
 using NEFAB.Views;
@@ -24,8 +24,9 @@ namespace NEFAB.ViewModels
         public ICommand NavigateToPackageEditViewCommand { get; }
 
 
-        private ContainerRepository containerRepository = new ContainerRepository();
-        private PackageRepository packageRepository = new PackageRepository();
+        //private ContainerRepository containerRepository = new ContainerRepository();
+        //private PackageRepository packageRepository = new PackageRepository();
+        private readonly PackageService _packageService;
 
         public int Amount { get; set; }
         public int PackageWeight { get; set; }
@@ -50,13 +51,16 @@ namespace NEFAB.ViewModels
         private void FilterPackages()
         {
             OCPackages.Clear();
-            if (string.IsNullOrWhiteSpace(ContainerNo))
-            {
-                foreach (Package package in packageRepository.GetAll())
+
+            //if (string.IsNullOrWhiteSpace(ContainerNo))
+            //{
+            List<Package>? packages = _packageService.GetByContainerNo(ContainerNo);
+
+                foreach (Package package in packages)
                 {
                     OCPackages.Add(package);
                 }
-            }
+            //}
         }
 
         public ObservableCollection<Container> OCContainers { get; set; }
@@ -72,27 +76,28 @@ namespace NEFAB.ViewModels
             NavigateToPackageCreateViewCommand = new NavigateCommand(packageCreateNavigationService);
             NavigateToPackageEditViewCommand = new NavigateCommand(packageEditNavigationService);
 
+            _packageService = new PackageService();
 
             OCContainers = new ObservableCollection<Container>();
             OCPackages = new ObservableCollection<Package>();
 
-            LoadAllPackages();
-            LoadAllContainers();
+            //LoadAllPackages();
+            //LoadAllContainers();
         }
-        public void LoadAllContainers()
-        {
-            foreach (Container container in containerRepository.GetAll())
-            {
-                OCContainers.Add(container);
-            }
-        }
-        public void LoadAllPackages() 
-        {
-            foreach (Package package in packageRepository.GetAll())
-            {
-                OCPackages.Add(package);
-            }
-        }
+        //public void LoadAllContainers()
+        //{
+        //    foreach (Container container in containerRepository.GetAll())
+        //    {
+        //        OCContainers.Add(container);
+        //    }
+        //}
+        //public void LoadAllPackages() 
+        //{
+        //    foreach (Package package in packageRepository.GetAll())
+        //    {
+        //        OCPackages.Add(package);
+        //    }
+        //}
     
 
     }
