@@ -57,11 +57,11 @@ namespace NEFAB.ViewModels
             try
             {
                 _packageService.Add(SelectedContainer, SelectedSupplier, SelectedPackage);
-                MessageBox.Show("Pakken er blevet redigeret", "Succes", MessageBoxButton.OK);
+                MessageBox.Show("Pakken er blevet opdateret", "Succes", MessageBoxButton.OK);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Pakken kan ikke redigeres! {ex}", "Fejl", MessageBoxButton.OK);
+                MessageBox.Show($"Pakken kan ikke opdateres! {ex}", "Fejl", MessageBoxButton.OK);
             }
 
         }
