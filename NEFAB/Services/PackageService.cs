@@ -45,6 +45,10 @@ namespace NEFAB.Services
 
         public void Update(Container container, Supplier supplier, Package package)
         {
+            if (package.PackageId == null)
+            {
+                throw new ArgumentException("Pakken skal have et id for at kunne opdateres");
+            }
 
             if (container.ContainerNo == null || supplier.SupplierName == null || package.ProjectNo == null ||
                 package.ProjectItemNo == null || package.PackageWeight == null || package.Amount == null ||
