@@ -54,6 +54,18 @@ namespace NEFAB.Services
                 throw new ArgumentException("Udfyld alle basis informationer om pakken: Container nummer, leverandør, indholdsmængde, antal pakker," +
                     " vægt, længde, bredde, højde, projekt-nummer og projekt produkt nummer");
             }
+
+            Container containerDB = _containerService.GetByID(container.ContainerNo);
+            Supplier supplierDB = _supplierService.GetByID(supplier.SupplierName);
+
+            try
+            {
+                //_packageRepo.Update(package, container.ContainerNo, supplier.SupplierName);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("pakken kunne ikke opdateres");
+            }
         }
     }
 }
