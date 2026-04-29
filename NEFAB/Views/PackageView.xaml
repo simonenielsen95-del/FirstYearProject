@@ -20,21 +20,21 @@
         <Label Content="Pakke oversigt" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontWeight="Bold"/>
 
 
-        <ListBox
-            ItemsSource="{Binding OCPackages}" Margin="97,201,94,87"/>
-        <ListBox.ItemTemplate>
-            <DataTemplate>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Amount}" Margin="5"/>
-                    <TextBlock Text="{Binding PackageWeight}" Margin="5"/>
-                    <TextBlock Text="{Binding ProjectNo}" Margin="5"/>
-                    <TextBlock Text="{Binding ProjectItemNo}" Margin="5"/>
-                    <TextBlock Text="{Binding SupplierName}" Margin="5"/>
-                    <TextBlock Text="{Binding InnerQuantity}" Margin="5"/>
-                </StackPanel>
-            </DataTemplate>
+        <ListBox ItemsSource="{Binding OCPackages}" Margin="97,201,94,87">
+            
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Amount}" Margin="5"/>
+                        <TextBlock Text="{Binding PackageWeight}" Margin="5"/>
+                        <TextBlock Text="{Binding ProjectNo}" Margin="5"/>
+                        <TextBlock Text="{Binding ProjectItemNo}" Margin="5"/>
+                        <TextBlock Text="{Binding SupplierName}" Margin="5"/>
+                        <TextBlock Text="{Binding InnerQuantity}" Margin="5"/>
+                    </StackPanel>
+                </DataTemplate>
             </ListBox.ItemTemplate>
-        <ListBox/>
+        </ListBox>
 
         <TextBox HorizontalAlignment="Left" Margin="162,151,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.462,-0.139"/>
         <TextBlock HorizontalAlignment="Left" Margin="46,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Tast et Container No "/><LineBreak/><Run Text="og vælg en pakke"/></TextBlock>
