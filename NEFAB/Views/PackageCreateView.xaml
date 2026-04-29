@@ -29,7 +29,7 @@
 
         <TextBox x:Name="txtContainerNo" HorizontalAlignment="Left" Margin="145,151,0,0" TextWrapping="Wrap" Text="{Binding SelectedContainer.ContainerNo, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
         <TextBox x:Name="txtSupplier" HorizontalAlignment="Left" Margin="145,195,0,0" TextWrapping="Wrap" Text="{Binding SelectedSupplier.SupplierName, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
-        <TextBox x:Name="txtInnerQuantaty" HorizontalAlignment="Left" Margin="145,236,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.InnerQuantaty, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtInnerQuantaty" HorizontalAlignment="Left" Margin="145,236,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.InnerQuantity, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
         <TextBox x:Name="txtAmount" HorizontalAlignment="Left" Margin="145,287,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.Amount, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
         <TextBox x:Name="txtWeight" HorizontalAlignment="Left" Margin="145,334,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageWeight, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
         <TextBox x:Name="txtLenth" HorizontalAlignment="Left" Margin="465,155,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageLength, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
