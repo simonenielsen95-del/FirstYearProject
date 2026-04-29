@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NEFAB.Repositories;
 
 namespace NEFAB.Services
 {
@@ -10,19 +11,22 @@ namespace NEFAB.Services
         //private readonly _packageRepository;
         private readonly ContainerService _containerService;
         private readonly SupplierService _supplierService;
+        private readonly PackageRepository _packageRepository;
+
 
         public PackageService() 
         {
             //_packageRepository = new PackageRepository();
             _containerService = new ContainerService();
             _supplierService = new SupplierService();
+            _packageRepository = new PackageRepository();
         }
 
         public void Add(Container container, Supplier supplier, Package package)
         {
             if (container.ContainerNo == null || supplier.SupplierName == null|| package.ProjectNo == null ||
                package.ProjectItemNo == null || package.PackageWeight == null || package.Amount == null || 
-               package.InnerQuantaty == null || package.PackageLength == null || package.PackageWidth == null ||
+               package.InnerQuantity == null || package.PackageLength == null || package.PackageWidth == null ||
                package.PackageHeight == null)
             {
                 throw new ArgumentException("Udfyld alle basis informationer om pakken: Container nummer, leverandør, inholdsmængde, antal pakker," +
@@ -34,7 +38,7 @@ namespace NEFAB.Services
 
             try
             {
-                //_packageRepo.Add(package, containerDB.ContainerNo, supplierDB.SupplierName);
+                _packageRepository.Add(container, supplier, package);
             }
             catch (Exception ex)
             {
