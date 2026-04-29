@@ -60,7 +60,7 @@ namespace NEFAB.ViewModels
         }
 
         public ObservableCollection<Container> OCContainers { get; set; }
-        public ObservableCollection<Package> OCPackages { get; set; } = new ObservableCollection<Package>();
+        public ObservableCollection<Package> OCPackages { get; set; } 
 
         public PackageViewModel(NavigationStore navigationStore)
         {
@@ -74,18 +74,23 @@ namespace NEFAB.ViewModels
 
 
             OCContainers = new ObservableCollection<Container>();
+            OCPackages = new ObservableCollection<Package>();
 
-            foreach (Package package in packageRepository.GetAll())
-            {
-                OCPackages.Add(package);
-            }
-            LoadAllNotes();
+            LoadAllPackages();
+            LoadAllContainers();
         }
-        public void LoadAllNotes()
+        public void LoadAllContainers()
         {
             foreach (Container container in containerRepository.GetAll())
             {
                 OCContainers.Add(container);
+            }
+        }
+        public void LoadAllPackages() 
+        {
+            foreach (Package package in packageRepository.GetAll())
+            {
+                OCPackages.Add(package);
             }
         }
     
