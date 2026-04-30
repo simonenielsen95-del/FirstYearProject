@@ -20,17 +20,17 @@
         <Label Content="Pakke oversigt" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontWeight="Bold"/>
 
 
-        <ListBox ItemsSource="{Binding OCPackages}" Margin="97,201,94,137">
+        <ListBox x:Name ="PackageList" SelectedItem="{Binding SelectedPackage, Mode=TwoWay}" ItemsSource="{Binding OCPackages, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="97,201,94,137">
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Amount}" Margin="5"/>
-                        <TextBlock Text="{Binding PackageWeight}" Margin="5"/>
-                        <TextBlock Text="{Binding ProjectNo}" Margin="5"/>
-                        <TextBlock Text="{Binding ProjectItemNo}" Margin="5"/>
-                        <TextBlock Text="{Binding SupplierName}" Margin="5"/>
-                        <TextBlock Text="{Binding InnerQuantity}" Margin="5"/>
+                        <TextBlock Text="{Binding SelectedPackage.Amount}" Margin="5"/>
+                        <TextBlock Text="{Binding SelectedPackage.PackageWeight}" Margin="5"/>
+                        <TextBlock Text="{Binding SelectedPackage.ProjectNo}" Margin="5"/>
+                        <TextBlock Text="{Binding SelectedPackage.ProjectItemNo}" Margin="5"/>
+                        <TextBlock Text="{Binding SelectedPackage.SupplierName}" Margin="5"/>
+                        <TextBlock Text="{Binding SelectedPackage.InnerQuantity}" Margin="5"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

@@ -38,7 +38,7 @@ namespace NEFAB.ViewModels
             set { _selectedPackage = value; OnPropertyChanged(); }
         }
 
-        public PackageEditViewModel(NavigationStore navigationStore)
+        public PackageEditViewModel(NavigationStore navigationStore, Package selectedPackage)
         {
             NavigationService packageNavigationService = new NavigationService(navigationStore, () => new PackageViewModel(navigationStore));
 
@@ -50,6 +50,8 @@ namespace NEFAB.ViewModels
             SelectedContainer = new Container();
             SelectedSupplier = new Supplier();
             SelectedPackage = new Package();
+
+            SelectedPackage = selectedPackage;
         }
 
         public void EditPackage()

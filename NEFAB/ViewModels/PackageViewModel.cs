@@ -25,6 +25,13 @@ namespace NEFAB.ViewModels
 
         public ICommand SearchPackages {  get; }
 
+        private Package _selectedPackage;
+
+        public Package SelectedPackage
+        {
+            get { return _selectedPackage; }
+            set { _selectedPackage = value; OnPropertyChanged(); }
+        }
 
         private readonly PackageService _packageService;
 
@@ -71,11 +78,19 @@ namespace NEFAB.ViewModels
         {
             NavigationService homeNavigationService = new NavigationService(navigationStore, () => new HomeViewModel(navigationStore));
             NavigationService packageCreateNavigationService = new NavigationService(navigationStore, () => new PackageCreateViewModel(navigationStore));
-            NavigationService packageEditNavigationService = new NavigationService(navigationStore, () => new PackageEditViewModel(navigationStore));
+            NavigationService packageEditNavigationService = new NavigationService(navigationStore, () => new PackageEditViewModel(navigationStore, SelectedPackage));
 
             NavigateToHomeViewCommand = new NavigateCommand(homeNavigationService);
             NavigateToPackageCreateViewCommand = new NavigateCommand(packageCreateNavigationService);
-            NavigateToPackageEditViewCommand = new NavigateCommand(packageEditNavigationService);
+          
+            NavigateToPackageEditViewCommand = new CommandHandler(() => 
+            {
+                if (SelectedPackage != null)
+                {
+                    var editViewModel = new PackageEditViewModel(navigationStore, SelectedPackage);
+                    navigationStore.CurrentViewModel = editViewModel;
+                }
+            }, () => true);
 
             SearchPackages = new CommandHandler(() => FilterPackages());
 
