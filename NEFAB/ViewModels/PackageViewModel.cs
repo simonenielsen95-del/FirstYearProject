@@ -8,6 +8,7 @@ using NEFAB.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Eventing.Reader;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows;
@@ -86,7 +87,7 @@ namespace NEFAB.ViewModels
             NavigateToPackageEditViewCommand = new CommandHandler(() => 
             {
                 if (SelectedPackage != null)
-                {
+                { 
                     var editViewModel = new PackageEditViewModel(navigationStore, SelectedPackage);
                     navigationStore.CurrentViewModel = editViewModel;
                 }
