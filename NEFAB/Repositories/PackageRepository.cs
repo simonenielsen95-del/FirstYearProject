@@ -170,6 +170,7 @@ namespace NEFAB.Repositories
                 using (SqlCommand cmd = new SqlCommand("spUpdatePackage", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@PackageId", SqlDbType.BigInt).Value = package.PackageId;
                     cmd.Parameters.Add("@ProjectNo", SqlDbType.BigInt).Value = package.ProjectNo;
                     cmd.Parameters.Add("@ProjectItemNo", SqlDbType.Int).Value = package.ProjectItemNo;
                     cmd.Parameters.Add("@PackageWeight", SqlDbType.Int).Value = package.PackageWeight;
