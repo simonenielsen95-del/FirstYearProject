@@ -7,10 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="900">
     <Grid>
-        <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="34,380,0,0" Width="88" Height="34" VerticalAlignment="Top"/>
+        <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="34,393,0,0" Width="88" Height="34" VerticalAlignment="Top"/>
         <Button Content="Opret ny pakke" Command="{Binding NavigateToPackageCreateViewCommand}" HorizontalAlignment="Left" Margin="626,128,0,0" VerticalAlignment="Top" Width="120" Height="29"/>
-        <Button Content="Rediger pakke" Command="{Binding NavigateToPackageEditViewCommand}" HorizontalAlignment="Left" Margin="488,373,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
-        <Button Content="Slet pakke" Command="{Binding NavigateToPackageRemoveViewCommand}" HorizontalAlignment="Left" Margin="626,368,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
+        <Button Content="Rediger pakke" Command="{Binding NavigateToPackageEditViewCommand}" HorizontalAlignment="Left" Margin="487,398,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
+        <Button Content="Slet pakke" Command="{Binding NavigateToPackageRemoveViewCommand}" HorizontalAlignment="Left" Margin="626,398,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
 
 
         <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="900"/>
@@ -20,7 +20,7 @@
         <Label Content="Pakke oversigt" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontWeight="Bold"/>
 
 
-        <ListBox x:Name ="PackageList" SelectedItem="{Binding SelectedPackage, Mode=TwoWay}" ItemsSource="{Binding OCPackages, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="97,201,94,137">
+        <ListBox x:Name ="PackageList" SelectedItem="{Binding SelectedPackage, Mode=TwoWay}" ItemsSource="{Binding OCPackages, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="56,217,135,121">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -33,19 +33,19 @@
                             <StackPanel>
                                 <Grid Background="#144e8c">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*"/>
-                                        <ColumnDefinition Width="2*"/>
-                                        <ColumnDefinition Width="2*"/>
-                                        <ColumnDefinition Width="2*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="4*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="Amount" Grid.Column="0" FontWeight="Bold" Margin="5" Foreground="White"/>
-                                    <TextBlock Text="Vægt" Grid.Column="1" FontWeight="Bold" Margin="5" Foreground="White"/>
-                                    <TextBlock Text="Project No" Grid.Column="2" FontWeight="Bold" Margin="5" Foreground="White"/>
-                                    <TextBlock Text="Item No" Grid.Column="3" FontWeight="Bold" Margin="5" Foreground="White"/>
-                                    <TextBlock Text="Leverandør" Grid.Column="4" FontWeight="Bold" Margin="5" Foreground="White"/>
-                                    <TextBlock Text="Inner Qty" Grid.Column="5" FontWeight="Bold" Margin="5" Foreground="White"/>
+                                    <TextBlock Text="         Leverandør" Grid.Column="0" FontWeight="Bold" Margin="5" Foreground="White"/>
+                                    <TextBlock Text="       Antal" Grid.Column="1" FontWeight="Bold" Margin="5" Foreground="White"/>
+                                    <TextBlock Text="Inner Q'ty" Grid.Column="2" FontWeight="Bold" Margin="5" Foreground="White"/>
+                                    <TextBlock Text="Vægt" Grid.Column="3" FontWeight="Bold" Margin="5" Foreground="White"/>
+                                    <TextBlock Text="PO NO." Grid.Column="4" FontWeight="Bold" Margin="5" Foreground="White"/>
+                                    <TextBlock Text="PO ITEM NO." Grid.Column="5" FontWeight="Bold" Margin="5" Foreground="White"/>
                                 </Grid>
                                 <ItemsPresenter />
                             </StackPanel>
@@ -64,12 +64,13 @@
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Amount}" Grid.Column="0" Margin="5"/>
-                        <TextBlock Text="{Binding PackageWeight}" Grid.Column="1" Margin="5"/>
-                        <TextBlock Text="{Binding ProjectNo}" Grid.Column="2" Margin="5"/>
-                        <TextBlock Text="{Binding ProjectItemNo}" Grid.Column="3" Margin="5"/>
-                        <TextBlock Text="{Binding SupplierName}" Grid.Column="4" Margin="5"/>
-                        <TextBlock Text="{Binding InnerQuantity}" Grid.Column="5" Margin="5"/>
+                        <TextBlock Text="{Binding SupplierName}" Grid.Column="0" Margin="5"/>
+                        <TextBlock Text="{Binding Amount}" Grid.Column="1" Margin="5"/>
+                        <TextBlock Text="{Binding InnerQuantity}" Grid.Column="2" Margin="5"/>
+                        <TextBlock Text="{Binding PackageWeight}" Grid.Column="3" Margin="5"/>
+                        <TextBlock Text="{Binding ProjectNo}" Grid.Column="4" Margin="5"/>
+                        <TextBlock Text="{Binding ProjectItemNo}" Grid.Column="5" Margin="5"/>
+
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -77,8 +78,18 @@
 
         <TextBox HorizontalAlignment="Left" Margin="162,151,0,0" TextWrapping="Wrap" Text="{Binding Container.ContainerNo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.462,-0.139"/>
         <TextBlock HorizontalAlignment="Left" Margin="46,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Tast et Container No "/><LineBreak/><Run Text="og vælg en pakke"/></TextBlock>
-        <Label Content="Samlet antal InnerQuantity" HorizontalAlignment="Left" Margin="222,414,0,0" VerticalAlignment="Top"/>
+        <Label Content="" HorizontalAlignment="Left" Margin="222,414,0,0" VerticalAlignment="Top"/>
         <Button Content="Søg" Command="{Binding SearchPackages}" HorizontalAlignment="Left" Margin="321,160,0,0" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="429,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        
+        <!--uge-->
+        <Label Content="Uge:" HorizontalAlignment="Left" Margin="606,187,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.507,0.603"/>
+        <TextBox HorizontalAlignment="Left" Margin="645,192,0,0" TextWrapping="Wrap" Text="{Binding Container.Week, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+
+
+        <TextBox HorizontalAlignment="Left" Margin="189,384,0,0" TextWrapping="Wrap" Text="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="72" IsEnabled="False"/>
+        <TextBox HorizontalAlignment="Left" Margin="273,384,0,0" TextWrapping="Wrap" Text="{Binding TotalInnerQuantity, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="72" IsEnabled="False" RenderTransformOrigin="0.5,0.631"/>
+        <Label Content="Samlet:" HorizontalAlignment="Left" Margin="140,380,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>
