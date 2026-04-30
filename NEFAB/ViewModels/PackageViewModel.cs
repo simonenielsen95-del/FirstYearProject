@@ -8,6 +8,7 @@ using NEFAB.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Eventing.Reader;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows;
@@ -34,7 +35,7 @@ namespace NEFAB.ViewModels
         }
 
         private readonly PackageService _packageService;
-
+        private readonly ContainerService _containerService;
 
 
         private Container _container;
@@ -49,6 +50,20 @@ namespace NEFAB.ViewModels
             }
         }
 
+        private int _totalAmount;
+        public int TotalAmount
+        {
+            get { return _totalAmount; }
+            set { _totalAmount = value; OnPropertyChanged(); }
+        }
+
+        private int _totalInnerQuantity;
+        public int TotalInnerQuantity
+        {
+            get { return _totalInnerQuantity; }
+            set { _totalInnerQuantity = value; OnPropertyChanged(); }
+        }
+
         private void FilterPackages()
         {
             OCPackages.Clear();
@@ -60,10 +75,24 @@ namespace NEFAB.ViewModels
 
             try
             {
-                foreach (Package package in _packageService.GetByContainerNo(Container.ContainerNo))
+                var foundContainer = _containerService.GetByID(Container.ContainerNo);
+                if (foundContainer != null)
+                {
+                    Container = foundContainer;
+                }
+
+                int calculatedAmount = 0;
+                int calculatedInnerQuantity = 0;
+
+                foreach (Package package in _packageService.GetByContainerNo(Container.ContainerNo)) //kalkulation
                 {
                     OCPackages.Add(package);
+                    calculatedAmount += package.Amount ?? 0;
+                    calculatedInnerQuantity += package.InnerQuantity ?? 0;
                 }
+
+                TotalAmount = calculatedAmount;
+                TotalInnerQuantity = calculatedInnerQuantity;
             }
             catch (Exception ex)
             {
@@ -86,7 +115,7 @@ namespace NEFAB.ViewModels
             NavigateToPackageEditViewCommand = new CommandHandler(() => 
             {
                 if (SelectedPackage != null)
-                {
+                { 
                     var editViewModel = new PackageEditViewModel(navigationStore, SelectedPackage);
                     navigationStore.CurrentViewModel = editViewModel;
                 }
@@ -95,6 +124,7 @@ namespace NEFAB.ViewModels
             SearchPackages = new CommandHandler(() => FilterPackages());
 
             _packageService = new PackageService();
+            _containerService = new ContainerService();
 
             OCContainers = new ObservableCollection<Container>();
             OCPackages = new ObservableCollection<Package>();
