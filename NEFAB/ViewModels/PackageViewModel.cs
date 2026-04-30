@@ -23,7 +23,7 @@ namespace NEFAB.ViewModels
         public ICommand NavigateToHomeViewCommand { get; }
         public ICommand NavigateToPackageCreateViewCommand { get; }
         public ICommand NavigateToPackageEditViewCommand { get; }
-
+        public ICommand RemovePackageCommand { get; }
         public ICommand SearchPackages {  get; }
 
         private Package _selectedPackage;
@@ -101,7 +101,7 @@ namespace NEFAB.ViewModels
         }
 
         public ObservableCollection<Container> OCContainers { get; set; }
-        public ObservableCollection<Package> OCPackages { get; set; } 
+        public ObservableCollection<Package> OCPackages { get; set; }
 
         public PackageViewModel(NavigationStore navigationStore)
         {
@@ -111,11 +111,11 @@ namespace NEFAB.ViewModels
 
             NavigateToHomeViewCommand = new NavigateCommand(homeNavigationService);
             NavigateToPackageCreateViewCommand = new NavigateCommand(packageCreateNavigationService);
-          
-            NavigateToPackageEditViewCommand = new CommandHandler(() => 
+
+            NavigateToPackageEditViewCommand = new CommandHandler(() =>
             {
                 if (SelectedPackage != null)
-                { 
+                {
                     var editViewModel = new PackageEditViewModel(navigationStore, SelectedPackage);
                     navigationStore.CurrentViewModel = editViewModel;
                 }
@@ -130,9 +130,9 @@ namespace NEFAB.ViewModels
             OCPackages = new ObservableCollection<Package>();
 
             Container = new Container();
-            
+
         }
-       
+
 
     }
 }
