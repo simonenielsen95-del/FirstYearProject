@@ -5,7 +5,10 @@ using NEFAB.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 //using System.ComponentModel;
+
+//using System.ComponentModel;
 using System.Data;
+//using System.IO.Packaging;
 using System.Xml.Linq;
 
 namespace NEFAB.Repositories
@@ -158,6 +161,30 @@ namespace NEFAB.Repositories
                 }
             }
             return result;
+        }
+        public void Update(Package package)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("spUpdatePackage", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@ProjectNo", SqlDbType.BigInt).Value = package.ProjectNo;
+                    cmd.Parameters.Add("@ProjectItemNo", SqlDbType.Int).Value = package.ProjectItemNo;
+                    cmd.Parameters.Add("@PackageWeight", SqlDbType.Int).Value = package.PackageWeight;
+                    cmd.Parameters.Add("@Amount", SqlDbType.Int).Value = package.Amount;
+                    cmd.Parameters.Add("@InnerQuantity", SqlDbType.Int).Value = package.InnerQuantity;
+                    cmd.Parameters.Add("@PackageLength", SqlDbType.Float).Value = package.PackageLength;
+                    cmd.Parameters.Add("@PackageWidth", SqlDbType.Float).Value = package.PackageWidth;
+                    cmd.Parameters.Add("@PackageHeight", SqlDbType.Float).Value = package.PackageHeight;
+                    cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, 400).Value = package.Comment ?? (object)DBNull.Value;
+                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = package.ContainerNo;
+                    cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar, 100).Value = package.SupplierName;
+                    cmd.ExecuteNonQuery();
+                    packages.Add(package);
+                }
+            }
         }
     }
 }

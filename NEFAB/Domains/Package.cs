@@ -16,9 +16,9 @@ namespace NEFAB.Domains
         public float? PackageWidth { get; set; }
         public float? PackageHeight { get; set; }
         public string? Comment { get; set; }
-        
 
 
+        //navigation properties:
         public string? ContainerNo { get; set; }
         public string? SupplierName { get; set; }
         //link og udvidelse?
