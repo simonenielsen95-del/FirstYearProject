@@ -73,7 +73,7 @@ namespace NEFAB.ViewModels
                 return;
             }
 
-            try
+            try //uge
             {
                 var foundContainer = _containerService.GetByID(Container.ContainerNo);
                 if (foundContainer != null)
@@ -84,7 +84,7 @@ namespace NEFAB.ViewModels
                 int calculatedAmount = 0;
                 int calculatedInnerQuantity = 0;
 
-                foreach (Package package in _packageService.GetByContainerNo(Container.ContainerNo)) //kalkulation
+                foreach (Package package in _packageService.GetByContainerNo(Container.ContainerNo)) //beregning
                 {
                     OCPackages.Add(package);
                     calculatedAmount += package.Amount ?? 0;
