@@ -23,6 +23,13 @@ namespace NEFAB.ViewModels
         public ICommand NavigateToPackageCreateViewCommand { get; }
         public ICommand NavigateToPackageEditViewCommand { get; }
 
+        private Package _selectedPackage;
+
+        public Package SelectedPackage
+        {
+            get { return _selectedPackage; }
+            set { _selectedPackage = value; OnPropertyChanged(); }
+        }
 
         private ContainerRepository containerRepository = new ContainerRepository();
         private PackageRepository packageRepository = new PackageRepository();
@@ -66,11 +73,19 @@ namespace NEFAB.ViewModels
         {
             NavigationService homeNavigationService = new NavigationService(navigationStore, () => new HomeViewModel(navigationStore));
             NavigationService packageCreateNavigationService = new NavigationService(navigationStore, () => new PackageCreateViewModel(navigationStore));
-            NavigationService packageEditNavigationService = new NavigationService(navigationStore, () => new PackageEditViewModel(navigationStore));
+            NavigationService packageEditNavigationService = new NavigationService(navigationStore, () => new PackageEditViewModel(navigationStore, SelectedPackage));
 
             NavigateToHomeViewCommand = new NavigateCommand(homeNavigationService);
             NavigateToPackageCreateViewCommand = new NavigateCommand(packageCreateNavigationService);
-            NavigateToPackageEditViewCommand = new NavigateCommand(packageEditNavigationService);
+          
+            NavigateToPackageEditViewCommand = new CommandHandler(() => 
+            {
+                if (SelectedPackage != null)
+                {
+                    var editViewModel = new PackageEditViewModel(navigationStore, SelectedPackage);
+                    navigationStore.CurrentViewModel = editViewModel;
+                }
+            }, () => true);
 
 
             OCContainers = new ObservableCollection<Container>();
