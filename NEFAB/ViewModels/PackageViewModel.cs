@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Windows.Controls;
-using System.Windows.Input;
-using NEFAB.Commands;
+﻿using NEFAB.Commands;
 using NEFAB.Domains;
 using NEFAB.Repositories;
-using NEFAB.Services;
 using NEFAB.Services;
 using NEFAB.Stores;
 using NEFAB.ViewModels;
 using NEFAB.Views;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 
 namespace NEFAB.ViewModels
@@ -23,6 +23,8 @@ namespace NEFAB.ViewModels
         public ICommand NavigateToPackageCreateViewCommand { get; }
         public ICommand NavigateToPackageEditViewCommand { get; }
 
+        public ICommand SearchPackages {  get; }
+
         private Package _selectedPackage;
 
         public Package SelectedPackage
@@ -31,38 +33,41 @@ namespace NEFAB.ViewModels
             set { _selectedPackage = value; OnPropertyChanged(); }
         }
 
-        private ContainerRepository containerRepository = new ContainerRepository();
-        private PackageRepository packageRepository = new PackageRepository();
-
-        public int Amount { get; set; }
-        public int PackageWeight { get; set; }
-       public int ProjectNo { get; set; }
-        public int ProjectItemNo { get; set; }
-        public string SupplierName { get; set; }
-        public int InnerQuantity { get; set; }
+        private readonly PackageService _packageService;
 
 
-        private string? _containerNo;
-        public string? ContainerNo
+
+        private Container _container;
+        public Container Container
         {
-            get => _containerNo;
+            get { return _container; } 
             set
             {
-                _containerNo = value;
+                _container = value;
                 OnPropertyChanged();
-                FilterPackages();
+                
             }
         }
 
         private void FilterPackages()
         {
             OCPackages.Clear();
-            if (string.IsNullOrWhiteSpace(ContainerNo))
+
+            if (Container == null || string.IsNullOrWhiteSpace(Container.ContainerNo))
             {
-                foreach (Package package in packageRepository.GetAll())
+                return;
+            }
+
+            try
+            {
+                foreach (Package package in _packageService.GetByContainerNo(Container.ContainerNo))
                 {
                     OCPackages.Add(package);
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Pakker kunne ikke findes! {ex}", "Fejl", MessageBoxButton.OK);
             }
         }
 
@@ -87,28 +92,17 @@ namespace NEFAB.ViewModels
                 }
             }, () => true);
 
+            SearchPackages = new CommandHandler(() => FilterPackages());
+
+            _packageService = new PackageService();
 
             OCContainers = new ObservableCollection<Container>();
             OCPackages = new ObservableCollection<Package>();
 
-            LoadAllPackages();
-            LoadAllContainers();
+            Container = new Container();
+            
         }
-        public void LoadAllContainers()
-        {
-            foreach (Container container in containerRepository.GetAll())
-            {
-                OCContainers.Add(container);
-            }
-        }
-        public void LoadAllPackages() 
-        {
-            foreach (Package package in packageRepository.GetAll())
-            {
-                OCPackages.Add(package);
-            }
-        }
-    
+       
 
     }
 }
