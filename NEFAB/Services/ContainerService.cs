@@ -9,13 +9,13 @@ namespace NEFAB.Services
     public class ContainerService 
     {
         
-
-        //public ContainerService(IRepoGetAddUpdateRemove<Container, string> containerRepository)
         private readonly ContainerRepository _containerRepository;
         public ContainerService()
         {
             _containerRepository = new ContainerRepository(); 
         }
+
+        
 
         public void Add(Container container)
         {
@@ -109,7 +109,7 @@ namespace NEFAB.Services
         {
             if (string.IsNullOrEmpty(container.ContainerNo) || container.Week == null || container.Year == null)
             {
-                throw new ArgumentException("Udfyld venligst både ContainerNo, uge og år.");
+                throw new ArgumentException("Udfyld venligst både ContainerNo, uge og år");
             }
 
 
@@ -171,7 +171,7 @@ namespace NEFAB.Services
         {
             try
             {
-                Container? containerDB = _containerRepository.GetByID(containerNo);
+                Container containerDB = _containerRepository.GetByID(containerNo);
                 return containerDB;
             }
             catch (Exception ex)

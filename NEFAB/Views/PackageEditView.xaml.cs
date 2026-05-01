@@ -14,15 +14,15 @@ using System.Windows.Shapes;
 namespace NEFAB.Views
 {
     /// <summary>
-    /// Interaction logic for EmployeeView.xaml
+    /// Interaction logic for PackageEdit.xaml
     /// </summary>
-    public partial class EmployeeView : UserControl
+    public partial class PackageEditView : UserControl
     {
-        public EmployeeView()
+        public PackageEditView()
         {
             InitializeComponent();
         }
 
-      
+       
     }
 }

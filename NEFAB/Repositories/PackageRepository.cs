@@ -5,14 +5,17 @@ using NEFAB.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 //using System.ComponentModel;
+
+//using System.ComponentModel;
 using System.Data;
+//using System.IO.Packaging;
 using System.Xml.Linq;
 
 namespace NEFAB.Repositories
 {
-    public class PackageRepository //: IRepoGetAdd<Package, string>
+    public class PackageRepository : IRepoGetAddUpdateRemove<Package, string>
     {
-        private readonly string ConnectionString;
+        private readonly string connectionString;
         private List<Package> packages;
 
         public PackageRepository()
@@ -22,27 +25,28 @@ namespace NEFAB.Repositories
                 .Build();
             packages = new List<Package>(); // rettet fra List<Packages> til List<Package>
 
-            ConnectionString = config.GetConnectionString("MyDBConnection");
+            connectionString = config.GetConnectionString("MyDBConnection");
         }
 
-        public void Add(Container container, Supplier supplier, Package package)
+        public void Add(Package package)// eller (package , string supplierName , string containerNo)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("spAddPackage", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@ProjectNo", SqlDbType.Int).Value = package.ProjectNo;
+                    cmd.Parameters.Add("@ProjectNo", SqlDbType.BigInt).Value = package.ProjectNo;
                     cmd.Parameters.Add("@ProjectItemNo", SqlDbType.Int).Value = package.ProjectItemNo;
                     cmd.Parameters.Add("@PackageWeight", SqlDbType.Int).Value = package.PackageWeight;
                     cmd.Parameters.Add("@Amount", SqlDbType.Int).Value = package.Amount;
+                    cmd.Parameters.Add("@InnerQuantity", SqlDbType.Int).Value = package.InnerQuantity;
                     cmd.Parameters.Add("@PackageLength", SqlDbType.Float).Value = package.PackageLength;
                     cmd.Parameters.Add("@PackageWidth", SqlDbType.Float).Value = package.PackageWidth;
                     cmd.Parameters.Add("@PackageHeight", SqlDbType.Float).Value = package.PackageHeight;
                     cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, 400).Value = package.Comment ?? (object)DBNull.Value;
-                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = container.ContainerNo;
-                    cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar, 100).Value = supplier.SupplierName;
+                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = package.ContainerNo;
+                    cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar, 100).Value = package.SupplierName;
                     cmd.ExecuteNonQuery();
                     packages.Add(package);
                 }
@@ -52,7 +56,7 @@ namespace NEFAB.Repositories
         public List<Package> GetAll()
         {
             List<Package> packages = new List<Package>();
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("spGetAllPackages", con))
@@ -65,16 +69,17 @@ namespace NEFAB.Repositories
                             Package package = new Package()
                             {
                                 PackageId = dr.GetInt32(0),
-                                ProjectNo = dr.GetInt32(1),
+                                ProjectNo = dr.GetInt64(1),
                                 ProjectItemNo = dr.GetInt32(2),
                                 PackageWeight = dr.GetInt32(3),
                                 Amount = dr.GetInt32(4),
-                                PackageLength = (float)dr.GetDouble(5),
-                                PackageWidth = (float)dr.GetDouble(6),
-                                PackageHeight = (float)dr.GetDouble(7),
-                                Comment = dr.IsDBNull(8) ? null : dr.GetString(8),
-                                //ContainerNo = dr.GetString(9),
-                                //SupplierName = dr.GetString(10)
+                                InnerQuantity = dr.GetInt32(5),
+                                PackageLength = (float)dr.GetDouble(6),
+                                PackageWidth = (float)dr.GetDouble(7),
+                                PackageHeight = (float)dr.GetDouble(8),
+                                Comment = dr.IsDBNull(9) ? null : dr.GetString(9),
+                                ContainerNo = dr.GetString(10),
+                                SupplierName = dr.GetString(11)
                             };
                             packages.Add(package);
                         }
@@ -84,10 +89,10 @@ namespace NEFAB.Repositories
             return packages;
         }
 
-        public Package? GetByID(string containerNo)
+        public Package? GetByID(string containerNo) // skal laves om. 
         {
             Package? package = null;
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("spGetPackagesByContainerNo", con))
@@ -101,16 +106,17 @@ namespace NEFAB.Repositories
                             package = new Package()
                             {
                                 PackageId = dr.GetInt32(0),
-                                ProjectNo = dr.GetInt32(1),
+                                ProjectNo = dr.GetInt64(1),
                                 ProjectItemNo = dr.GetInt32(2),
                                 PackageWeight = dr.GetInt32(3),
                                 Amount = dr.GetInt32(4),
-                                PackageLength = (float)dr.GetDouble(5),
-                                PackageWidth = (float)dr.GetDouble(6),
-                                PackageHeight = (float)dr.GetDouble(7),
-                                Comment = dr.IsDBNull(8) ? null : dr.GetString(8)
-                                //ContainerNo = dr.GetString(9),
-                                //SupplierName = dr.GetString(10)
+                                InnerQuantity = dr.GetInt32(5),
+                                PackageLength = (float)dr.GetDouble(6),
+                                PackageWidth = (float)dr.GetDouble(7),
+                                PackageHeight = (float)dr.GetDouble(8),
+                                Comment = dr.IsDBNull(9) ? null : dr.GetString(9),
+                                ContainerNo = dr.GetString(10),
+                                SupplierName = dr.GetString(11)
                             };
                         }
                     }
@@ -122,7 +128,7 @@ namespace NEFAB.Repositories
         public List<Package> GetPackagesByContainerNo(string containerNo)
         {
             List<Package> result = new List<Package>();
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("spGetPackagesByContainerNo", con))
@@ -136,16 +142,17 @@ namespace NEFAB.Repositories
                             Package package = new Package()
                             {
                                 PackageId = dr.GetInt32(0),
-                                ProjectNo = dr.GetInt32(1),
+                                ProjectNo = dr.GetInt64(1),
                                 ProjectItemNo = dr.GetInt32(2),
                                 PackageWeight = dr.GetInt32(3),
                                 Amount = dr.GetInt32(4),
-                                PackageLength = (float)dr.GetDouble(5),
-                                PackageWidth = (float)dr.GetDouble(6),
-                                PackageHeight = (float)dr.GetDouble(7),
-                                Comment = dr.IsDBNull(8) ? null : dr.GetString(8)
-                                //ContainerNo = dr.GetString(9),
-                                //SupplierName = dr.GetString(10)
+                                InnerQuantity = dr.GetInt32(5),
+                                PackageLength = (float)dr.GetDouble(6),
+                                PackageWidth = (float)dr.GetDouble(7),
+                                PackageHeight = (float)dr.GetDouble(8),
+                                Comment = dr.IsDBNull(9) ? null : dr.GetString(9),
+                                ContainerNo = dr.GetString(10),
+                                SupplierName = dr.GetString(11)
                             };
                             result.Add(package);
                         }
@@ -154,6 +161,49 @@ namespace NEFAB.Repositories
                 }
             }
             return result;
+        }
+
+        public void Remove(Package package)
+
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("spRemovePackage", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@PackageId", SqlDbType.Int).Value = package.PackageId;
+                    cmd.ExecuteNonQuery();
+                    packages.Remove(package);
+                }
+            }
+        }
+
+
+        public void Update(Package package)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("spUpdatePackage", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@PackageId", SqlDbType.BigInt).Value = package.PackageId;
+                    cmd.Parameters.Add("@ProjectNo", SqlDbType.BigInt).Value = package.ProjectNo;
+                    cmd.Parameters.Add("@ProjectItemNo", SqlDbType.Int).Value = package.ProjectItemNo;
+                    cmd.Parameters.Add("@PackageWeight", SqlDbType.Int).Value = package.PackageWeight;
+                    cmd.Parameters.Add("@Amount", SqlDbType.Int).Value = package.Amount;
+                    cmd.Parameters.Add("@InnerQuantity", SqlDbType.Int).Value = package.InnerQuantity;
+                    cmd.Parameters.Add("@PackageLength", SqlDbType.Float).Value = package.PackageLength;
+                    cmd.Parameters.Add("@PackageWidth", SqlDbType.Float).Value = package.PackageWidth;
+                    cmd.Parameters.Add("@PackageHeight", SqlDbType.Float).Value = package.PackageHeight;
+                    cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, 400).Value = package.Comment ?? (object)DBNull.Value;
+                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = package.ContainerNo;
+                    cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar, 100).Value = package.SupplierName;
+                    cmd.ExecuteNonQuery();
+                    packages.Add(package);
+                }
+            }
         }
     }
 }

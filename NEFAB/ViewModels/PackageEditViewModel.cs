@@ -10,11 +10,10 @@ using System.Windows.Input;
 
 namespace NEFAB.ViewModels
 {
-    internal class PackageCreateViewModel : BaseViewModel
+    internal class PackageEditViewModel : BaseViewModel
     {
         public ICommand NavigateToPackageViewCommand { get; }
-
-        public ICommand CreateNewPackageCommand { get; }
+        public ICommand EditPackageCommand { get; }
 
         private readonly PackageService _packageService;
 
@@ -27,30 +26,32 @@ namespace NEFAB.ViewModels
             set { _selectedPackage = value; OnPropertyChanged(); }
         }
 
-        public PackageCreateViewModel(NavigationStore navigationStore)
+        public PackageEditViewModel(NavigationStore navigationStore, Package selectedPackage)
         {
             NavigationService packageNavigationService = new NavigationService(navigationStore, () => new PackageViewModel(navigationStore));
 
             NavigateToPackageViewCommand = new NavigateCommand(packageNavigationService);
 
-            CreateNewPackageCommand = new CommandHandler(() => CreatePackage());
+            EditPackageCommand = new CommandHandler(() => EditPackage());
             _packageService = new PackageService();
 
-            
             SelectedPackage = new Package();
+
+            SelectedPackage = selectedPackage;
         }
 
-        public void CreatePackage()
+        public void EditPackage()
         {
             try
             {
-                _packageService.Add(SelectedPackage);
-                MessageBox.Show("Ny pakke er blevet oprettet!", "Succes", MessageBoxButton.OK);
+                _packageService.Update(SelectedPackage);
+                MessageBox.Show("Pakken er blevet opdateret", "Succes", MessageBoxButton.OK);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Pakke kunne ikke oprettes! {ex}", "Fejl", MessageBoxButton.OK);
+                MessageBox.Show($"Pakken kan ikke opdateres! {ex}", "Fejl", MessageBoxButton.OK);
             }
+
         }
     }
 }
