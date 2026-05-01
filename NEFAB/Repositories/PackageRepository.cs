@@ -33,7 +33,7 @@ namespace NEFAB.Repositories
                 using (SqlCommand cmd = new SqlCommand("spAddPackage", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@ProjectNo", SqlDbType.Int).Value = package.ProjectNo;
+                    cmd.Parameters.Add("@ProjectNo", SqlDbType.BigInt).Value = package.ProjectNo;
                     cmd.Parameters.Add("@ProjectItemNo", SqlDbType.Int).Value = package.ProjectItemNo;
                     cmd.Parameters.Add("@PackageWeight", SqlDbType.Int).Value = package.PackageWeight;
                     cmd.Parameters.Add("@Amount", SqlDbType.Int).Value = package.Amount;
@@ -66,7 +66,7 @@ namespace NEFAB.Repositories
                             Package package = new Package()
                             {
                                 PackageId = dr.GetInt32(0),
-                                ProjectNo = dr.GetInt32(1),
+                                ProjectNo = dr.GetInt64(1),
                                 ProjectItemNo = dr.GetInt32(2),
                                 PackageWeight = dr.GetInt32(3),
                                 Amount = dr.GetInt32(4),
@@ -103,7 +103,7 @@ namespace NEFAB.Repositories
                             package = new Package()
                             {
                                 PackageId = dr.GetInt32(0),
-                                ProjectNo = dr.GetInt32(1),
+                                ProjectNo = dr.GetInt64(1),
                                 ProjectItemNo = dr.GetInt32(2),
                                 PackageWeight = dr.GetInt32(3),
                                 Amount = dr.GetInt32(4),
@@ -139,7 +139,7 @@ namespace NEFAB.Repositories
                             Package package = new Package()
                             {
                                 PackageId = dr.GetInt32(0),
-                                ProjectNo = dr.GetInt32(1),
+                                ProjectNo = dr.GetInt64(1),
                                 ProjectItemNo = dr.GetInt32(2),
                                 PackageWeight = dr.GetInt32(3),
                                 Amount = dr.GetInt32(4),

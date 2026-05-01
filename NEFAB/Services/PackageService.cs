@@ -24,14 +24,24 @@ namespace NEFAB.Services
 
         public void Add(Container container, Supplier supplier, Package package)
         {
-            if (container.ContainerNo == null || supplier.SupplierName == null|| package.ProjectNo == null ||
-               package.ProjectItemNo == null || package.PackageWeight == null || package.Amount == null || 
-               package.InnerQuantity == null || package.PackageLength == null || package.PackageWidth == null ||
-               package.PackageHeight == null)
-            {
-                throw new ArgumentException("Udfyld alle basis informationer om pakken: Container nummer, leverandør, inholdsmængde, antal pakker," +
-                    " vægt, længde, brede, højde, projekt-nummer og projet produkt nummer");
-            }
+            if (string.IsNullOrWhiteSpace(container?.ContainerNo))
+                throw new ArgumentException("Udfyld Container nummer.");
+
+            if (string.IsNullOrWhiteSpace(supplier?.SupplierName))
+                throw new ArgumentException("Udfyld Leverandør.");
+
+            if (package == null)
+                throw new ArgumentException("Pakke data mangler.");
+
+            if (package.ProjectNo == null || package.ProjectItemNo == null)
+                throw new ArgumentException("Udfyld projekt-nummer og projekt produkt nummer.");
+
+            if (package.Amount == null || package.InnerQuantity == null)
+                throw new ArgumentException("Udfyld inholdsmængde og antal pakker.");
+
+            if (package.PackageWeight == null || package.PackageLength == null || 
+                package.PackageWidth == null || package.PackageHeight == null)
+                throw new ArgumentException("Udfyld vægt, længde, bredde og højde.");
 
             Container containerDB = _containerService.GetByID(container.ContainerNo);
             Supplier supplierDB = _supplierService.GetByID(supplier.SupplierName);
@@ -42,9 +52,20 @@ namespace NEFAB.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException("pakken kunne ikke oprettes");
+                throw new ArgumentException("Pakken kunne ikke oprettes", ex);
             }
-   
+        }
+        public List<Package> GetByContainerNo(string containerNo) 
+        {
+            try
+            {
+                List<Package> packages = _packageRepository.GetPackagesByContainerNo(containerNo);
+                return packages;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("pakker kunne ikke findes");
+            }
         }
     }
 }
