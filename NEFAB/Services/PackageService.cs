@@ -9,7 +9,7 @@ namespace NEFAB.Services
 {
     public class PackageService
     {
-        //private readonly _packageRepository;
+       
         private readonly ContainerService _containerService;
         private readonly SupplierService _supplierService;
         private readonly PackageRepository _packageRepository;
@@ -17,18 +17,18 @@ namespace NEFAB.Services
 
         public PackageService() 
         {
-            //_packageRepository = new PackageRepository();
+            
             _containerService = new ContainerService();
             _supplierService = new SupplierService();
             _packageRepository = new PackageRepository();
         }
 
-        public void Add(Container container, Supplier supplier, Package package)
+        public void Add(Package package)
         {
-            if (string.IsNullOrWhiteSpace(container?.ContainerNo))
+            if (string.IsNullOrWhiteSpace(package.ContainerNo))
                 throw new ArgumentException("Udfyld Container nummer.");
 
-            if (string.IsNullOrWhiteSpace(supplier?.SupplierName))
+            if (string.IsNullOrWhiteSpace(package.SupplierName))
                 throw new ArgumentException("Udfyld Leverandør.");
 
             if (package == null)
@@ -44,12 +44,14 @@ namespace NEFAB.Services
                 package.PackageWidth == null || package.PackageHeight == null)
                 throw new ArgumentException("Udfyld vægt, længde, bredde og højde.");
 
-            Container containerDB = _containerService.GetByID(container.ContainerNo);
-            Supplier supplierDB = _supplierService.GetByID(supplier.SupplierName);
+            Container containerDB = _containerService.GetByID(package.ContainerNo); 
+            
+            Supplier supplierDB = _supplierService.GetByID(package.SupplierName);
+           
 
             try
-            {
-                _packageRepository.Add(container, supplier, package);
+            {   
+                _packageRepository.Add(package);
             }
             catch (Exception ex)
             {
@@ -88,6 +90,7 @@ namespace NEFAB.Services
             if (package.PackageWeight == null || package.PackageLength == null ||
                 package.PackageWidth == null || package.PackageHeight == null)
                 throw new ArgumentException("Udfyld vægt, længde, bredde og højde.");
+
             Container containerDB = _containerService.GetByID(package.ContainerNo);
             Supplier supplierDB = _supplierService.GetByID(package.SupplierName);
             try
