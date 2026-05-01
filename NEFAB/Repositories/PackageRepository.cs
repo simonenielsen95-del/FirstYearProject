@@ -175,11 +175,12 @@ namespace NEFAB.Repositories
                     cmd.ExecuteNonQuery();
                 }
             }
+        }
 
 
         public void Update(Package package)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("spUpdatePackage", con))
