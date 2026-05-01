@@ -12,7 +12,7 @@ namespace NEFAB.Repositories
 {
     public class PackageRepository //: IRepoGetAdd<Package, string>
     {
-        private readonly string ConnectionString;
+        private readonly string connectionString;
         private List<Package> packages;
 
         public PackageRepository()
@@ -22,12 +22,12 @@ namespace NEFAB.Repositories
                 .Build();
             packages = new List<Package>(); // rettet fra List<Packages> til List<Package>
 
-            ConnectionString = config.GetConnectionString("MyDBConnection");
+            connectionString = config.GetConnectionString("MyDBConnection");
         }
 
         public void Add(Container container, Supplier supplier, Package package)// eller (package , string supplierName , string containerNo)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("spAddPackage", con))
@@ -52,7 +52,7 @@ namespace NEFAB.Repositories
         public List<Package> GetAll()
         {
             List<Package> packages = new List<Package>();
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("spGetAllPackages", con))
@@ -87,7 +87,7 @@ namespace NEFAB.Repositories
         public Package? GetByID(string containerNo)
         {
             Package? package = null;
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("spGetPackagesByContainerNo", con))
@@ -122,7 +122,7 @@ namespace NEFAB.Repositories
         public List<Package> GetPackagesByContainerNo(string containerNo)
         {
             List<Package> result = new List<Package>();
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("spGetPackagesByContainerNo", con))
@@ -154,6 +154,22 @@ namespace NEFAB.Repositories
                 }
             }
             return result;
+        }
+
+        public void Remove(Package package)
+
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("DELETE FROM PACKAGE WHERE PackageId = @PackageId", con))
+                {
+                    cmd.Parameters.Add("@PackageId", SqlDbType.Int).Value = package.PackageId;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+
         }
     }
 }
