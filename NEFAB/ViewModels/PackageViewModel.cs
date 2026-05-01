@@ -121,6 +121,8 @@ namespace NEFAB.ViewModels
                 }
             }, () => true);
 
+            //RemovePackageCommand = new CommandHandler(() => Remove());
+
             SearchPackages = new CommandHandler(() => FilterPackages());
 
             _packageService = new PackageService();
@@ -132,19 +134,7 @@ namespace NEFAB.ViewModels
             Container = new Container();
 
         }
-        public void Remove()
-        {
-            try
-            {
-                _packageService.Remove(SelectedPackage);
-                MessageBox.Show("Pakken er blevet slettet", "Succes", MessageBoxButton.OK);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Pakken kan ikke slettes! {ex}", "Fejl", MessageBoxButton.OK);
-            }
-
-        }
+       
 
     }
 }
