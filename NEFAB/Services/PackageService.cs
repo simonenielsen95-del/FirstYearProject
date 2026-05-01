@@ -1,8 +1,9 @@
 ﻿using NEFAB.Domains;
+using NEFAB.Repositories;
 using System;
 using System.Collections.Generic;
+
 using System.Text;
-using NEFAB.Repositories;
 
 namespace NEFAB.Services
 {
@@ -65,6 +66,37 @@ namespace NEFAB.Services
             catch (Exception ex)
             {
                 throw new ArgumentException("pakker kunne ikke findes");
+            }
+        }
+        public void Update(Package package) 
+        {
+            if (string.IsNullOrWhiteSpace(package.ContainerNo))
+                throw new ArgumentException("Udfyld Container nummer.");
+
+            if (string.IsNullOrWhiteSpace(package.SupplierName))
+                throw new ArgumentException("Udfyld Leverandør.");
+
+            if (package == null)
+                throw new ArgumentException("Pakke data mangler.");
+
+            if (package.ProjectNo == null || package.ProjectItemNo == null)
+                throw new ArgumentException("Udfyld projekt-nummer og projekt produkt nummer.");
+
+            if (package.Amount == null || package.InnerQuantity == null)
+                throw new ArgumentException("Udfyld inholdsmængde og antal pakker.");
+
+            if (package.PackageWeight == null || package.PackageLength == null ||
+                package.PackageWidth == null || package.PackageHeight == null)
+                throw new ArgumentException("Udfyld vægt, længde, bredde og højde.");
+            Container containerDB = _containerService.GetByID(package.ContainerNo);
+            Supplier supplierDB = _supplierService.GetByID(package.SupplierName);
+            try
+            {
+                _packageRepository.Update(package);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Pakken kunne ikke oprettes", ex);
             }
         }
     }
