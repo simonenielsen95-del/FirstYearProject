@@ -13,7 +13,7 @@ using System.Xml.Linq;
 
 namespace NEFAB.Repositories
 {
-    public class PackageRepository //: IRepoGetAdd<Package, string>
+    public class PackageRepository : IRepoGetAddUpdateRemove<Package, string>
     {
         private readonly string connectionString;
         private List<Package> packages;
@@ -28,7 +28,7 @@ namespace NEFAB.Repositories
             connectionString = config.GetConnectionString("MyDBConnection");
         }
 
-        public void Add(Container container, Supplier supplier, Package package)// eller (package , string supplierName , string containerNo)
+        public void Add(Package package)// eller (package , string supplierName , string containerNo)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -45,8 +45,8 @@ namespace NEFAB.Repositories
                     cmd.Parameters.Add("@PackageWidth", SqlDbType.Float).Value = package.PackageWidth;
                     cmd.Parameters.Add("@PackageHeight", SqlDbType.Float).Value = package.PackageHeight;
                     cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, 400).Value = package.Comment ?? (object)DBNull.Value;
-                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = container.ContainerNo;
-                    cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar, 100).Value = supplier.SupplierName;
+                    cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = package.ContainerNo;
+                    cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar, 100).Value = package.SupplierName;
                     cmd.ExecuteNonQuery();
                     packages.Add(package);
                 }
@@ -169,10 +169,12 @@ namespace NEFAB.Repositories
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("DELETE FROM PACKAGE WHERE PackageId = @PackageId", con))
+                using (SqlCommand cmd = new SqlCommand("spRemovePackage", con))
                 {
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@PackageId", SqlDbType.Int).Value = package.PackageId;
                     cmd.ExecuteNonQuery();
+                    packages.Remove(package);
                 }
             }
         }

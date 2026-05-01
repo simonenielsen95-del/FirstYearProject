@@ -17,19 +17,7 @@ namespace NEFAB.ViewModels
 
         private readonly PackageService _packageService;
 
-        //private Container _selectedContainer;
-        //public Container SelectedContainer
-        //{
-        //    get { return _selectedContainer; }
-        //    set { _selectedContainer = value; OnPropertyChanged(); }
-        //}
-
-        //private Supplier _selectedSupplier;
-        //public Supplier SelectedSupplier
-        //{
-        //    get { return _selectedSupplier; }
-        //    set { _selectedSupplier = value; OnPropertyChanged(); }
-        //}
+        
 
         private Package _selectedPackage;
         public Package SelectedPackage
@@ -47,8 +35,6 @@ namespace NEFAB.ViewModels
             EditPackageCommand = new CommandHandler(() => EditPackage());
             _packageService = new PackageService();
 
-            //SelectedContainer = new Container();
-            //SelectedSupplier = new Supplier();
             SelectedPackage = new Package();
 
             SelectedPackage = selectedPackage;
