@@ -23,7 +23,7 @@ namespace NEFAB.ViewModels
         public ICommand NavigateToHomeViewCommand { get; }
         public ICommand NavigateToPackageCreateViewCommand { get; }
         public ICommand NavigateToPackageEditViewCommand { get; }
-
+        public ICommand RemovePackageCommand { get; }
         public ICommand SearchPackages {  get; }
 
         private Package _selectedPackage;
@@ -73,7 +73,7 @@ namespace NEFAB.ViewModels
                 return;
             }
 
-            try
+            try //uge
             {
                 var foundContainer = _containerService.GetByID(Container.ContainerNo);
                 if (foundContainer != null)
@@ -84,7 +84,7 @@ namespace NEFAB.ViewModels
                 int calculatedAmount = 0;
                 int calculatedInnerQuantity = 0;
 
-                foreach (Package package in _packageService.GetByContainerNo(Container.ContainerNo)) //kalkulation
+                foreach (Package package in _packageService.GetByContainerNo(Container.ContainerNo)) //beregning
                 {
                     OCPackages.Add(package);
                     calculatedAmount += package.Amount ?? 0;
@@ -101,7 +101,7 @@ namespace NEFAB.ViewModels
         }
 
         public ObservableCollection<Container> OCContainers { get; set; }
-        public ObservableCollection<Package> OCPackages { get; set; } 
+        public ObservableCollection<Package> OCPackages { get; set; }
 
         public PackageViewModel(NavigationStore navigationStore)
         {
@@ -111,11 +111,11 @@ namespace NEFAB.ViewModels
 
             NavigateToHomeViewCommand = new NavigateCommand(homeNavigationService);
             NavigateToPackageCreateViewCommand = new NavigateCommand(packageCreateNavigationService);
-          
-            NavigateToPackageEditViewCommand = new CommandHandler(() => 
+
+            NavigateToPackageEditViewCommand = new CommandHandler(() =>
             {
                 if (SelectedPackage != null)
-                { 
+                {
                     var editViewModel = new PackageEditViewModel(navigationStore, SelectedPackage);
                     navigationStore.CurrentViewModel = editViewModel;
                 }
@@ -130,9 +130,9 @@ namespace NEFAB.ViewModels
             OCPackages = new ObservableCollection<Package>();
 
             Container = new Container();
-            
+
         }
-       
+
 
     }
 }
