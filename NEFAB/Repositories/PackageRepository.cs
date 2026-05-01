@@ -37,6 +37,7 @@ namespace NEFAB.Repositories
                     cmd.Parameters.Add("@ProjectItemNo", SqlDbType.Int).Value = package.ProjectItemNo;
                     cmd.Parameters.Add("@PackageWeight", SqlDbType.Int).Value = package.PackageWeight;
                     cmd.Parameters.Add("@Amount", SqlDbType.Int).Value = package.Amount;
+                    cmd.Parameters.Add("@InnerQuantity", SqlDbType.Int).Value = package.InnerQuantity;
                     cmd.Parameters.Add("@PackageLength", SqlDbType.Float).Value = package.PackageLength;
                     cmd.Parameters.Add("@PackageWidth", SqlDbType.Float).Value = package.PackageWidth;
                     cmd.Parameters.Add("@PackageHeight", SqlDbType.Float).Value = package.PackageHeight;
@@ -69,12 +70,13 @@ namespace NEFAB.Repositories
                                 ProjectItemNo = dr.GetInt32(2),
                                 PackageWeight = dr.GetInt32(3),
                                 Amount = dr.GetInt32(4),
-                                PackageLength = (float)dr.GetDouble(5),
-                                PackageWidth = (float)dr.GetDouble(6),
-                                PackageHeight = (float)dr.GetDouble(7),
-                                Comment = dr.IsDBNull(8) ? null : dr.GetString(8),
-                                //ContainerNo = dr.GetString(9),
-                                //SupplierName = dr.GetString(10)
+                                InnerQuantity = dr.GetInt32(5),
+                                PackageLength = (float)dr.GetDouble(6),
+                                PackageWidth = (float)dr.GetDouble(7),
+                                PackageHeight = (float)dr.GetDouble(8),
+                                Comment = dr.IsDBNull(9) ? null : dr.GetString(9),
+                                ContainerNo = dr.GetString(10),
+                                SupplierName = dr.GetString(11)
                             };
                             packages.Add(package);
                         }
@@ -84,7 +86,7 @@ namespace NEFAB.Repositories
             return packages;
         }
 
-        public Package? GetByID(string containerNo)
+        public Package? GetByID(string containerNo) // skal laves om. 
         {
             Package? package = null;
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -105,12 +107,13 @@ namespace NEFAB.Repositories
                                 ProjectItemNo = dr.GetInt32(2),
                                 PackageWeight = dr.GetInt32(3),
                                 Amount = dr.GetInt32(4),
-                                PackageLength = (float)dr.GetDouble(5),
-                                PackageWidth = (float)dr.GetDouble(6),
-                                PackageHeight = (float)dr.GetDouble(7),
-                                Comment = dr.IsDBNull(8) ? null : dr.GetString(8)
-                                //ContainerNo = dr.GetString(9),
-                                //SupplierName = dr.GetString(10)
+                                InnerQuantity = dr.GetInt32(5),
+                                PackageLength = (float)dr.GetDouble(6),
+                                PackageWidth = (float)dr.GetDouble(7),
+                                PackageHeight = (float)dr.GetDouble(8),
+                                Comment = dr.IsDBNull(9) ? null : dr.GetString(9),
+                                ContainerNo = dr.GetString(10),
+                                SupplierName = dr.GetString(11)
                             };
                         }
                     }
@@ -140,12 +143,13 @@ namespace NEFAB.Repositories
                                 ProjectItemNo = dr.GetInt32(2),
                                 PackageWeight = dr.GetInt32(3),
                                 Amount = dr.GetInt32(4),
-                                PackageLength = (float)dr.GetDouble(5),
-                                PackageWidth = (float)dr.GetDouble(6),
-                                PackageHeight = (float)dr.GetDouble(7),
-                                Comment = dr.IsDBNull(8) ? null : dr.GetString(8)
-                                //ContainerNo = dr.GetString(9),
-                                //SupplierName = dr.GetString(10)
+                                InnerQuantity = dr.GetInt32(5),
+                                PackageLength = (float)dr.GetDouble(6),
+                                PackageWidth = (float)dr.GetDouble(7),
+                                PackageHeight = (float)dr.GetDouble(8),
+                                Comment = dr.IsDBNull(9) ? null : dr.GetString(9),
+                                ContainerNo = dr.GetString(10),
+                                SupplierName = dr.GetString(11)
                             };
                             result.Add(package);
                         }

@@ -9,11 +9,7 @@ namespace NEFAB.Domains
       
             public string EmployeeID { get; set; }
             public string EmployeeName { get; set; }
-
-            public Employee(string employeeID)
-            {
-                EmployeeID = employeeID;
-            }
+        public string? Name { get; internal set; }
         
     }
 }
