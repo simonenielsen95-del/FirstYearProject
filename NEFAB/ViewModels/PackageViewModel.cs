@@ -24,7 +24,7 @@ namespace NEFAB.ViewModels
         public ICommand NavigateToPackageCreateViewCommand { get; }
         public ICommand NavigateToPackageEditViewCommand { get; }
         public ICommand RemovePackageCommand { get; }
-        public ICommand SearchPackages {  get; }
+        public ICommand SearchPackages { get; }
 
         private Package _selectedPackage;
 
@@ -41,12 +41,12 @@ namespace NEFAB.ViewModels
         private Container _container;
         public Container Container
         {
-            get { return _container; } 
+            get { return _container; }
             set
             {
                 _container = value;
                 OnPropertyChanged();
-                
+
             }
         }
 
@@ -122,6 +122,8 @@ namespace NEFAB.ViewModels
             }, () => true);
 
             SearchPackages = new CommandHandler(() => FilterPackages());
+            RemovePackageCommand = new CommandHandler(() => RemovePackage());
+
 
             _packageService = new PackageService();
             _containerService = new ContainerService();
@@ -133,6 +135,25 @@ namespace NEFAB.ViewModels
 
         }
 
-
+        public void RemovePackage()
+        {
+            if (SelectedPackage != null)
+            {
+                try
+                {
+                    _packageService.Remove(SelectedPackage);
+                    OCPackages.Remove(SelectedPackage);
+                    MessageBox.Show("Pakken er blevet fjernet.", "Success", MessageBoxButton.OK);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Pakken kunne ikke fjernes! {ex}", "Fejl", MessageBoxButton.OK);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vælg en pakke for at fjerne den.", "Fejl", MessageBoxButton.OK);
+            }
+        }
     }
 }

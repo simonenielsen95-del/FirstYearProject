@@ -99,5 +99,24 @@ namespace NEFAB.Services
                 throw new ArgumentException("Pakken kunne ikke oprettes", ex);
             }
         }
+
+
+        public void Remove(Package package)
+        {
+            if (package == null || package.PackageId == null)
+            {
+                throw new ArgumentException("Pakken kunne ikke slettes.");
+            }
+
+            try
+            {
+                _packageRepository.Remove(package);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Der opstod en fejl under sletning af pakken", ex);
+            }
+        }
+
     }
 }
