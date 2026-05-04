@@ -1,7 +1,9 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
+using System.Windows.Media.Imaging;
 
 namespace NEFAB.Domains
 {
@@ -17,6 +19,7 @@ namespace NEFAB.Domains
         public float? PackageWidth { get; set; }
         public float? PackageHeight { get; set; }
         public string? Comment { get; set; }
+        public byte[]? Image {  get; set; }
 
         public string? IsComment 
         { 
@@ -31,6 +34,23 @@ namespace NEFAB.Domains
         public string? SupplierName { get; set; }
         //link og udvidelse?
 
+        // Source - https://stackoverflow.com/q/14337071
+        // Posted by Hossein Narimani Rad, modified by community. See post 'Timeline' for change history
+        // Retrieved 2026-05-04, License - CC BY-SA 3.0
+
+        public BitmapImage ToImage(byte[] array)
+        {
+            if (array == null || array.Length == 0) return null;
+            using (System.IO.MemoryStream ms = new System.IO.MemoryStream(array))
+            {
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
+            }
+        }
 
 
     }
