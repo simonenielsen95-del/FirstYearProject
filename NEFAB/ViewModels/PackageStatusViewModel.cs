@@ -41,7 +41,15 @@ namespace NEFAB.ViewModels
 
         public void ChangeStatusPackage()
         {
-
+            try
+            {
+                _packageService.Update(SelectedPackage);
+                MessageBox.Show("Status på pakken er blevet opdateret", "Succes", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Status på pakken kan ikke opdateres! {ex}", "Fejl", MessageBoxButton.OK);
+            }
         }
     }
 }

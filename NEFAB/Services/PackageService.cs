@@ -121,5 +121,27 @@ namespace NEFAB.Services
             }
         }
 
+
+        public void ChangeStatus(Package package)
+        {
+            if (package == null || package.PackageId == null)
+            {
+                throw new ArgumentException("Kun gyldige pakker kan opdateres.");
+            }
+
+            try
+            {
+                package.Status = newStatus;
+                _packageRepository.UpdateStatus(package); 
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Status kunne ikke opdateres.", ex);
+            }
+        }
+
+
     }
+
+}
 }
