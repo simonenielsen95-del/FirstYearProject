@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
+
 namespace NEFAB.ViewModels
 {
     public class PackageStatusViewModel : BaseViewModel
@@ -24,6 +25,15 @@ namespace NEFAB.ViewModels
             set { _selectedPackage = value; OnPropertyChanged(); }
         }
 
+        public Array AvailableStatusTypes => Enum.GetValues(SelectedStatus.GetType());
+
+private PackageStatus.StatusType _selectedStatus;
+public PackageStatus.StatusType SelectedStatus
+        {
+            get { return _selectedStatus; }
+            set { _selectedStatus = value; OnPropertyChanged(); }
+        }
+
 
         public PackageStatusViewModel(NavigationStore navigationStore, Package selectedPackage)
         {
@@ -37,13 +47,28 @@ namespace NEFAB.ViewModels
             SelectedPackage = new Package();
 
             SelectedPackage = selectedPackage;
+
+
+            if (Enum.TryParse(SelectedPackage.PackageStatus, out PackageStatus.StatusType parsedStatus))
+            {
+                SelectedStatus = parsedStatus;
+            }
         }
 
         public void ChangeStatusPackage()
         {
             try
             {
-                _packageService.Update(SelectedPackage);
+                SelectedPackage.PackageStatus = SelectedStatus.ToString();
+
+                var statusObj = new PackageStatus 
+                { 
+                    Status = SelectedStatus,
+                    PackageId = SelectedPackage.PackageId,
+                    Comment = SelectedPackage.Comment
+                };
+                _packageService.ChangeStatus(statusObj);
+
                 MessageBox.Show("Status på pakken er blevet opdateret", "Succes", MessageBoxButton.OK);
             }
             catch (Exception ex)

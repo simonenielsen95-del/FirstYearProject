@@ -1,15 +1,18 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using NEFAB.Domains;
-using NEFAB.Repositories.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 //using System.ComponentModel;
 
 //using System.ComponentModel;
 using System.Data;
 //using System.IO.Packaging;
+
+//using System.IO.Packaging;
 using System.Xml.Linq;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using NEFAB.Domains;
+using NEFAB.Repositories.Interfaces;
+using static NEFAB.Domains.PackageStatus;
 
 namespace NEFAB.Repositories
 {
@@ -124,7 +127,7 @@ namespace NEFAB.Repositories
             }
             return package;
         }
-        //fulde liste til combobox, da der kan være flere pakker i en container
+        //fulde liste til listbox, da der kan være flere pakker i en container
         public List<Package> GetByContainerNo(string containerNo)
         {
             List<Package> result = new List<Package>();
@@ -156,7 +159,7 @@ namespace NEFAB.Repositories
                             };
                             result.Add(package);
                         }
-                                
+
                     }
                 }
             }
@@ -188,7 +191,7 @@ namespace NEFAB.Repositories
                 using (SqlCommand cmd = new SqlCommand("spUpdatePackage", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@PackageId", SqlDbType.BigInt).Value = package.PackageId;
+                    cmd.Parameters.Add("@PackageId", SqlDbType.Int).Value = package.PackageId;
                     cmd.Parameters.Add("@ProjectNo", SqlDbType.BigInt).Value = package.ProjectNo;
                     cmd.Parameters.Add("@ProjectItemNo", SqlDbType.Int).Value = package.ProjectItemNo;
                     cmd.Parameters.Add("@PackageWeight", SqlDbType.Int).Value = package.PackageWeight;
@@ -202,6 +205,22 @@ namespace NEFAB.Repositories
                     cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar, 100).Value = package.SupplierName;
                     cmd.ExecuteNonQuery();
                     packages.Add(package);
+                }
+            }
+        }
+
+        public void ChangeStatus(PackageStatus packageStatus)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("spChangeStatus", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@PackageStatusId", SqlDbType.Int).Value = packageStatus.PackageStatusId;
+                    cmd.Parameters.Add("@StatusType", SqlDbType.NVarChar, 100).Value = packageStatus.Status.ToString();
+                    cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, 400).Value = packageStatus.Comment ?? (object)DBNull.Value;
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

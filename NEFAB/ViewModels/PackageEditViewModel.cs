@@ -51,7 +51,6 @@ namespace NEFAB.ViewModels
             {
                 MessageBox.Show($"Pakken kan ikke opdateres! {ex}", "Fejl", MessageBoxButton.OK);
             }
-
         }
     }
 }

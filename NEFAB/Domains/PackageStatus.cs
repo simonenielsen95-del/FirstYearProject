@@ -8,6 +8,7 @@ namespace NEFAB.Domains
     {
         public int PackageStatusId { get; }
         public string? Comment { get; set; }
+        public StatusType Status { get; set; }
 
         public enum StatusType
         {
@@ -19,7 +20,7 @@ namespace NEFAB.Domains
         }
 
         //navigation properties:
-        public int? PackageId{ get; }
-        public string? EmployeeId { get; }
+        public int? PackageId { get; set; }
+        public string? EmployeeId { get; set; }
     }
 }

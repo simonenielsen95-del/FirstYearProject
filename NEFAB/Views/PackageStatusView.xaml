@@ -38,10 +38,10 @@
         <TextBox x:Name="txtUpdateProjectNo" HorizontalAlignment="Left" Margin="442,274,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ProjectNo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <TextBox x:Name="txtUpdateProjectItemNo" HorizontalAlignment="Left" Margin="442,324,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ProjectItemNo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <TextBox HorizontalAlignment="Left" Margin="608,274,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.Comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="233" Height="88"/>
-        <Button Content="Gem" Command="{Binding ChangeStatusPackageCommand}" HorizontalAlignment="Left" Margin="806,384,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <Button Content="Gem ny status" Command="{Binding ChangeStatusPackageCommand}" HorizontalAlignment="Left" Margin="781,384,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.152,0.71" FontSize="14"/>
 
 
-        <ComboBox Text="{Binding PackageStatus}" DisplayMemberPath="PackageStatus" SelectedItem="{Binding SelectedStatus, Mode=TwoWay}" ItemsSource="{Binding StatusTyper}" HorizontalAlignment="Left" Margin="721,165,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox SelectedItem="{Binding SelectedStatus, Mode=TwoWay}" ItemsSource="{Binding AvailableStatusTypes}" HorizontalAlignment="Left" Margin="721,165,0,0" VerticalAlignment="Top" Width="120"/>
      
         
         
