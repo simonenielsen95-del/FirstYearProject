@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,6 +18,13 @@ namespace NEFAB.Domains
         public float? PackageHeight { get; set; }
         public string? Comment { get; set; }
 
+        public string? IsComment 
+        { 
+            get 
+            {
+                return string.IsNullOrWhiteSpace(Comment) ? null : "*"; 
+            } 
+        }
 
         //navigation properties:
         public string? ContainerNo { get; set; }
