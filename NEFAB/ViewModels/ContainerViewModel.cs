@@ -47,20 +47,13 @@ namespace NEFAB.ViewModels
             RemoveContainerCommand = new CommandHandler(() => RemoveContainer());
 
             UpdateContainerCommand = new CommandHandler(() => UpdateContainer());
-            //IRepoGetAddUpdateRemove<Container, string> repo = new ContainerRepository(); 
+          
             _containerService = new ContainerService();
 
             SelectedNewContainer = new Container();
             SelectedRemoveContainer = new Container();
             SelectedUpdateContainer = new Container();
         }
-
-      
-        //private ContainerRepository containerRepository = new ContainerRepository();
-
-        //public string ContainerNo { get; set; }
-        //public int Week { get; set; }
-        //public int Year { get; set; }
 
 
         public void CreateNewContainer() 

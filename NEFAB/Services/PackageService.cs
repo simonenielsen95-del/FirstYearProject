@@ -62,7 +62,7 @@ namespace NEFAB.Services
         {
             try
             {
-                List<Package> packages = _packageRepository.GetPackagesByContainerNo(containerNo);
+                List<Package> packages = _packageRepository.GetByContainerNo(containerNo);
                 return packages;
             }
             catch (Exception ex)

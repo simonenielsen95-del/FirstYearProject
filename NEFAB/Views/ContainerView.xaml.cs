@@ -20,12 +20,11 @@ namespace NEFAB.Views
     /// </summary>
     public partial class ContainerView : UserControl
     {
-        private ContainerRepository _repository;
 
         public ContainerView()
         {
             InitializeComponent();
-            _repository = new ContainerRepository();
+           
         }
 
        

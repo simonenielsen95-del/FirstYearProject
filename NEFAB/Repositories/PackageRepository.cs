@@ -125,7 +125,7 @@ namespace NEFAB.Repositories
             return package;
         }
         //fulde liste til combobox, da der kan være flere pakker i en container
-        public List<Package> GetPackagesByContainerNo(string containerNo)
+        public List<Package> GetByContainerNo(string containerNo)
         {
             List<Package> result = new List<Package>();
             using (SqlConnection con = new SqlConnection(connectionString))
