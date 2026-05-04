@@ -9,8 +9,8 @@
     <Grid>
         <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="49,437,0,0" Width="88" Height="34" VerticalAlignment="Top"/>
         <Button Content="Opret ny pakke" Command="{Binding NavigateToPackageCreateViewCommand}" HorizontalAlignment="Left" Margin="626,128,0,0" VerticalAlignment="Top" Width="120" Height="29"/>
-        <Button Content="Rediger pakke" Command="{Binding NavigateToPackageEditViewCommand}" HorizontalAlignment="Left" Margin="500,441,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
-        <Button Content="Slet pakke" Command="{Binding RemovePackageCommand}" HorizontalAlignment="Left" Margin="621,442,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
+        <Button Content="Rediger pakke" Command="{Binding NavigateToPackageEditViewCommand}" HorizontalAlignment="Left" Margin="645,441,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
+        <Button Content="Slet pakke" Command="{Binding RemovePackageCommand}" HorizontalAlignment="Left" Margin="765,441,0,0" VerticalAlignment="Top" Width="80" Height="24" Background="#FFD04F4F"/>
 
 
         <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="900"/>
@@ -96,6 +96,7 @@
         <TextBox HorizontalAlignment="Left" Margin="211,410,0,0" TextWrapping="Wrap" Text="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="72" IsEnabled="False"/>
         <TextBox HorizontalAlignment="Left" Margin="295,410,0,0" TextWrapping="Wrap" Text="{Binding TotalInnerQuantity, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="72" IsEnabled="False" RenderTransformOrigin="0.5,0.631"/>
         <Label Content="Samlet:" HorizontalAlignment="Left" Margin="162,406,0,0" VerticalAlignment="Top"/>
+        <Button Content="Ændre status" Command="{Binding NavigateToPackageStatusViewCommand}" HorizontalAlignment="Left" Margin="450,443,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>
