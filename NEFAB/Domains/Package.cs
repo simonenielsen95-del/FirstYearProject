@@ -24,7 +24,5 @@ namespace NEFAB.Domains
         public string? PackageStatus { get; set; }
         //link og udvidelse?
 
-
-
     }
 }

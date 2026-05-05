@@ -10,13 +10,14 @@ namespace NEFAB.Domains
         public string? Comment { get; set; }
         public StatusType Status { get; set; }
 
-        public enum StatusType
+        public enum StatusType //Fra forretningens side af
         {
             Modtaget,
             Bestilt,
             Håndteret,
             Forsinket,
-            UnderInspektion
+            UnderInspektion,
+            Leveret
         }
 
         //navigation properties:
