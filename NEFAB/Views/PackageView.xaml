@@ -9,8 +9,8 @@
     <Grid>
         <Button Content="Tilbage" Command="{Binding NavigateToHomeViewCommand}" HorizontalAlignment="Left" Margin="49,437,0,0" Width="88" Height="34" VerticalAlignment="Top"/>
         <Button Content="Opret ny pakke" Command="{Binding NavigateToPackageCreateViewCommand}" HorizontalAlignment="Left" Margin="626,128,0,0" VerticalAlignment="Top" Width="120" Height="29"/>
-        <Button Content="Rediger pakke" Command="{Binding NavigateToPackageEditViewCommand}" HorizontalAlignment="Left" Margin="500,441,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
-        <Button Content="Slet pakke" Command="{Binding RemovePackageCommand}" HorizontalAlignment="Left" Margin="621,442,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
+        <Button Content="Rediger pakke" Command="{Binding NavigateToPackageEditViewCommand}" HorizontalAlignment="Left" Margin="645,441,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
+        <Button Content="Slet pakke" Command="{Binding RemovePackageCommand}" HorizontalAlignment="Left" Margin="765,441,0,0" VerticalAlignment="Top" Width="80" Height="24" Background="#FFD04F4F"/>
 
 
         <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="900"/>
@@ -111,6 +111,8 @@
         <Label Content="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" HorizontalAlignment="Left" Margin="202,410,0,0" VerticalAlignment="Top" Width="40"/>
         <Label Content="Total Q'ty:" HorizontalAlignment="Left" Margin="260,410,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding TotalInnerQuantity, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" HorizontalAlignment="Left" Margin="323,410,0,0" VerticalAlignment="Top" Width="32"/>
+       
+        <Button Content="Ændre status" Command="{Binding NavigateToPackageStatusViewCommand}" HorizontalAlignment="Left" Margin="450,443,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>
