@@ -3,7 +3,9 @@ using Microsoft.Extensions.Configuration;
 using NEFAB.Domains;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.IO.Packaging;
 using System.Text;
 
 namespace NEFAB.Repositories
@@ -40,6 +42,38 @@ namespace NEFAB.Repositories
                 }
             }
         }
+
+        public List<PackageStatus> GetByPackageId(int? packageId)
+        {
+            List<PackageStatus> packagestatuses = new List<PackageStatus>();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("spGetPackageStatusByPackageId", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@PackageId", SqlDbType.Int).Value = packageId;
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            PackageStatus packagestatus = new PackageStatus()
+                            {
+                                PackageStatusId = dr.GetInt32(0),
+                                Status = Enum.TryParse<StatusType>(dr.GetString(1), out var parsedStatus) ? parsedStatus : default,
+                                Comment = dr.IsDBNull(2) ? null : dr.GetString(2),
+                                PackageId = dr.GetInt32(3),
+                                EmployeeId = dr.GetString(4)
+                            };
+                            packagestatuses.Add(packagestatus);
+                        }
+                    }
+                }
+            }
+            return packagestatuses;
+        }
+
+
 
         public void ChangeStatus(PackageStatus packageStatus)
         {
