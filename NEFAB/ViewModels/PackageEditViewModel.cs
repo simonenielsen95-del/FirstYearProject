@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace NEFAB.ViewModels
 {
@@ -17,7 +18,12 @@ namespace NEFAB.ViewModels
 
         private readonly PackageService _packageService;
 
-        
+        private BitmapImage? _selectedImage;
+        public BitmapImage? SelectedImage
+        {
+            get { return _selectedImage; }
+            set { _selectedImage = value; OnPropertyChanged(); }
+        }
 
         private Package _selectedPackage;
         public Package SelectedPackage
@@ -38,6 +44,11 @@ namespace NEFAB.ViewModels
             SelectedPackage = new Package();
 
             SelectedPackage = selectedPackage;
+
+            if (SelectedPackage.Image != null)
+            {
+                SelectedImage = SelectedPackage.ToImage(SelectedPackage.Image);
+            }
         }
 
         public void EditPackage()
@@ -51,6 +62,8 @@ namespace NEFAB.ViewModels
             {
                 MessageBox.Show($"Pakken kan ikke opdateres! {ex}", "Fejl", MessageBoxButton.OK);
             }
+
         }
+
     }
 }

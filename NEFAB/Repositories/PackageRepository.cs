@@ -209,22 +209,6 @@ namespace NEFAB.Repositories
             }
         }
 
-        public void ChangeStatus(PackageStatus packageStatus)
-        {
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("spChangeStatus", con))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@PackageStatusId", SqlDbType.Int).Value = packageStatus.PackageStatusId;
-                    cmd.Parameters.Add("@StatusType", SqlDbType.NVarChar, 100).Value = packageStatus.Status.ToString();
-                    cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, 400).Value = packageStatus.Comment ?? (object)DBNull.Value;
-                    cmd.Parameters.Add("@EmployeeId", SqlDbType.NVarChar, 8).Value = packageStatus.EmployeeId ?? "ADMI0101";
-                    cmd.Parameters.Add("@PackageId", SqlDbType.Int).Value = packageStatus.PackageId ?? (object)DBNull.Value;
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
+        
     }
 }

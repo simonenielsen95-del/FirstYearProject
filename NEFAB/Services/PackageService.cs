@@ -122,21 +122,6 @@ namespace NEFAB.Services
         }
 
 
-        public void ChangeStatus(PackageStatus packageStatus)
-        {
-            if (packageStatus == null)
-            {
-                throw new ArgumentException("Gyldig status mangler.");
-            }
-
-            try
-            {
-                _packageRepository.ChangeStatus(packageStatus); 
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Status kunne ikke opdateres.", ex);
-            }
-        }
+        
     }
 }

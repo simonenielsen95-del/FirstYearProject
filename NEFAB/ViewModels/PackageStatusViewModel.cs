@@ -14,9 +14,9 @@ namespace NEFAB.ViewModels
     public class PackageStatusViewModel : BaseViewModel
     {
         public ICommand NavigateToPackageViewCommand { get; }
-        public ICommand ChangeStatusPackageCommand { get; }
+        public ICommand AddStatusPackageCommand { get; }
 
-        private readonly PackageService _packageService;
+        private readonly PackageStatusService _packageStatusService;
 
         private Package _selectedPackage;
         public Package SelectedPackage
@@ -25,10 +25,10 @@ namespace NEFAB.ViewModels
             set { _selectedPackage = value; OnPropertyChanged(); }
         }
 
-        public Array AvailableStatusTypes => Enum.GetValues(SelectedStatus.GetType());
+        public Array AvailableStatusTypes => Enum.GetValues(typeof(StatusType));
 
-private PackageStatus.StatusType _selectedStatus;
-public PackageStatus.StatusType SelectedStatus
+        private PackageStatus _selectedStatus;
+        public PackageStatus SelectedStatus
         {
             get { return _selectedStatus; }
             set { _selectedStatus = value; OnPropertyChanged(); }
@@ -41,35 +41,37 @@ public PackageStatus.StatusType SelectedStatus
 
             NavigateToPackageViewCommand = new NavigateCommand(packageNavigationService);
 
-            ChangeStatusPackageCommand = new CommandHandler(() => ChangeStatusPackage());
-            _packageService = new PackageService();
+            AddStatusPackageCommand = new CommandHandler(() => AddStatusPackage());
+            _packageStatusService = new PackageStatusService();
 
             SelectedPackage = new Package();
 
             SelectedPackage = selectedPackage;
 
 
-            if (Enum.TryParse(SelectedPackage.PackageStatus, out PackageStatus.StatusType parsedStatus))
-            {
-                SelectedStatus = parsedStatus;
-            }
+
+            //if (Enum.TryParse(SelectedStatus.Status, out parsedStatus))
+            //{
+            //    SelectedStatus = parsedStatus;
+            //}
         }
 
-        public void ChangeStatusPackage()
+        public void AddStatusPackage()
         {
             try
             {
-                SelectedPackage.PackageStatus = SelectedStatus.ToString();
+                //SelectedStatus.Status = SelectedStatus.ToString();
 
-                var statusObj = new PackageStatus 
-                { 
-                    Status = SelectedStatus,
-                    PackageId = SelectedPackage.PackageId,
-                    Comment = SelectedPackage.Comment
-                };
-                _packageService.ChangeStatus(statusObj);
+                //var statusObj = new PackageStatus 
+                //{ 
+                //    Status = SelectedStatus,
+                //    PackageId = SelectedPackage.PackageId,
+                //    Comment = SelectedPackage.Comment
+                //};
+                SelectedStatus.PackageId = SelectedPackage.PackageId;
+                _packageStatusService.Add(SelectedStatus);
 
-                MessageBox.Show("Status på pakken er blevet opdateret", "Succes", MessageBoxButton.OK);
+                MessageBox.Show("Status på pakken er blevet oprettet", "Succes", MessageBoxButton.OK);
             }
             catch (Exception ex)
             {

@@ -8,7 +8,7 @@
              d:DesignHeight="500" d:DesignWidth="900">
     <Grid>
         <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="900"/>
-        <Label Content="Ændre pakke-status" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" Width="381" FontSize="36" FontWeight="Bold" Foreground="White"/>
+        <Label Content="Tilføj pakke-status" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" Width="381" FontSize="36" FontWeight="Bold" Foreground="White"/>
         <Image HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Source="/images/nefab white.png"/>
 
 
@@ -27,24 +27,26 @@
        <Label Content="Status" HorizontalAlignment="Left" Margin="647,160,0,0" VerticalAlignment="Top"/>
 
 
-        <TextBox x:Name="txtUpdateContainerNo" HorizontalAlignment="Left" Margin="150,129,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ContainerNo, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="txtUpdateSupplier" HorizontalAlignment="Left" Margin="150,178,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.SupplierName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="txtUpdateInnerQuantaty" HorizontalAlignment="Left" Margin="150,226,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.InnerQuantity, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="txtUpdateAmount" HorizontalAlignment="Left" Margin="150,274,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.Amount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="txtUpdateWeight" HorizontalAlignment="Left" Margin="150,324,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageWeight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="txtUpdateLength" HorizontalAlignment="Left" Margin="442,129,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageLength, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="txtUpdateWidth" HorizontalAlignment="Left" Margin="440,178,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="txtUpdateHeight" HorizontalAlignment="Left" Margin="442,226,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageHeight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="txtUpdateProjectNo" HorizontalAlignment="Left" Margin="442,274,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ProjectNo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="txtUpdateProjectItemNo" HorizontalAlignment="Left" Margin="442,324,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ProjectItemNo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox HorizontalAlignment="Left" Margin="608,274,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.Comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="233" Height="88"/>
-        <Button Content="Gem ny status" Command="{Binding ChangeStatusPackageCommand}" HorizontalAlignment="Left" Margin="781,384,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.152,0.71" FontSize="14"/>
+        <TextBox x:Name="txtUpdateContainerNo" HorizontalAlignment="Left" Margin="150,129,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ContainerNo, UpdateSourceTrigger=PropertyChanged, Mode =OneWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="txtUpdateSupplier" HorizontalAlignment="Left" Margin="150,178,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.SupplierName, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="txtUpdateInnerQuantaty" HorizontalAlignment="Left" Margin="150,226,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.InnerQuantity, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="txtUpdateAmount" HorizontalAlignment="Left" Margin="150,274,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.Amount, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="txtUpdateWeight" HorizontalAlignment="Left" Margin="150,324,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageWeight, UpdateSourceTrigger=PropertyChanged, Mode=Oneway}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="txtUpdateLength" HorizontalAlignment="Left" Margin="442,129,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageLength, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="txtUpdateWidth" HorizontalAlignment="Left" Margin="440,178,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageWidth, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="txtUpdateHeight" HorizontalAlignment="Left" Margin="442,226,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageHeight, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="txtUpdateProjectNo" HorizontalAlignment="Left" Margin="442,274,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ProjectNo, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="txtUpdateProjectItemNo" HorizontalAlignment="Left" Margin="442,324,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ProjectItemNo, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox HorizontalAlignment="Left" Margin="608,274,0,0" TextWrapping="Wrap" Text="{Binding SelectedStatus.Comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="233" Height="88"/>
+        <Button Content="Gem ny status" Command="{Binding AddStatusPackageCommand}" HorizontalAlignment="Left" Margin="781,384,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.152,0.71" FontSize="14"/>
 
 
-        <ComboBox SelectedItem="{Binding SelectedStatus, Mode=TwoWay}" ItemsSource="{Binding AvailableStatusTypes}" HorizontalAlignment="Left" Margin="721,165,0,0" VerticalAlignment="Top" Width="120"/>
-     
-        
-        
+        <ComboBox SelectedItem="{Binding SelectedStatus.StatusType, Mode=TwoWay}" ItemsSource="{Binding AvailableStatusTypes}" HorizontalAlignment="Left" Margin="721,165,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="MedarbejderID:" HorizontalAlignment="Left" Margin="597,125,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="724,129,0,0" TextWrapping="Wrap" Text="{Binding SelectedStatus.EmployeeId, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
+
+
+
 
     </Grid>
 </UserControl>

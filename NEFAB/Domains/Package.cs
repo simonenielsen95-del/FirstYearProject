@@ -21,7 +21,7 @@ namespace NEFAB.Domains
         //navigation properties:
         public string? ContainerNo { get; set; }
         public string? SupplierName { get; set; }
-        public string? PackageStatus { get; set; }
+
         //link og udvidelse?
 
     }
