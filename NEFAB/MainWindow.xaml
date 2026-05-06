@@ -33,10 +33,13 @@
                 <DataTemplate DataType="{x:Type viewmodels:PackageEditViewModel}">
                             <views:PackageEditView />
                         </DataTemplate>
-                <DataTemplate DataType="{x:Type viewmodels:PackageStatusViewModel}">
-                    <views:PackageStatusView />
+                <DataTemplate DataType="{x:Type viewmodels:PackageStatusCreateViewModel}">
+                    <views:PackageStatusCreateView />
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:PackageStatusOverviewViewModel}">
+                    <views:PackageStatusOverviewView />
 
+                </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
     </Grid>

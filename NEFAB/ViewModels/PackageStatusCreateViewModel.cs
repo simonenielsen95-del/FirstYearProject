@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace NEFAB.ViewModels
 {
-    public class PackageStatusViewModel : BaseViewModel
+    public class PackageStatusCreateViewModel : BaseViewModel
     {
         public ICommand NavigateToPackageViewCommand { get; }
         public ICommand AddStatusPackageCommand { get; }
@@ -35,7 +35,7 @@ namespace NEFAB.ViewModels
         }
 
 
-        public PackageStatusViewModel(NavigationStore navigationStore, Package selectedPackage)
+        public PackageStatusCreateViewModel(NavigationStore navigationStore, Package selectedPackage)
         {
             NavigationService packageNavigationService = new NavigationService(navigationStore, () => new PackageViewModel(navigationStore));
 
@@ -45,6 +45,7 @@ namespace NEFAB.ViewModels
             _packageStatusService = new PackageStatusService();
 
             SelectedPackage = new Package();
+            SelectedStatus = new PackageStatus();
 
             SelectedPackage = selectedPackage;
 

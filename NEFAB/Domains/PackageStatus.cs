@@ -6,7 +6,7 @@ namespace NEFAB.Domains
 {
     public class PackageStatus
     {
-        public int PackageStatusId { get; }
+        public int PackageStatusId { get; set; }
         public string? Comment { get; set; }
         public StatusType Status { get; set; }
 

@@ -30,5 +30,18 @@ namespace NEFAB.Services
                 throw new Exception("Status kunne ikke oprettes.", ex);
             }
         }
+
+        public List<PackageStatus> GetByPackageId(int? packageId)
+        {
+            try
+            {
+                List<PackageStatus> packagestatuses = _packageStausRepository.GetByPackageId(packageId);
+                return packagestatuses;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("pakker kunne ikke findes");
+            }
+        }
     }
 }
