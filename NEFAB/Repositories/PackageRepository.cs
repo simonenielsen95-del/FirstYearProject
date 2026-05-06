@@ -8,6 +8,8 @@ using System.Collections.Generic;
 
 //using System.ComponentModel;
 using System.Data;
+using System.Runtime.ConstrainedExecution;
+
 //using System.IO.Packaging;
 using System.Xml.Linq;
 
@@ -45,6 +47,7 @@ namespace NEFAB.Repositories
                     cmd.Parameters.Add("@PackageWidth", SqlDbType.Float).Value = package.PackageWidth;
                     cmd.Parameters.Add("@PackageHeight", SqlDbType.Float).Value = package.PackageHeight;
                     cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, 400).Value = package.Comment ?? (object)DBNull.Value;
+                    cmd.Parameters.Add("@Picture", SqlDbType.NVarChar, 500).Value = package.Image ?? (object)DBNull.Value;
                     cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = package.ContainerNo;
                     cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar, 100).Value = package.SupplierName;
                     cmd.ExecuteNonQuery();
@@ -78,8 +81,9 @@ namespace NEFAB.Repositories
                                 PackageWidth = (float)dr.GetDouble(7),
                                 PackageHeight = (float)dr.GetDouble(8),
                                 Comment = dr.IsDBNull(9) ? null : dr.GetString(9),
-                                ContainerNo = dr.GetString(10),
-                                SupplierName = dr.GetString(11)
+                                Image = dr.IsDBNull(10) ? null : dr.GetString(10),
+                                ContainerNo = dr.GetString(11),
+                                SupplierName = dr.GetString(12)
                             };
                             packages.Add(package);
                         }
@@ -115,8 +119,9 @@ namespace NEFAB.Repositories
                                 PackageWidth = (float)dr.GetDouble(7),
                                 PackageHeight = (float)dr.GetDouble(8),
                                 Comment = dr.IsDBNull(9) ? null : dr.GetString(9),
-                                ContainerNo = dr.GetString(10),
-                                SupplierName = dr.GetString(11)
+                                Image = dr.IsDBNull(10) ? null : dr.GetString(10),
+                                ContainerNo = dr.GetString(11),
+                                SupplierName = dr.GetString(12)
                             };
                         }
                     }
@@ -151,8 +156,9 @@ namespace NEFAB.Repositories
                                 PackageWidth = (float)dr.GetDouble(7),
                                 PackageHeight = (float)dr.GetDouble(8),
                                 Comment = dr.IsDBNull(9) ? null : dr.GetString(9),
-                                ContainerNo = dr.GetString(10),
-                                SupplierName = dr.GetString(11)
+                                Image = dr.IsDBNull(10) ? null : dr.GetString(10),
+                                ContainerNo = dr.GetString(11),
+                                SupplierName = dr.GetString(12)
                             };
                             result.Add(package);
                         }
@@ -198,6 +204,7 @@ namespace NEFAB.Repositories
                     cmd.Parameters.Add("@PackageWidth", SqlDbType.Float).Value = package.PackageWidth;
                     cmd.Parameters.Add("@PackageHeight", SqlDbType.Float).Value = package.PackageHeight;
                     cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, 400).Value = package.Comment ?? (object)DBNull.Value;
+                    cmd.Parameters.Add("@Picture", SqlDbType.NVarChar, 500).Value = package.Image ?? (object)DBNull.Value;
                     cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = package.ContainerNo;
                     cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar, 100).Value = package.SupplierName;
                     cmd.ExecuteNonQuery();

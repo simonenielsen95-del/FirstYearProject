@@ -9,7 +9,7 @@
     <Grid>
 
         <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="900"/>
-        <Image HorizontalAlignment="Left" Height="98" Margin="680,185,0,0" VerticalAlignment="Top" Width="177"/>
+        <Image Source="{Binding SelectedImage, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" HorizontalAlignment="Left" Height="98" Margin="680,185,0,0" VerticalAlignment="Top" Width="177"/>
 
         <Label Content="Opret Pakke" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" Width="218" FontSize="36" FontWeight="Bold" Foreground="White"/>
         <Label Content="Container nummer:" HorizontalAlignment="Left" Margin="20,147,0,0" VerticalAlignment="Top"/>
@@ -37,11 +37,11 @@
         <TextBox x:Name="txtHeight" HorizontalAlignment="Left" Margin="465,244,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.PackageHeight, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
         <TextBox x:Name="txtProjectNo" HorizontalAlignment="Left" Margin="465,286,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ProjectNo, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
         <TextBox x:Name="txtProjectItemNo" HorizontalAlignment="Left" Margin="465,334,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ProjectItemNo, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
-        <TextBox x:Name="txtImage" HorizontalAlignment="Left" Margin="685,151,0,0" TextWrapping="Wrap" Text="{Binding SelectedImage.path?, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="120" />
         <TextBox HorizontalAlignment="Left" Margin="707,300,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.Comment, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}" VerticalAlignment="Top" Width="153" Height="159"/>
 
         <Button x:Name="btnCreateNewPackage" Content="OPRET" Command="{Binding CreateNewPackageCommand}" HorizontalAlignment="Left" Margin="546,411,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.08,0.927"/>
         <Image HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Source="/images/nefab white.png"/>
+        <Button Content="Søg" Command="{Binding SelectImageCommand}" HorizontalAlignment="Left" Margin="830,149,0,0" VerticalAlignment="Top"/>
 
 
 
