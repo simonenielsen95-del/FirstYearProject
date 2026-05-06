@@ -41,7 +41,7 @@
         <Button Content="Gem ny status" Command="{Binding AddStatusPackageCommand}" HorizontalAlignment="Left" Margin="781,384,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.152,0.71" FontSize="14"/>
 
 
-        <ComboBox SelectedItem="{Binding SelectedStatus.StatusType, Mode=TwoWay}" ItemsSource="{Binding AvailableStatusTypes}" HorizontalAlignment="Left" Margin="721,165,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox SelectedItem="{Binding SelectedStatus.Status, Mode=TwoWay}" ItemsSource="{Binding AvailableStatusTypes}" HorizontalAlignment="Left" Margin="721,165,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="MedarbejderID:" HorizontalAlignment="Left" Margin="597,125,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="724,129,0,0" TextWrapping="Wrap" Text="{Binding SelectedStatus.EmployeeId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
 
