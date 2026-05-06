@@ -57,7 +57,7 @@ namespace NEFAB.ViewModels
             {
                 if (SelectedImage?.UriSource != null)
                 {
-                    SelectedPackage.Image = System.IO.File.ReadAllBytes(SelectedImage.UriSource.LocalPath);
+                    SelectedPackage.Image = SelectedImage.UriSource.LocalPath;
                 }
                 _packageService.Add(SelectedPackage);
                 MessageBox.Show("Ny pakke er blevet oprettet!", "Succes", MessageBoxButton.OK);

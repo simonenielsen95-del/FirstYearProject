@@ -51,7 +51,10 @@ namespace NEFAB.ViewModels
 
             if (SelectedPackage.Image != null)
             {
+                SelectedImage = new BitmapImage();
                 SelectedImage = SelectedPackage.ToImage(SelectedPackage.Image);
+                    
+                  
             }
         }
 
@@ -59,7 +62,7 @@ namespace NEFAB.ViewModels
         {
             if (SelectedImage?.UriSource != null)
             {
-                SelectedPackage.Image = System.IO.File.ReadAllBytes(SelectedImage.UriSource.LocalPath);
+                SelectedPackage.Image = SelectedImage.UriSource.LocalPath;
             }
             try
             {

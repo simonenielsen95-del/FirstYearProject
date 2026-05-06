@@ -19,7 +19,7 @@ namespace NEFAB.Domains
         public float? PackageWidth { get; set; }
         public float? PackageHeight { get; set; }
         public string? Comment { get; set; }
-        public byte[]? Image {  get; set; }
+        public string? Image {  get; set; }
 
         public string? IsComment 
         { 
@@ -38,20 +38,21 @@ namespace NEFAB.Domains
         // Posted by Hossein Narimani Rad, modified by community. See post 'Timeline' for change history
         // Retrieved 2026-05-04, License - CC BY-SA 3.0
 
-        public BitmapImage ToImage(byte[] array)
+        public BitmapImage ToImage(string path)
         {
-            if (array == null || array.Length == 0) return null;
-            using (System.IO.MemoryStream ms = new System.IO.MemoryStream(array))
-            {
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.StreamSource = ms;
-                image.EndInit();
-                return image;
-            }
+            
+                var bitmapimage = new BitmapImage();
+                bitmapimage.BeginInit();
+                bitmapimage.UriSource = new Uri(path, UriKind.Absolute);
+                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapimage.EndInit();
+                bitmapimage.Freeze();
+                return bitmapimage;
+            
         }
 
 
     }
 }
+
+
