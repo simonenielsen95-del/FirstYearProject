@@ -38,6 +38,7 @@ namespace NEFAB.Repositories
                     cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, 400).Value = packageStatus.Comment ?? (object)DBNull.Value;
                     cmd.Parameters.Add("@EmployeeId", SqlDbType.NVarChar, 8).Value = packageStatus.EmployeeId;
                     cmd.Parameters.Add("@PackageId", SqlDbType.Int).Value = packageStatus.PackageId;
+                    cmd.Parameters.Add("@StatusDate", SqlDbType.DateTime).Value = DateTime.Now;
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -63,7 +64,8 @@ namespace NEFAB.Repositories
                                 Status = Enum.TryParse<StatusType>(dr.GetString(1), out var parsedStatus) ? parsedStatus : default,
                                 Comment = dr.IsDBNull(2) ? null : dr.GetString(2),
                                 PackageId = dr.GetInt32(3),
-                                EmployeeId = dr.GetString(4)
+                                EmployeeId = dr.GetString(4),
+                                StatusDate = dr.GetDateTime(5)
                             };
                             packagestatuses.Add(packagestatus);
                         }
