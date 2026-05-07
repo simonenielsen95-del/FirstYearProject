@@ -9,6 +9,7 @@ namespace NEFAB.Domains
         public int PackageStatusId { get; set; }
         public string? Comment { get; set; }
         public StatusType Status { get; set; }
+        public DateTime? DateTime { get; set; }
 
         //navigation properties:
         public int? PackageId { get; set; }

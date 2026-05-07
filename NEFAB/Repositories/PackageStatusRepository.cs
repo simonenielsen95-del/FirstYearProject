@@ -27,6 +27,7 @@ namespace NEFAB.Repositories
 
         public void Add(PackageStatus packageStatus)
         {
+            packageStatus.DateTime= DateTime.Now;
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
@@ -36,6 +37,7 @@ namespace NEFAB.Repositories
                    
                     cmd.Parameters.Add("@StatusType", SqlDbType.NVarChar, 100).Value = packageStatus.Status.ToString();
                     cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, 400).Value = packageStatus.Comment ?? (object)DBNull.Value;
+                    cmd.Parameters.Add("@StatusTime", SqlDbType.DateTime).Value = packageStatus.DateTime; 
                     cmd.Parameters.Add("@EmployeeId", SqlDbType.NVarChar, 8).Value = packageStatus.EmployeeId;
                     cmd.Parameters.Add("@PackageId", SqlDbType.Int).Value = packageStatus.PackageId;
                     cmd.ExecuteNonQuery();
@@ -62,8 +64,9 @@ namespace NEFAB.Repositories
                                 PackageStatusId = dr.GetInt32(0),
                                 Status = Enum.TryParse<StatusType>(dr.GetString(1), out var parsedStatus) ? parsedStatus : default,
                                 Comment = dr.IsDBNull(2) ? null : dr.GetString(2),
-                                PackageId = dr.GetInt32(3),
-                                EmployeeId = dr.GetString(4)
+                                DateTime = dr.GetDateTime(3),
+                                PackageId = dr.GetInt32(4),
+                                EmployeeId = dr.GetString(5)
                             };
                             packagestatuses.Add(packagestatus);
                         }
