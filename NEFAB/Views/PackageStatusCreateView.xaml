@@ -44,9 +44,7 @@
         <ComboBox SelectedItem="{Binding SelectedStatus.Status, Mode=TwoWay}" ItemsSource="{Binding AvailableStatusTypes}" HorizontalAlignment="Left" Margin="721,165,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="MedarbejderID:" HorizontalAlignment="Left" Margin="597,125,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="724,129,0,0" TextWrapping="Wrap" Text="{Binding SelectedStatus.EmployeeId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
-
-
-
+        
 
     </Grid>
 </UserControl>

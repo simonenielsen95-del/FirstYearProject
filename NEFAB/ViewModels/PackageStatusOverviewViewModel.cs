@@ -52,14 +52,14 @@ namespace NEFAB.ViewModels
             OCPackageStatus.Clear();
             try
             {
-                if (selectedPackage.PackageId != null)
+                
+                
+                foreach (PackageStatus packagestatus in _packageStatusService.GetByPackageId(selectedPackage.PackageId))
                 {
-                    foreach (PackageStatus packagestatus in _packageStatusService.GetByPackageId(selectedPackage.PackageId))
-                    {
-                        OCPackageStatus.Add(packagestatus);
+                   OCPackageStatus.Add(packagestatus);
 
-                    }
                 }
+                
             }
             catch (Exception ex)
             {

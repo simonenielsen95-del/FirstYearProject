@@ -34,6 +34,8 @@ namespace NEFAB.ViewModels
             set { _selectedStatus = value; OnPropertyChanged(); }
         }
 
+        
+
 
         public PackageStatusCreateViewModel(NavigationStore navigationStore, Package selectedPackage)
         {
@@ -50,6 +52,7 @@ namespace NEFAB.ViewModels
             SelectedPackage = selectedPackage;
 
 
+          
 
             //if (Enum.TryParse(SelectedStatus.Status, out parsedStatus))
             //{
@@ -70,7 +73,7 @@ namespace NEFAB.ViewModels
                 //    Comment = SelectedPackage.Comment
                 //};
                 SelectedStatus.PackageId = SelectedPackage.PackageId;
-                _packageStatusService.Add(SelectedStatus);
+                //SelectedStatus.StatusDate = DateTime.Now;
 
                 MessageBox.Show("Status på pakken er blevet oprettet", "Succes", MessageBoxButton.OK);
             }
@@ -78,7 +81,21 @@ namespace NEFAB.ViewModels
             {
                 MessageBox.Show($"Status på pakken kan ikke opdateres! {ex}", "Fejl", MessageBoxButton.OK);
             }
+
+
+
+            //    private void DateToStatus()
+            //{ 
+            //    SelectedStatus.Date = DateTime.Now;
+
+            //    SelectedStatus.PackageId = SelectedPackage.PackageId;
+
+            //    _packageStatusRepository.Add(SelectedStatus);
+            //}
+
         }
     }
+
 }
+
 
