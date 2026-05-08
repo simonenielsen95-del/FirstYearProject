@@ -8,10 +8,10 @@ namespace NEFAB.Services
 {
     public class PackageStatusService
     {
-        private readonly PackageStatusRepository _packageStausRepository;
+        private readonly PackageStatusRepository _packageStatusRepository;
         public PackageStatusService()
         {
-            _packageStausRepository = new PackageStatusRepository();
+            _packageStatusRepository = new PackageStatusRepository();
         }
 
         public void Add(PackageStatus packageStatus)
@@ -23,7 +23,7 @@ namespace NEFAB.Services
 
             try
             {
-                _packageStausRepository.Add(packageStatus);
+                _packageStatusRepository.Add(packageStatus);
             }
             catch (Exception ex)
             {
@@ -35,7 +35,7 @@ namespace NEFAB.Services
         {
             try
             {
-                List<PackageStatus> packagestatuses = _packageStausRepository.GetByPackageId(packageId);
+                List<PackageStatus> packagestatuses = _packageStatusRepository.GetByPackageId(packageId);
                 return packagestatuses;
             }
             catch (Exception ex)
