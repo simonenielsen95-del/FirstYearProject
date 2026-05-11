@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "NEFAB": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
