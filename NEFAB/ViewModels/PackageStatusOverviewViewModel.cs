@@ -26,6 +26,7 @@ namespace NEFAB.ViewModels
             set { _selectedPackage = value; OnPropertyChanged(); }
         }
 
+ 
         //private PackageStatus _selectedStatus;
         //public PackageStatus SelectedStatus
         //{
