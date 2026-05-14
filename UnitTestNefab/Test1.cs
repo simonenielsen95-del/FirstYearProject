@@ -27,19 +27,18 @@ namespace UnitTestNefab
                 PackageHeight = 1,
                 Comment = null,
                 Image = null,
-                ContainerNo = "", 
+                ContainerNo = "FAKE1234567", 
                 SupplierName = "TSP"
             };
 
             //act
-            // Vi kalder Add på PackageService. Testen forventer at få en ArgumentException tilbage
             ArgumentException ex = Assert.ThrowsException<ArgumentException>(() => 
             {
                 packageService.Add(newPackage);
             });
 
             //assert
-            Assert.AreEqual("Udfyld Container nummer.", ex.Message); 
+            Assert.AreEqual("Pakken kunne ikke oprettes", ex.Message); 
         }
     }
 }
