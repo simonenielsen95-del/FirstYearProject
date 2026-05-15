@@ -83,7 +83,7 @@ namespace NEFAB.Repositories
             }
             return packages;
         }
-        public Package? GetByID(string containerNo) // skal laves om. 
+        public Package? GetByID(string containerNo)
         {
             Package? package = null;
             using (SqlConnection con = new SqlConnection(connectionString))
