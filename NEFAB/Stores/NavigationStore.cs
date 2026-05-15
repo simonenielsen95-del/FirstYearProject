@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using NEFAB.ViewModels;
-
 namespace NEFAB.Stores
 {
     public class NavigationStore
@@ -20,11 +19,9 @@ namespace NEFAB.Stores
                 _currentViewModel = value; OnCurrentViewModelChanged();
             }
         }
-
-            public void OnCurrentViewModelChanged()
-            {
-                CurrentViewModelChanged?.Invoke();
+        public void OnCurrentViewModelChanged()
+        {
+            CurrentViewModelChanged?.Invoke();
         }
-
     }
 }

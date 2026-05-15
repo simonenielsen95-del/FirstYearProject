@@ -12,7 +12,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using NEFAB.Repositories;
 using NEFAB.Domains;
-
 namespace NEFAB.Views
 {
     /// <summary>
@@ -20,14 +19,9 @@ namespace NEFAB.Views
     /// </summary>
     public partial class ContainerView : UserControl
     {
-
         public ContainerView()
         {
             InitializeComponent();
-           
         }
-
-       
-        
     }
 }

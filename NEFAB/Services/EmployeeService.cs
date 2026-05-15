@@ -3,7 +3,6 @@ using NEFAB.Repositories;
 using NEFAB.Repositories.Interfaces;
 using System;
 using System.ComponentModel;
-
 namespace NEFAB.Services
 {
     public class EmployeeService
@@ -42,7 +41,6 @@ namespace NEFAB.Services
             try
             {
                 _employeeRepository.Add(employee);
-
             }
             catch
             {
@@ -91,10 +89,5 @@ namespace NEFAB.Services
                 }
             }
         }
-
     }
 }
-
-
-
-
