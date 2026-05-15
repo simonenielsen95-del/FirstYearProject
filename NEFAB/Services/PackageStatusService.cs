@@ -3,7 +3,6 @@ using NEFAB.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace NEFAB.Services
 {
     public class PackageStatusService
@@ -13,14 +12,12 @@ namespace NEFAB.Services
         {
             _packageStatusRepository = new PackageStatusRepository();
         }
-
         public void Add(PackageStatus packageStatus)
         {
             if (packageStatus == null)
             {
                 throw new ArgumentException("Gyldig status mangler.");
             }
-
             try
             {
                 _packageStatusRepository.Add(packageStatus);
@@ -30,7 +27,6 @@ namespace NEFAB.Services
                 throw new Exception("Status kunne ikke oprettes.", ex);
             }
         }
-
         public List<PackageStatus> GetByPackageId(int? packageId)
         {
             try

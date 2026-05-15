@@ -2,7 +2,6 @@
 using NEFAB.Domains;
 using NEFAB.Services;
 using System;
-
 namespace UnitTestNefab
 {
     [TestClass]
@@ -13,7 +12,6 @@ namespace UnitTestNefab
         {
             //arrange
             PackageService packageService = new PackageService();
-            
             Package newPackage = new Package()
             {
                 PackageId = 1,
@@ -30,13 +28,11 @@ namespace UnitTestNefab
                 ContainerNo = "FAKE1234567", 
                 SupplierName = "TSP"
             };
-
             //act
             ArgumentException ex = Assert.ThrowsException<ArgumentException>(() => 
             {
                 packageService.Add(newPackage);
             });
-
             //assert
             Assert.AreEqual("Pakken kunne ikke oprettes", ex.Message); 
         }

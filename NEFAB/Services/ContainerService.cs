@@ -2,35 +2,25 @@
 using NEFAB.Repositories;
 using NEFAB.Repositories.Interfaces;
 using System;
-//using System.ComponentModel;
-
 namespace NEFAB.Services
 {
     public class ContainerService 
     {
-        
         private readonly ContainerRepository _containerRepository;
         public ContainerService()
         {
             _containerRepository = new ContainerRepository(); 
         }
-
-        
-
         public void Add(Container container)
         {
             if (string.IsNullOrEmpty(container.ContainerNo) || (container.Year == null) || (container.Week== null))
             {
                 throw new ArgumentException("Udfyld venligst både ContainerNo, Uge og År.");
             }
-
-            
             if (container.ContainerNo.Length != 11)
             {
                 throw new ArgumentException("Udfyld venligst et korrekt container nr.");
             }
-           
-
             for (int i = 0; i < container.ContainerNo.Length; i++)
             {
                 if (i <= 3)
@@ -49,18 +39,14 @@ namespace NEFAB.Services
                     }
                 }
             }
-
             if (container.Year <1949) 
             {
                 throw new ArgumentException("Udfyld venligst et korrekt År.");
             }
-            
             if (container.Week <=0 || container.Week >= 54)
             {
                 throw new ArgumentException("Udfyld venligst et korrekt uge nr.");
             }
-
-           
             else
             {
                 try 
@@ -71,22 +57,15 @@ namespace NEFAB.Services
                 { 
                     throw new ArgumentException("Noget gik galt, prøv igen");
                 }
-
-                    
-               
             }
-            
         }
-
         public void Remove(Container container)
         {
             if (string.IsNullOrEmpty(container.ContainerNo))
             {
                 throw new ArgumentException("Udfyld venligst ContainerNo.");
             }
-
             Container? containerDB = _containerRepository.GetByID(container.ContainerNo);
-
             if (containerDB == null)
             {
                 throw new Exception($"Container {container.ContainerNo} blev ikke fundet.");
@@ -103,22 +82,16 @@ namespace NEFAB.Services
                 }
             }
         }  
- 
-
         public void Update(Container container)
         {
             if (string.IsNullOrEmpty(container.ContainerNo) || container.Week == null || container.Year == null)
             {
                 throw new ArgumentException("Udfyld venligst både ContainerNo, uge og år");
             }
-
-
             if (container.ContainerNo.Length != 11)
             {
                 throw new ArgumentException("Udfyld venligst et korrekt container nr.");
             }
-
-
             for (int i = 0; i < container.ContainerNo.Length; i++)
             {
                 if (i <= 3)
@@ -137,24 +110,19 @@ namespace NEFAB.Services
                     }
                 }
             }
-
             if (container.Year < 1949)
             {
                 throw new ArgumentException("Udfyld venligst et korrekt År.");
             }
-
             if (container.Week <= 0 || container.Week >= 54)
             {
                 throw new ArgumentException("Udfyld venligst et korrekt uge nr.");
             }
-
-
             Container? containerDB = _containerRepository.GetByID(container.ContainerNo);
             if (containerDB == null)
             {
                 throw new Exception($"Container {container.ContainerNo} blev ikke fundet.");
             }
-
             else
             {
                 try

@@ -14,8 +14,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
-
 namespace NEFAB.ViewModels
 {
     internal class PackageViewModel : BaseViewModel
@@ -27,19 +25,14 @@ namespace NEFAB.ViewModels
         public ICommand NavigateToPackageStatusOverviewViewCommand { get; }
         public ICommand RemovePackageCommand { get; }
         public ICommand SearchPackages { get; }
-
         private Package _selectedPackage;
-
         public Package SelectedPackage
         {
             get { return _selectedPackage; }
             set { _selectedPackage = value; OnPropertyChanged(); }
         }
-
         private readonly PackageService _packageService;
         private readonly ContainerService _containerService;
-
-
         private Container _container;
         public Container Container
         {
@@ -48,28 +41,22 @@ namespace NEFAB.ViewModels
             {
                 _container = value;
                 OnPropertyChanged();
-
             }
         }
-
         private int _totalAmount;
         public int TotalAmount
         {
             get { return _totalAmount; }
             set { _totalAmount = value; OnPropertyChanged(); }
         }
-
         private int _totalInnerQuantity;
         public int TotalInnerQuantity
         {
             get { return _totalInnerQuantity; }
             set { _totalInnerQuantity = value; OnPropertyChanged(); }
         }
-
-       
         public ObservableCollection<Container> OCContainers { get; set; }
         public ObservableCollection<Package> OCPackages { get; set; }
-
         public PackageViewModel(NavigationStore navigationStore)
         {
             NavigationService homeNavigationService = new NavigationService(navigationStore, () => new HomeViewModel(navigationStore));
@@ -77,10 +64,8 @@ namespace NEFAB.ViewModels
             NavigationService packageEditNavigationService = new NavigationService(navigationStore, () => new PackageEditViewModel(navigationStore, SelectedPackage));
             NavigationService packageStatusCreateNavigationService = new NavigationService(navigationStore, () => new PackageStatusCreateViewModel(navigationStore, SelectedPackage));
             NavigationService packageStatusOverviewNavigationService = new NavigationService(navigationStore, () => new PackageStatusOverviewViewModel(navigationStore, SelectedPackage));
-
             NavigateToHomeViewCommand = new NavigateCommand(homeNavigationService);
             NavigateToPackageCreateViewCommand = new NavigateCommand(packageCreateNavigationService);
-
             NavigateToPackageEditViewCommand = new CommandHandler(() =>
             {
                 if (SelectedPackage != null)
@@ -89,8 +74,6 @@ namespace NEFAB.ViewModels
                     navigationStore.CurrentViewModel = editViewModel;
                 }
             }, () => true);
-
-
             NavigateToPackageStatusCreateViewCommand = new CommandHandler(() =>
             {
                 if (SelectedPackage != null)
@@ -99,7 +82,6 @@ namespace NEFAB.ViewModels
                     navigationStore.CurrentViewModel = statusViewModel;
                 }
             }, () => true);
-
             NavigateToPackageStatusOverviewViewCommand = new CommandHandler(() =>
             {
                 if (SelectedPackage != null)
@@ -108,50 +90,36 @@ namespace NEFAB.ViewModels
                     navigationStore.CurrentViewModel = statusViewModel;
                 }
             }, () => true);
-        
-
-
             SearchPackages = new CommandHandler(() => FilterPackages());
             RemovePackageCommand = new CommandHandler(() => RemovePackage());
-
-
             _packageService = new PackageService();
             _containerService = new ContainerService();
-
             OCContainers = new ObservableCollection<Container>();
             OCPackages = new ObservableCollection<Package>();
-
             Container = new Container();
-
         }
-
         private void FilterPackages()
         {
             OCPackages.Clear();
-
             if (Container == null || string.IsNullOrWhiteSpace(Container.ContainerNo))
             {
                 return;
             }
-
-            try //uge
+            try
             {
                 var foundContainer = _containerService.GetByID(Container.ContainerNo);
                 if (foundContainer != null)
                 {
                     Container = foundContainer;
                 }
-
                 int calculatedAmount = 0;
                 int calculatedInnerQuantity = 0;
-
-                foreach (Package package in _packageService.GetByContainerNo(Container.ContainerNo)) //beregning
+                foreach (Package package in _packageService.GetByContainerNo(Container.ContainerNo))
                 {
                     OCPackages.Add(package);
                     calculatedAmount += package.Amount ?? 0;
                     calculatedInnerQuantity += package.InnerQuantity ?? 0;
                 }
-
                 TotalAmount = calculatedAmount;
                 TotalInnerQuantity = calculatedInnerQuantity;
             }
@@ -160,8 +128,6 @@ namespace NEFAB.ViewModels
                 MessageBox.Show($"Pakker kunne ikke findes! {ex}", "Fejl", MessageBoxButton.OK);
             }
         }
-
-
         public void RemovePackage()
         {
             if (SelectedPackage != null)
@@ -170,7 +136,6 @@ namespace NEFAB.ViewModels
                 {
                     TotalAmount = TotalAmount - SelectedPackage.Amount ?? 0;
                     TotalInnerQuantity = TotalInnerQuantity - SelectedPackage.InnerQuantity ?? 0;
-
                     _packageService.Remove(SelectedPackage);
                     OCPackages.Remove(SelectedPackage);
                     MessageBox.Show("Pakken er blevet fjernet.", "Success", MessageBoxButton.OK);
