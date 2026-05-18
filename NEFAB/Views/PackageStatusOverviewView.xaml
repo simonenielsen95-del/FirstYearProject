@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="NEFAB.Views.PackageStatusOverviewView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NEFAB.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="900">
+    <Grid>
+        <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="998"/>
+        <Label Content="Status Historik" HorizontalAlignment="Left" Margin="272,21,0,0" VerticalAlignment="Top" Foreground="White" FontSize="36" FontWeight="Bold"/>
+        <Image HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Source="/images/nefab white.png"/>
+        <Label Content="Leverandør:" HorizontalAlignment="Left" Margin="65,115,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock Text="{Binding SelectedPackage.SupplierName}" HorizontalAlignment="Left" Margin="145,120,0,0" VerticalAlignment="Top"/>
+        <Label Content="Antal:" HorizontalAlignment="Left" Margin="65,145,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock Text="{Binding SelectedPackage.Amount}" HorizontalAlignment="Left" Margin="145,150,0,0" VerticalAlignment="Top"/>
+        <Label Content="Kommentar:" HorizontalAlignment="Left" Margin="65,175,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock Text="{Binding SelectedPackage.Comment}" HorizontalAlignment="Left" Margin="145,180,0,0" VerticalAlignment="Top" TextWrapping="Wrap" MaxWidth="280"/>
+        <ListBox x:Name="PackageStatusList" ItemsSource="{Binding OCPackageStatus}" Margin="272,139,118,83">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.Template>
+                <ControlTemplate TargetType="ListBox">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Background="#144e8c" Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Status" Grid.Column="0" FontWeight="Bold" Margin="5" Foreground="White"/>
+                                <TextBlock Text="Note" Grid.Column="1" FontWeight="Bold" Margin="5" Foreground="White"/>
+                                <TextBlock Text="EmployeeId" Grid.Column="2" FontWeight="Bold" Margin="5" Foreground="White"/>
+                                <TextBlock Text="Dato" Grid.Column="3" FontWeight="Bold" Margin="5" Foreground="White"/>
+                            </Grid>
+                            <ScrollViewer Grid.Row="1" x:Name="PART_ScrollViewer" VerticalScrollBarVisibility="Auto">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </ListBox.Template>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Status}" Grid.Column="0" Margin="5"/>
+                        <TextBlock Text="{Binding Comment}" Grid.Column="1" Margin="5" TextWrapping="Wrap" />
+                        <TextBlock Text="{Binding EmployeeId}" Grid.Column="2" Margin="5"/>
+                        <TextBlock Text="{Binding DateTime, StringFormat=dd-MM-yyyy HH:mm}" Grid.Column="3" Margin="5"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Content="Tilbage" Command="{Binding NavigateToPackageViewCommand}" HorizontalAlignment="Left" Margin="65,400,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</UserControl>

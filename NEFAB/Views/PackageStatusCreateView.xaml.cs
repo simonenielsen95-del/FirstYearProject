@@ -13,11 +13,11 @@ using System.Windows.Shapes;
 namespace NEFAB.Views
 {
     /// <summary>
-    /// Interaction logic for EmployeeView.xaml
+    /// Interaction logic for PackageStatusCreateView.xaml
     /// </summary>
-    public partial class EmployeeView : UserControl
+    public partial class PackageStatusCreateView : UserControl
     {
-        public EmployeeView()
+        public PackageStatusCreateView()
         {
             InitializeComponent();
         }

@@ -9,7 +9,6 @@
         xmlns:viewmodels="clr-namespace:NEFAB.ViewModels"
         xmlns:views="clr-namespace:NEFAB.Views">
     <Grid>
-
         <ContentControl Content="{Binding CurrentViewModel}">
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
@@ -33,7 +32,12 @@
                 <DataTemplate DataType="{x:Type viewmodels:PackageEditViewModel}">
                             <views:PackageEditView />
                         </DataTemplate>
-
+                <DataTemplate DataType="{x:Type viewmodels:PackageStatusCreateViewModel}">
+                    <views:PackageStatusCreateView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:PackageStatusOverviewViewModel}">
+                    <views:PackageStatusOverviewView />
+                </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
     </Grid>

@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="../UnitTestNefab/UnitTestNefab.csproj" Id="a966f5ba-2540-4e14-9f2c-b6534c179ef6" />
   <Project Path="NEFAB.csproj" />
 </Solution>

@@ -3,15 +3,14 @@ using NEFAB.Repositories;
 using NEFAB.Repositories.Interfaces;
 using System;
 using System.ComponentModel;
-
 namespace NEFAB.Services
 {
     public class EmployeeService
     {
-        public EmployeeRepository EmployeeRepository { get; set; }
+        private readonly EmployeeRepository _employeeRepository;
         public EmployeeService()
         {
-            EmployeeRepository = new EmployeeRepository();
+            _employeeRepository = new EmployeeRepository();
         }
         public void Add(Employee employee)
         {
@@ -41,8 +40,7 @@ namespace NEFAB.Services
             }
             try
             {
-                EmployeeRepository.Add(employee);
-
+                _employeeRepository.Add(employee);
             }
             catch
             {
@@ -76,14 +74,14 @@ namespace NEFAB.Services
                         throw new ArgumentException("EmployeeID er ikke af korrekt type: ABCD1234");
                     }
                 }
-                Employee? employeeDB = EmployeeRepository.GetByID(employee.EmployeeID);
+                Employee? employeeDB = _employeeRepository.GetByID(employee.EmployeeID);
                 if (employeeDB == null)
                 {
                     throw new Exception($"Employee {employee.EmployeeID} blev ikke fundet.");
                 }
                 try
                 {
-                    EmployeeRepository.Update(employee);
+                    _employeeRepository.Update(employee);
                 }
                 catch (Exception ex)
                 {
@@ -91,10 +89,5 @@ namespace NEFAB.Services
                 }
             }
         }
-
     }
 }
-
-
-
-

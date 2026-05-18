@@ -1,34 +1,28 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Runtime.ConstrainedExecution;
+using System.Xml.Linq;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using NEFAB.Domains;
 using NEFAB.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-//using System.ComponentModel;
-
-//using System.ComponentModel;
-using System.Data;
-//using System.IO.Packaging;
-using System.Xml.Linq;
-
+using static NEFAB.Domains.PackageStatus;
 namespace NEFAB.Repositories
 {
     public class PackageRepository : IRepoGetAddUpdateRemove<Package, string>
     {
         private readonly string connectionString;
         private List<Package> packages;
-
         public PackageRepository()
         {
             IConfigurationRoot config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
-            packages = new List<Package>(); // rettet fra List<Packages> til List<Package>
-
+            packages = new List<Package>();
             connectionString = config.GetConnectionString("MyDBConnection");
         }
-
-        public void Add(Package package)// eller (package , string supplierName , string containerNo)
+        public void Add(Package package)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -45,6 +39,7 @@ namespace NEFAB.Repositories
                     cmd.Parameters.Add("@PackageWidth", SqlDbType.Float).Value = package.PackageWidth;
                     cmd.Parameters.Add("@PackageHeight", SqlDbType.Float).Value = package.PackageHeight;
                     cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, 400).Value = package.Comment ?? (object)DBNull.Value;
+                    cmd.Parameters.Add("@Picture", SqlDbType.NVarChar, 500).Value = package.Image ?? (object)DBNull.Value;
                     cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = package.ContainerNo;
                     cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar, 100).Value = package.SupplierName;
                     cmd.ExecuteNonQuery();
@@ -52,7 +47,6 @@ namespace NEFAB.Repositories
                 }
             }
         }
-
         public List<Package> GetAll()
         {
             List<Package> packages = new List<Package>();
@@ -78,8 +72,9 @@ namespace NEFAB.Repositories
                                 PackageWidth = (float)dr.GetDouble(7),
                                 PackageHeight = (float)dr.GetDouble(8),
                                 Comment = dr.IsDBNull(9) ? null : dr.GetString(9),
-                                ContainerNo = dr.GetString(10),
-                                SupplierName = dr.GetString(11)
+                                Image = dr.IsDBNull(10) ? null : dr.GetString(10),
+                                ContainerNo = dr.GetString(11),
+                                SupplierName = dr.GetString(12)
                             };
                             packages.Add(package);
                         }
@@ -88,8 +83,7 @@ namespace NEFAB.Repositories
             }
             return packages;
         }
-
-        public Package? GetByID(string containerNo) // skal laves om. 
+        public Package? GetByID(string containerNo)
         {
             Package? package = null;
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -115,8 +109,9 @@ namespace NEFAB.Repositories
                                 PackageWidth = (float)dr.GetDouble(7),
                                 PackageHeight = (float)dr.GetDouble(8),
                                 Comment = dr.IsDBNull(9) ? null : dr.GetString(9),
-                                ContainerNo = dr.GetString(10),
-                                SupplierName = dr.GetString(11)
+                                Image = dr.IsDBNull(10) ? null : dr.GetString(10),
+                                ContainerNo = dr.GetString(11),
+                                SupplierName = dr.GetString(12)
                             };
                         }
                     }
@@ -124,8 +119,7 @@ namespace NEFAB.Repositories
             }
             return package;
         }
-        //fulde liste til combobox, da der kan være flere pakker i en container
-        public List<Package> GetPackagesByContainerNo(string containerNo)
+        public List<Package> GetByContainerNo(string containerNo)
         {
             List<Package> result = new List<Package>();
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -151,20 +145,18 @@ namespace NEFAB.Repositories
                                 PackageWidth = (float)dr.GetDouble(7),
                                 PackageHeight = (float)dr.GetDouble(8),
                                 Comment = dr.IsDBNull(9) ? null : dr.GetString(9),
-                                ContainerNo = dr.GetString(10),
-                                SupplierName = dr.GetString(11)
+                                Image = dr.IsDBNull(10) ? null : dr.GetString(10),
+                                ContainerNo = dr.GetString(11),
+                                SupplierName = dr.GetString(12)
                             };
                             result.Add(package);
                         }
-                                
                     }
                 }
             }
             return result;
         }
-
         public void Remove(Package package)
-
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -178,8 +170,6 @@ namespace NEFAB.Repositories
                 }
             }
         }
-
-
         public void Update(Package package)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -188,7 +178,7 @@ namespace NEFAB.Repositories
                 using (SqlCommand cmd = new SqlCommand("spUpdatePackage", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@PackageId", SqlDbType.BigInt).Value = package.PackageId;
+                    cmd.Parameters.Add("@PackageId", SqlDbType.Int).Value = package.PackageId;
                     cmd.Parameters.Add("@ProjectNo", SqlDbType.BigInt).Value = package.ProjectNo;
                     cmd.Parameters.Add("@ProjectItemNo", SqlDbType.Int).Value = package.ProjectItemNo;
                     cmd.Parameters.Add("@PackageWeight", SqlDbType.Int).Value = package.PackageWeight;
@@ -198,6 +188,7 @@ namespace NEFAB.Repositories
                     cmd.Parameters.Add("@PackageWidth", SqlDbType.Float).Value = package.PackageWidth;
                     cmd.Parameters.Add("@PackageHeight", SqlDbType.Float).Value = package.PackageHeight;
                     cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, 400).Value = package.Comment ?? (object)DBNull.Value;
+                    cmd.Parameters.Add("@Picture", SqlDbType.NVarChar, 500).Value = package.Image ?? (object)DBNull.Value;
                     cmd.Parameters.Add("@ContainerNo", SqlDbType.NVarChar, 50).Value = package.ContainerNo;
                     cmd.Parameters.Add("@SupplierName", SqlDbType.NVarChar, 100).Value = package.SupplierName;
                     cmd.ExecuteNonQuery();
