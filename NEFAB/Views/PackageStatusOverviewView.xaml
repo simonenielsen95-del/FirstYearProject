@@ -18,7 +18,7 @@
         <Label Content="Antal:" HorizontalAlignment="Left" Margin="65,145,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <TextBlock Text="{Binding SelectedPackage.Amount}" HorizontalAlignment="Left" Margin="145,150,0,0" VerticalAlignment="Top"/>
         <Label Content="Kommentar:" HorizontalAlignment="Left" Margin="65,175,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBlock Text="{Binding SelectedPackage.Comment}" HorizontalAlignment="Left" Margin="145,180,0,0" VerticalAlignment="Top" TextWrapping="Wrap" MaxWidth="280"/>
+        <TextBlock Text="{Binding SelectedPackage.Comment}" HorizontalAlignment="Left" Margin="145,180,0,0" VerticalAlignment="Top" TextWrapping="Wrap" MaxWidth="100"/>
 
        
         <ListBox x:Name="PackageStatusList" ItemsSource="{Binding OCPackageStatus}" Margin="272,139,118,83">
