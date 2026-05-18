@@ -11,15 +11,10 @@
         <Button Content="Opret ny pakke" Command="{Binding NavigateToPackageCreateViewCommand}" HorizontalAlignment="Left" Margin="626,128,0,0" VerticalAlignment="Top" Width="120" Height="29"/>
         <Button Content="Rediger pakke" Command="{Binding NavigateToPackageEditViewCommand}" HorizontalAlignment="Left" Margin="645,441,0,0" VerticalAlignment="Top" Width="80" Height="24"/>
         <Button Content="Slet pakke" Command="{Binding RemovePackageCommand}" HorizontalAlignment="Left" Margin="765,441,0,0" VerticalAlignment="Top" Width="80" Height="24" Background="#FFD04F4F"/>
-
-
         <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="900"/>
         <Image HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="1350" Source="/images/nefab white.png" Margin="10,24,0,0"/>
-
         <Label Content="Find pakke:" HorizontalAlignment="Left" Margin="46,111,0,0" VerticalAlignment="Top" FontSize="18"/>
         <Label Content="Pakke oversigt" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontWeight="Bold"/>
-
-
         <ListBox x:Name ="PackageList" SelectedItem="{Binding SelectedPackage, Mode=TwoWay}" ItemsSource="{Binding OCPackages, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="46,199,40,95">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
@@ -34,7 +29,6 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-
                             <Grid Background="#144e8c" Grid.Row="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="4*"/>
@@ -59,7 +53,6 @@
                                 <TextBlock Text="PO ITEM NO." Grid.Column="8" FontWeight="Bold" Margin="5" Foreground="White"/>
                                 <TextBlock Text="Note" Grid.Column="9" FontWeight="Bold" Margin="5" Foreground="White"/>
                             </Grid>
-
                             <ScrollViewer Grid.Row="1" x:Name="PART_ScrollViewer" VerticalScrollBarVisibility="Auto">
                                 <ItemsPresenter />
                             </ScrollViewer>
@@ -92,18 +85,15 @@
                         <TextBlock Text="{Binding ProjectNo}" Grid.Column="7" Margin="5"/>
                         <TextBlock Text="{Binding ProjectItemNo}" Grid.Column="8" Margin="5"/>
                         <TextBlock Text="{Binding IsComment}" Grid.Column="9" Margin="5"/>
-
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
         <TextBox HorizontalAlignment="Left" Margin="162,151,0,0" TextWrapping="Wrap" Text="{Binding Container.ContainerNo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.462,-0.139"/>
         <TextBlock HorizontalAlignment="Left" Margin="46,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Tast et Container No"/><Run Language="da-dk" Text=":"/></TextBlock>
         <Label Content="" HorizontalAlignment="Left" Margin="237,445,0,0" VerticalAlignment="Top"/>
         <Button Content="Søg" Command="{Binding SearchPackages}" HorizontalAlignment="Left" Margin="321,149,0,0" VerticalAlignment="Top" Width="39"/>
         <TextBlock HorizontalAlignment="Left" Margin="429,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-
         <!--uge-->
         <Label Content="Uge:" HorizontalAlignment="Left" Margin="523,146,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.507,0.603"/>
         <Label Content="Total Antal:" HorizontalAlignment="Left" Margin="126,410,0,0" VerticalAlignment="Top"/>
@@ -111,11 +101,7 @@
         <Label Content="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" HorizontalAlignment="Left" Margin="202,410,0,0" VerticalAlignment="Top" Width="40"/>
         <Label Content="Total Q'ty:" HorizontalAlignment="Left" Margin="260,410,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding TotalInnerQuantity, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" HorizontalAlignment="Left" Margin="323,410,0,0" VerticalAlignment="Top" Width="32"/>
-
         <Button Content="Opret status" Command="{Binding NavigateToPackageStatusCreateViewCommand}" HorizontalAlignment="Center" Margin="0,443,0,0" VerticalAlignment="Top"/>
         <Button Content="Se statuser" Command="{Binding NavigateToPackageStatusOverviewViewCommand}" HorizontalAlignment="Left" Margin="510,444,0,0" VerticalAlignment="Top"/>
-
     </Grid>
 </UserControl>
-
-    

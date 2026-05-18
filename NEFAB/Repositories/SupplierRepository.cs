@@ -7,26 +7,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
-
 namespace NEFAB.Repositories
 {
     public class SupplierRepository : IRepoGetAdd<Supplier, string>
     {
         private readonly string ConnectionString;
         private List<Supplier> suppliers;
-
         public SupplierRepository()
         {
             IConfigurationRoot config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
             suppliers = new List<Supplier>();
-
             ConnectionString = config.GetConnectionString("MyDBConnection");
-
         }
-
-
         public void Add(Supplier supplier)
         {
             using (SqlConnection con = new SqlConnection(ConnectionString))
@@ -42,9 +36,6 @@ namespace NEFAB.Repositories
             }
             return;
         }
-
-
-
         public List<Supplier> GetAll()
         {
             List<Supplier> suppliers = new List<Supplier>();
@@ -61,12 +52,11 @@ namespace NEFAB.Repositories
                             SupplierName = dr.GetString(0)
                         };
                         suppliers.Add(supplier);
-                    }                    
+                    }
                 }
             }
             return suppliers;
         }
-
         public Supplier? GetByID(string Name)
         {
             Supplier? supplier = null;
@@ -88,5 +78,5 @@ namespace NEFAB.Repositories
             }
             return supplier;
         }
-    }   
+    }
 }

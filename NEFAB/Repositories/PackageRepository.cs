@@ -1,39 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-//using System.ComponentModel;
-
-//using System.ComponentModel;
 using System.Data;
 using System.Runtime.ConstrainedExecution;
-
-//using System.IO.Packaging;
-
-//using System.IO.Packaging;
 using System.Xml.Linq;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using NEFAB.Domains;
 using NEFAB.Repositories.Interfaces;
 using static NEFAB.Domains.PackageStatus;
-
 namespace NEFAB.Repositories
 {
     public class PackageRepository : IRepoGetAddUpdateRemove<Package, string>
     {
         private readonly string connectionString;
         private List<Package> packages;
-
         public PackageRepository()
         {
             IConfigurationRoot config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
-            packages = new List<Package>(); // rettet fra List<Packages> til List<Package>
-
+            packages = new List<Package>();
             connectionString = config.GetConnectionString("MyDBConnection");
         }
-
-        public void Add(Package package)// eller (package , string supplierName , string containerNo)
+        public void Add(Package package)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -58,7 +47,6 @@ namespace NEFAB.Repositories
                 }
             }
         }
-
         public List<Package> GetAll()
         {
             List<Package> packages = new List<Package>();
@@ -95,8 +83,7 @@ namespace NEFAB.Repositories
             }
             return packages;
         }
-
-        public Package? GetByID(string containerNo) // skal laves om. 
+        public Package? GetByID(string containerNo)
         {
             Package? package = null;
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -132,7 +119,6 @@ namespace NEFAB.Repositories
             }
             return package;
         }
-        //fulde liste til listbox, da der kan være flere pakker i en container
         public List<Package> GetByContainerNo(string containerNo)
         {
             List<Package> result = new List<Package>();
@@ -165,15 +151,12 @@ namespace NEFAB.Repositories
                             };
                             result.Add(package);
                         }
-
                     }
                 }
             }
             return result;
         }
-
         public void Remove(Package package)
-
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -187,8 +170,6 @@ namespace NEFAB.Repositories
                 }
             }
         }
-
-
         public void Update(Package package)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -215,7 +196,5 @@ namespace NEFAB.Repositories
                 }
             }
         }
-
-        
     }
 }

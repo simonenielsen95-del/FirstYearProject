@@ -10,8 +10,6 @@
         <Rectangle HorizontalAlignment="Center" Height="100" Stroke="Black" Fill="#144e8c" VerticalAlignment="Top" Width="900"/>
         <Label Content="Tilføj pakke-status" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" Width="381" FontSize="36" FontWeight="Bold" Foreground="White"/>
         <Image HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Source="/images/nefab white.png"/>
-
-
         <Label Content="Container Nummer" HorizontalAlignment="Left" Margin="37,125,0,0" VerticalAlignment="Top"/>
         <Button Content="Tilbage" Command="{Binding NavigateToPackageViewCommand}" HorizontalAlignment="Left" Margin="34,378,0,0" VerticalAlignment="Top" Height="35" Width="88"/>
         <Label Content="Leverandør" HorizontalAlignment="Left" Margin="37,174,0,0" VerticalAlignment="Top"/>
@@ -25,8 +23,6 @@
         <Label Content="Projekt produkt nummer" HorizontalAlignment="Left" Margin="297,320,0,0" VerticalAlignment="Top"/>
         <Label Content="Kommentar: " HorizontalAlignment="Left" Margin="608,243,0,0" VerticalAlignment="Top"/>
        <Label Content="Status" HorizontalAlignment="Left" Margin="647,160,0,0" VerticalAlignment="Top"/>
-
-
         <TextBox x:Name="txtUpdateContainerNo" HorizontalAlignment="Left" Margin="150,129,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ContainerNo, UpdateSourceTrigger=PropertyChanged, Mode =OneWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <TextBox x:Name="txtUpdateSupplier" HorizontalAlignment="Left" Margin="150,178,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.SupplierName, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <TextBox x:Name="txtUpdateInnerQuantaty" HorizontalAlignment="Left" Margin="150,226,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.InnerQuantity, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
@@ -39,14 +35,8 @@
         <TextBox x:Name="txtUpdateProjectItemNo" HorizontalAlignment="Left" Margin="442,324,0,0" TextWrapping="Wrap" Text="{Binding SelectedPackage.ProjectItemNo, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <TextBox HorizontalAlignment="Left" Margin="608,274,0,0" TextWrapping="Wrap" Text="{Binding SelectedStatus.Comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="233" Height="88"/>
         <Button Content="Gem ny status" Command="{Binding AddStatusPackageCommand}" HorizontalAlignment="Left" Margin="781,384,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.152,0.71" FontSize="14"/>
-
-
         <ComboBox SelectedItem="{Binding SelectedStatus.Status, Mode=TwoWay}" ItemsSource="{Binding AvailableStatusTypes}" HorizontalAlignment="Left" Margin="721,165,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="MedarbejderID:" HorizontalAlignment="Left" Margin="597,125,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="724,129,0,0" TextWrapping="Wrap" Text="{Binding SelectedStatus.EmployeeId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
-
-
-
-
     </Grid>
 </UserControl>
